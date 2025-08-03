@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-    outDir: "../api/dist/public",
+    outDir: "../server/dist/public",
     emptyOutDir: true,
   },
   plugins: [
@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      "/api": "http://localhost:8787",
+      "/api": "http://localhost:3030",
     },
   },
 });

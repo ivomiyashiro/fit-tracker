@@ -1,17 +1,13 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import env from "@/server/env";
-
-import * as schema from "./schema";
-
-const client = createClient({
-  url: env.DATABASE_URL,
-  authToken: env.DATABASE_AUTH_TOKEN,
-});
-
-const db = drizzle(client, {
-  schema,
+const db = drizzle({
+  client: createClient({
+    url: "file:dev.db",
+  }),
+  logger: true,
 });
 
 export default db;
+
+export type database = typeof db;

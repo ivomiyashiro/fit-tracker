@@ -1,7 +1,7 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import env from "@/api/env";
+import env from "@/server/env";
 
 import * as schema from "./schema";
 

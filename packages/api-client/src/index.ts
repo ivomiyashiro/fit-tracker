@@ -1,4 +1,4 @@
-import type { router } from "@fit-tracker/api/routes";
+import type { router } from "@fit-tracker/server/routes";
 
 import { hc } from "hono/client";
 
@@ -9,7 +9,7 @@ const client = hc<router>("");
 export type Client = typeof client;
 
 export default (...args: Parameters<typeof hc>): Client =>
-  hc<router>(...args);
+  hc<router>(...args); 
 
 export type ErrorSchema = {
   error: {

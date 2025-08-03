@@ -4,7 +4,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "rootDir": "src",
     "paths": {
-      "@/api/*": ["../../apps/api/src/*"]
+      "@/server/*": ["../../apps/server/src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./node_modules/@cloudflare"],
     "types": ["workers-types/2023-07-01", "node"],

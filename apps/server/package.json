@@ -1,5 +1,5 @@
 {
-  "name": "@fit-tracker/api",
+  "name": "@fit-tracker/server",
   "type": "module",
   "version": "1.0.0",
   "license": "MIT",

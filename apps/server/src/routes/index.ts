@@ -1,8 +1,8 @@
 /* eslint-disable ts/no-redeclare */
-import type { AppOpenAPI } from "@/api/lib/types";
+import type { AppOpenAPI } from "@/server/lib/types";
 
-import { BASE_PATH } from "@/api/lib/constants";
-import createRouter from "@/api/lib/create-app";
+import { BASE_PATH } from "@/server/lib/constants";
+import createRouter from "@/server/lib/create-app";
 
 import index from "./index.route";
 import tasks from "./tasks/tasks.index";

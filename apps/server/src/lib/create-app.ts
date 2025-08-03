@@ -5,7 +5,7 @@ import { requestId } from "hono/request-id";
 import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
 import { defaultHook } from "stoker/openapi";
 
-import { pinoLogger } from "@/api/middlewares/pino-logger";
+import { pinoLogger } from "@/server/middlewares/pino-logger";
 
 import type { AppBindings, AppOpenAPI } from "./types";
 

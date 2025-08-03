@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
-    "@fit-tracker/api": "workspace:^",
     "@fit-tracker/api-client": "workspace:^",
     "@fit-tracker/eslint-config": "workspace:^",
+    "@fit-tracker/server": "workspace:^",
     "@hono/auth-js": "^1.0.15",
     "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.62.7",

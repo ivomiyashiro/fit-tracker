@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  apps/api:
+  apps/server:
     dependencies:
       '@hono/node-server':
         specifier: ^1.14.3
@@ -89,15 +89,15 @@ importers:
       '@auth/core':
         specifier: ^0.37.4
         version: 0.37.4
-      '@fit-tracker/api':
-        specifier: workspace:^
-        version: link:../api
       '@fit-tracker/api-client':
         specifier: workspace:^
         version: link:../../packages/api-client
       '@fit-tracker/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
+      '@fit-tracker/server':
+        specifier: workspace:^
+        version: link:../server
       '@hono/auth-js':
         specifier: ^1.0.15
         version: 1.1.0(@auth/core@0.37.4)(hono@4.8.12)(react@19.1.1)
@@ -180,12 +180,12 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@fit-tracker/api':
-        specifier: workspace:^
-        version: link:../../apps/api
       '@fit-tracker/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      '@fit-tracker/server':
+        specifier: workspace:^
+        version: link:../../apps/server
       '@types/node':
         specifier: ^22.10.2
         version: 22.17.0

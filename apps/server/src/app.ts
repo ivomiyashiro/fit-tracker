@@ -1,15 +1,13 @@
 import configureOpenAPI from "@/server/lib/configure-open-api";
 import createApp from "@/server/lib/create-app";
-import index from "@/server/routes/index.route";
-import tasks from "@/server/routes/tasks/tasks.index";
+import workouts from "@/server/modules/workouts/workouts.index";
 
 const app = createApp();
 
 configureOpenAPI(app);
 
 const routes = [
-  index,
-  tasks,
+  workouts,
 ] as const;
 
 routes.forEach((route) => {

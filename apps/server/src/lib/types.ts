@@ -2,9 +2,17 @@ import type { OpenAPIHono, RouteConfig, RouteHandler } from "@hono/zod-openapi";
 import type { Schema } from "hono";
 import type { PinoLogger } from "hono-pino";
 
+import type { Session, User } from "@/server/db/schemas";
+
+export interface AuthContextVariables {
+  user: User;
+  session: Session;
+}
+
 export interface AppBindings {
   Variables: {
     logger: PinoLogger;
+    auth: AuthContextVariables;
   };
 };
 

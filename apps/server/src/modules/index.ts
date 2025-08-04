@@ -4,13 +4,11 @@ import type { AppOpenAPI } from "@/server/lib/types";
 import { BASE_PATH } from "@/server/lib/constants";
 import createRouter from "@/server/lib/create-app";
 
-import index from "./index.route";
-import tasks from "./tasks/tasks.index";
+import workouts from "./workouts/workouts.index";
 
 export function registerRoutes(app: AppOpenAPI) {
   return app
-    .route("/", index)
-    .route("/", tasks);
+    .route("/", workouts);
 }
 
 // stand alone router type used for api client

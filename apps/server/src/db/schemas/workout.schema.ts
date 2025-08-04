@@ -15,5 +15,4 @@ export const workout = sqliteTable("workouts", {
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
-
 });

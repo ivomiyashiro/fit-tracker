@@ -6,9 +6,9 @@ import * as queries from "./handlers/queries";
 
 const router = createRouter()
   .openapi(endpoints.listWorkouts, queries.listWorkouts)
-  .openapi(endpoints.createWorkout, mutations.createWorkout);
-  // .openapi(endpoints.getOne, queries.getOne)
-  // .openapi(endpoints.update, mutations.update)
-  // .openapi(endpoints.remove, mutations.remove);
+  .openapi(endpoints.createWorkout, mutations.createWorkout)
+  .openapi(endpoints.getOneWorkout, queries.getOneWorkout)
+  .openapi(endpoints.updateWorkout, mutations.updateWorkout)
+  .openapi(endpoints.deleteWorkout, mutations.deleteWorkout);
 
 export default router;

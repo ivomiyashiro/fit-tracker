@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
 import { exercise } from "./exercise.schema";
@@ -18,3 +19,14 @@ export const workoutExercise = sqliteTable("workout_exercises", {
     .$defaultFn(() => new Date())
     .notNull(),
 });
+
+export const workoutExerciseRelations = relations(workoutExercise, ({ one }) => ({
+  workout: one(workout, {
+    fields: [workoutExercise.workoutId],
+    references: [workout.id],
+  }),
+  exercise: one(exercise, {
+    fields: [workoutExercise.exerciseId],
+    references: [exercise.id],
+  }),
+}));

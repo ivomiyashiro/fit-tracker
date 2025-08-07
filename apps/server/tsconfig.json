@@ -6,8 +6,9 @@
     "baseUrl": "./",
     "paths": {
       "@/server/*": ["./src/*"],
-      "@/server/workouts/*": ["./src/modules/workouts/*"],
-      "@/server/auth/*": ["./src/modules/auth/*"]
+      "@/server/auth/*": ["./src/modules/auth/*"],
+      "@/server/workout-exercises/*": ["./src/modules/workout-exercises/*"],
+      "@/server/workouts/*": ["./src/modules/workouts/*"]
     },
     "typeRoots": ["./node_modules/@types"],
     "outDir": "./dist"

@@ -5,12 +5,14 @@ import { BASE_PATH } from "@/server/lib/constants";
 import createRouter from "@/server/lib/create-app";
 
 import auth from "./auth/auth.index";
+import workoutExercises from "./workout-exercises/workout-exercises.index";
 import workouts from "./workouts/workouts.index";
 
 export function registerRoutes(app: AppOpenAPI) {
   return app
     .route("/", auth)
-    .route("/", workouts);
+    .route("/", workouts)
+    .route("/", workoutExercises);
 }
 
 // stand alone router type used for api client

@@ -3,31 +3,31 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema } from "stoker/openapi/schemas";
 
-import { createWorkoutSchema } from "@/server/workouts/dtos/requests";
-import { workoutResponseSchema } from "@/server/workouts/dtos/responses";
+import { createSetSchema } from "@/server/sets/dtos/requests";
+import { setResponseSchema } from "@/server/sets/dtos/responses";
 
-const tags = ["Workouts"];
+const tags = ["Sets"];
 
-export const createWorkout = createRoute({
-  path: "/workouts",
+export const createSet = createRoute({
+  path: "/sets",
   method: "post",
   request: {
     body: jsonContentRequired(
-      createWorkoutSchema,
-      "The workout to create",
+      createSetSchema,
+      "The set to create",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.CREATED]: jsonContent(
-      workoutResponseSchema,
-      "The created workout",
+      setResponseSchema,
+      "The created set",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(createWorkoutSchema),
+      createErrorSchema(createSetSchema),
       "The validation error(s)",
     ),
   },
 });
 
-export type CreateRoute = typeof createWorkout;
+export type CreateSetRoute = typeof createSet;

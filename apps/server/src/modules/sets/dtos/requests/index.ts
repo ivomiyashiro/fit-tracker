@@ -1,2 +1,1 @@
-export * from "./create-workout.request";
-export * from "./update-workout.request";
+export * from "./set.request";

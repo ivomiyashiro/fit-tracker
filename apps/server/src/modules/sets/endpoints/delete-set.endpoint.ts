@@ -5,10 +5,10 @@ import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
 
 import { notFoundSchema } from "@/server/lib/constants";
 
-const tags = ["Workouts"];
+const tags = ["Sets"];
 
-export const deleteWorkout = createRoute({
-  path: "/workouts/{id}",
+export const deleteSet = createRoute({
+  path: "/sets/{id}",
   method: "delete",
   request: {
     params: IdParamsSchema,
@@ -16,11 +16,11 @@ export const deleteWorkout = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.NO_CONTENT]: {
-      description: "Workout deleted",
+      description: "Set deleted",
     },
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Workout not found",
+      "Set not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),
@@ -29,4 +29,4 @@ export const deleteWorkout = createRoute({
   },
 });
 
-export type DeleteRoute = typeof deleteWorkout;
+export type DeleteSetRoute = typeof deleteSet;

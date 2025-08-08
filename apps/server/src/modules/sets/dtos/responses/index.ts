@@ -1,1 +1,1 @@
-export * from "./workouts.response";
+export * from "./set.response";

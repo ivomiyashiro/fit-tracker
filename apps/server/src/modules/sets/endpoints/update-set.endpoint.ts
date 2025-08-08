@@ -4,37 +4,37 @@ import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
 
 import { notFoundSchema } from "@/server/lib/constants";
-import { updateWorkoutSchema } from "@/server/workouts/dtos/requests";
-import { workoutResponseSchema } from "@/server/workouts/dtos/responses";
+import { updateSetSchema } from "@/server/sets/dtos/requests";
+import { setResponseSchema } from "@/server/sets/dtos/responses";
 
-const tags = ["Workouts"];
+const tags = ["Sets"];
 
-export const updateWorkout = createRoute({
-  path: "/workouts/{id}",
+export const updateSet = createRoute({
+  path: "/sets/{id}",
   method: "put",
   request: {
     params: IdParamsSchema,
     body: jsonContentRequired(
-      updateWorkoutSchema,
-      "The workout updates",
+      updateSetSchema,
+      "The set data to update",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      workoutResponseSchema,
-      "The updated workout",
+      setResponseSchema,
+      "The updated set",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Workout not found",
+      "Set not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(updateWorkoutSchema)
+      createErrorSchema(updateSetSchema)
         .or(createErrorSchema(IdParamsSchema)),
       "The validation error(s)",
     ),
   },
 });
 
-export type UpdateRoute = typeof updateWorkout;
+export type UpdateSetRoute = typeof updateSet;

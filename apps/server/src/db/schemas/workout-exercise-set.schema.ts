@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 import { workoutExercise } from "./workout-exercise.schema";
@@ -11,7 +12,6 @@ export const workoutExerciseSet = sqliteTable("workout_exercise_sets", {
   reps: integer("reps").notNull(),
   weight: integer("weight").notNull(),
   rir: integer("rir"),
-  rpe: integer("rpe"),
   notes: text("notes", { length: 1000 }),
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
@@ -20,3 +20,10 @@ export const workoutExerciseSet = sqliteTable("workout_exercise_sets", {
     .$defaultFn(() => new Date())
     .notNull(),
 });
+
+export const workoutExerciseSetRelations = relations(workoutExerciseSet, ({ one }) => ({
+  workoutExercise: one(workoutExercise, {
+    fields: [workoutExerciseSet.workoutExerciseId],
+    references: [workoutExercise.id],
+  }),
+}));

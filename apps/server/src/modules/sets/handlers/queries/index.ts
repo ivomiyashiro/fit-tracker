@@ -1,2 +1,2 @@
-export * from "./get-one-workout.query";
-export * from "./list-workouts.query";
+export * from "./get-one-set.query";
+export * from "./get-paginated-sets.query";

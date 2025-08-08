@@ -4,12 +4,12 @@ import { jsonContent } from "stoker/openapi/helpers";
 import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
 
 import { notFoundSchema } from "@/server/lib/constants";
-import { workoutResponseSchema } from "@/server/workouts/dtos/responses";
+import { setResponseSchema } from "@/server/sets/dtos/responses";
 
-const tags = ["Workouts"];
+const tags = ["Sets"];
 
-export const getOneWorkout = createRoute({
-  path: "/workouts/{id}",
+export const getOneSet = createRoute({
+  path: "/sets/{id}",
   method: "get",
   request: {
     params: IdParamsSchema,
@@ -17,12 +17,12 @@ export const getOneWorkout = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      workoutResponseSchema,
-      "The requested workout",
+      setResponseSchema,
+      "The set",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Workout not found",
+      "Set not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),
@@ -31,4 +31,4 @@ export const getOneWorkout = createRoute({
   },
 });
 
-export type GetOneRoute = typeof getOneWorkout;
+export type GetOneSetRoute = typeof getOneSet;

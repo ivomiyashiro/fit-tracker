@@ -6,6 +6,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@/server/auth/*": path.resolve(__dirname, "./src/modules/auth/*"),
+      "@/server/sets/*": path.resolve(__dirname, "./src/modules/sets/*"),
       "@/server/workout-exercises/*": path.resolve(__dirname, "./src/modules/workout-exercises/*"),
       "@/server/workouts/*": path.resolve(__dirname, "./src/modules/workouts/*"),
     },

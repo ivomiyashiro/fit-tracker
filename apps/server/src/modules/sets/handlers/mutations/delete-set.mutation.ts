@@ -5,33 +5,32 @@ import type { AppRouteHandler } from "@/server/lib/types";
 import type { DeleteSetRoute } from "@/server/sets/endpoints";
 
 import db from "@/server/db";
-import { workout, workoutExerciseSet } from "@/server/db/schemas";
+import { workoutExerciseSet } from "@/server/db/schemas";
 
 export const deleteSet: AppRouteHandler<DeleteSetRoute> = async (c) => {
   const { id } = c.req.valid("param");
   const userId = c.get("auth").user.id;
 
-  const userWorkout = await db.query.workout.findFirst({
-    where: eq(workout.userId, userId),
+  const existingSet = await db.query.workoutExerciseSet.findFirst({
+    where: eq(workoutExerciseSet.id, id),
     with: {
-      workoutExercises: {
+      workoutExercise: {
         with: {
-          workoutExerciseSets: {
-            where: eq(workoutExerciseSet.id, id),
-          },
+          workout: true,
         },
       },
     },
   });
 
-  if (!userWorkout || !userWorkout.workoutExercises.some(we => we.workoutExerciseSets.some(wes => wes.id === id))) {
+  if (!existingSet || existingSet.workoutExercise?.workout?.userId !== userId) {
     return c.json(
-      { message: "Workout exercise not found" },
+      { message: "Set not found" },
       HttpStatusCodes.NOT_FOUND,
     );
   }
 
-  await db.delete(workoutExerciseSet)
+  await db
+    .delete(workoutExerciseSet)
     .where(eq(workoutExerciseSet.id, id));
 
   return c.json(null);

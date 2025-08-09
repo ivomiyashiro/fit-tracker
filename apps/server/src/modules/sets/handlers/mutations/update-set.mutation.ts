@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types";
 import type { SetResponse } from "@/server/sets/dtos/responses";
@@ -30,5 +31,5 @@ export const updateSet: AppRouteHandler<UpdateSetRoute> = async (c) => {
     updatedAt: updatedSet.updatedAt.toISOString(),
   };
 
-  return c.json(result);
+  return c.json(result, HttpStatusCodes.OK);
 };

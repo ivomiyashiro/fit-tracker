@@ -3,6 +3,7 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema } from "stoker/openapi/schemas";
 
+import { notFoundSchema } from "@/server/lib/constants";
 import { createSetSchema } from "@/server/sets/dtos/requests";
 import { setResponseSchema } from "@/server/sets/dtos/responses";
 
@@ -22,6 +23,10 @@ export const createSet = createRoute({
     [HttpStatusCodes.CREATED]: jsonContent(
       setResponseSchema,
       "The created set",
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      notFoundSchema,
+      "Workout exercise not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(createSetSchema),

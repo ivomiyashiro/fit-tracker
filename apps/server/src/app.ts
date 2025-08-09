@@ -1,6 +1,7 @@
 import auth from "@/server/auth/auth.index";
 import configureOpenAPI from "@/server/lib/configure-open-api";
 import createApp from "@/server/lib/create-app";
+import sets from "@/server/sets/sets.index";
 import workoutExercises from "@/server/workout-exercises/workout-exercises.index";
 import workouts from "@/server/workouts/workouts.index";
 
@@ -12,6 +13,7 @@ const routes = [
   auth,
   workouts,
   workoutExercises,
+  sets,
 ] as const;
 
 routes.forEach((route) => {

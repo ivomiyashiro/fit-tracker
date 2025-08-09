@@ -6,4 +6,4 @@ export const signUpRequestSchema = z.object({
   name: z.string().optional(),
 });
 
-export type SignUpRequest = z.infer<typeof signUpRequestSchema>; 
+export type SignUpRequest = z.infer<typeof signUpRequestSchema>;

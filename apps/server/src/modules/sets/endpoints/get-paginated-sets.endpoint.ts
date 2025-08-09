@@ -31,6 +31,10 @@ export const getPaginatedSets = createRoute({
       }),
       "The paginated sets",
     ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      z.object({ message: z.string() }),
+      "Not found",
+    ),
   },
 });
 

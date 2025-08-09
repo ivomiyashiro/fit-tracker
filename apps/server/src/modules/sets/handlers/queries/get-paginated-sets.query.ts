@@ -1,11 +1,11 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { and, count, eq, inArray } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types";
 import type { GetPaginatedSetsRoute } from "@/server/sets/endpoints";
 
 import db from "@/server/db";
-import { workout, workoutExercise, workoutExerciseSet } from "@/server/db/schemas";
+import { workout, workoutExerciseSet } from "@/server/db/schemas";
 
 export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c) => {
   const { page = 1, limit = 10, workoutExerciseId } = c.req.valid("query");
@@ -38,7 +38,7 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
 
   // Get total count
   const totalCount = await db
-    .select({ count: db.fn.count() })
+    .select({ count: count() })
     .from(workoutExerciseSet)
     .where(and(...whereConditions));
 
@@ -57,7 +57,7 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
   const result = {
     sets: sets.map(set => ({
       id: set.id,
-      workoutExerciseId: set.workoutExerciseId,
+      workoutExerciseId: set.workoutExerciseId!,
       reps: set.reps,
       weight: set.weight,
       rir: set.rir,
@@ -73,5 +73,5 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
     },
   };
 
-  return c.json(result);
+  return c.json(result, HttpStatusCodes.OK);
 };

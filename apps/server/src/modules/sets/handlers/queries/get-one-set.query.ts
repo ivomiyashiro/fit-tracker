@@ -10,12 +10,20 @@ import { workoutExerciseSet } from "@/server/db/schemas";
 
 export const getOneSet: AppRouteHandler<GetOneSetRoute> = async (c) => {
   const { id } = c.req.valid("param");
+  const userId = c.get("auth").user.id;
 
   const set = await db.query.workoutExerciseSet.findFirst({
     where: eq(workoutExerciseSet.id, id),
+    with: {
+      workoutExercise: {
+        with: {
+          workout: true,
+        },
+      },
+    },
   });
 
-  if (!set) {
+  if (!set || set.workoutExercise?.workout?.userId !== userId) {
     return c.json(
       { message: "Set not found" },
       HttpStatusCodes.NOT_FOUND,
@@ -33,5 +41,5 @@ export const getOneSet: AppRouteHandler<GetOneSetRoute> = async (c) => {
     updatedAt: set.updatedAt.toISOString(),
   };
 
-  return c.json(result);
+  return c.json(result, HttpStatusCodes.OK);
 };

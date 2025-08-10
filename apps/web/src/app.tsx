@@ -1,23 +1,18 @@
-import { useSession } from "@hono/auth-js/react";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
 
-import { routeTree } from "@/web/route-tree.gen";
-
-const router = createRouter({
-  routeTree,
-  context: {
-    session: undefined,
-  },
-});
-
-declare module "@tanstack/react-router" {
-  // eslint-disable-next-line ts/consistent-type-definitions
-  interface Register {
-    router: typeof router;
-  }
-}
+import { Toaster } from "@/web/components/ui";
+import queryClient from "@/web/lib/query-client";
+import { router } from "@/web/lib/router";
+import { ThemeProvider } from "@/web/lib/theme/theme.provider";
 
 export default function App() {
-  const session = useSession();
-  return <RouterProvider router={router} context={{ session }} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <Toaster richColors position="bottom-center" />
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 }

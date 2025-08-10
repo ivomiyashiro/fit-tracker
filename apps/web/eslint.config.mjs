@@ -10,6 +10,7 @@ export default createConfig({
   rules: {
     "antfu/top-level-function": "off",
     "@tanstack/query/exhaustive-deps": "error",
+    "react-refresh/only-export-components": "off",
     "unicorn/filename-case": ["error", {
       case: "kebabCase",
       ignore: ["README.md", "~__root.tsx"],

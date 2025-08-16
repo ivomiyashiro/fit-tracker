@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent } from "stoker/openapi/helpers";
 import { createErrorSchema, IdParamsSchema } from "stoker/openapi/schemas";
@@ -8,10 +8,10 @@ import { notFoundSchema } from "@/server/lib/constants";
 const tags = ["Workout Exercises"];
 
 export const deleteWorkoutExercise = createRoute({
-  path: "/workout-exercises/{id}",
+  path: "/workout-exercises",
   method: "delete",
   request: {
-    params: IdParamsSchema,
+    body: jsonContent(z.array(z.number()), "Workout exercise ids"),
   },
   tags,
   responses: {

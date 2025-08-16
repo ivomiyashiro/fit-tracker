@@ -5,11 +5,11 @@ export const workoutResponseSchema = z.object({
   name: z.string(),
   workoutExercises: z.array(z.object({
     id: z.number(),
-    exercises: z.array(z.object({
+    exercise: z.object({
       id: z.number(),
       name: z.string(),
       muscleGroups: z.array(z.string()),
-    })),
+    }),
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
   })),

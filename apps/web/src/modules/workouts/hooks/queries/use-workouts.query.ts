@@ -1,24 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { useCache } from "@/web/hooks";
-import { workoutService } from "@/web/modules/workouts/api";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
 
-export const useWorkoutSuspenseQuery = () => {
+export const useWorkoutsQuery = () => {
   return useSuspenseQuery({
-    queryKey: workoutQueryKeys.all,
+    queryKey: workoutQueryKeys.lists(),
     queryFn: () => workoutService.getWorkouts(),
-    refetchOnMount: false,
-  });
-};
-
-export const useCachedOrWorkoutSuspenseQuery = () => {
-  const workoutsData = useCache<GetWorkoutsResponse>(workoutQueryKeys.all);
-
-  return useSuspenseQuery({
-    queryKey: workoutQueryKeys.all,
-    queryFn: () => workoutService.getWorkouts(),
-    initialData: workoutsData,
-    staleTime: workoutsData ? Infinity : 0,
   });
 };

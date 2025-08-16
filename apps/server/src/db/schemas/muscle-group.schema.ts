@@ -1,4 +1,7 @@
+import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+import { exerciseMuscleGroup } from "./exercise-muscle-group.schema";
 
 export type MuscleGroup = typeof muscleGroup.$inferSelect;
 
@@ -12,3 +15,7 @@ export const muscleGroup = sqliteTable("muscle_groups", {
     .$defaultFn(() => new Date())
     .notNull(),
 });
+
+export const muscleGroupRelations = relations(muscleGroup, ({ many }) => ({
+  exerciseMuscleGroups: many(exerciseMuscleGroup),
+}));

@@ -1,7 +1,7 @@
 import { AppHeader } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
 import { createRoute } from "@tanstack/react-router";
-import { rootRoute } from "@/web/lib/router/__root";
+import { rootRoute } from "@/web/lib/router/routes/__root";
 
 export const calendarRoute = createRoute({
   getParentRoute: () => rootRoute,

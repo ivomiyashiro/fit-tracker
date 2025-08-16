@@ -1,9 +1,9 @@
-import type { GetWorkoutsResponse } from "@fit-tracker/api-client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { workoutService } from "@/web/modules/workouts/api";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
+import { Workout } from "@/web/modules/workouts/types";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
 
 export const useDeleteWorkoutByIdMutation = ({
@@ -16,18 +16,18 @@ export const useDeleteWorkoutByIdMutation = ({
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: workoutService.deleteWorkoutById,
+    mutationFn: (workoutId: number) => workoutService.deleteWorkouts([workoutId]),
     onMutate: async (workoutId: number) => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: workoutQueryKeys.all });
 
       // Snapshot the previous value
-      const previousWorkouts = queryClient.getQueryData<GetWorkoutsResponse>(workoutQueryKeys.all);
+      const previousWorkouts = queryClient.getQueryData<Workout[]>(workoutQueryKeys.all);
 
       // Optimistically remove the workout
       if (previousWorkouts) {
         const updatedWorkouts = previousWorkouts.filter(workout => workout.id !== workoutId);
-        queryClient.setQueryData<GetWorkoutsResponse>(workoutQueryKeys.all, updatedWorkouts);
+        queryClient.setQueryData<Workout[]>(workoutQueryKeys.all, updatedWorkouts);
       }
 
       // Return a context object with the snapshotted value

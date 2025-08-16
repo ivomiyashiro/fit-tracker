@@ -1,0 +1,70 @@
+import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
+import { useDeleteWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
+import { useState } from "react";
+import { Workout } from "../../types";
+
+const useWorkoutsSelectionForm = () => {
+  const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
+  const [selectionEnabled, setSelectionEnabled] = useState(false);
+
+  const toggleSelectionEnabled = () => {
+    setSelectionEnabled(prev => !prev);
+    if (selectionEnabled) {
+      setSelectedWorkouts([]);
+    }
+  };
+
+  const toggleSelection = (workout: Workout) => {
+    setSelectedWorkouts(prev =>
+      prev.includes(workout) ? prev.filter(w => w.id !== workout.id) : [...prev, workout],
+    );
+  };
+
+  const clearSelection = () => {
+    setSelectedWorkouts([]);
+  };
+
+  return {
+    selectedWorkouts,
+    selectionEnabled,
+    toggleSelectionEnabled,
+    toggleSelection,
+    clearSelection,
+  };
+};
+
+
+export const useWorkoutsList = () => {
+  const {
+    selectionEnabled,
+    toggleSelectionEnabled,
+    selectedWorkouts,
+    toggleSelection,
+    clearSelection,
+  } = useWorkoutsSelectionForm();
+
+  const { data: workouts } = useWorkoutsQuery();
+  const { mutate: deleteWorkouts, isPending: isDeletingWorkouts } = useDeleteWorkoutMutation();
+
+  const handleDeleteWorkouts = () => {
+    deleteWorkouts(selectedWorkouts.map(w => w.id));
+    clearSelection();
+    toggleSelectionEnabled();
+  };
+
+  return {
+    // Selection state
+    selectionEnabled,
+    toggleSelectionEnabled,
+    selectedWorkouts,
+    toggleSelection,
+    
+    // Data
+    workouts,
+    
+    // Actions
+    handleDeleteWorkouts,
+    isDeletingWorkouts,
+  };
+};
+

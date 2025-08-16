@@ -21,16 +21,15 @@ const LandingPage = () => {
         <p className="text-muted-foreground">Your fitness journey starts now.</p>
       </div>
       <div className="flex flex-col items-center justify-center gap-4 mt-12">
-        <Link to="/register" className="w-full">
+        <Link to="/auth/sign-up" className="w-full">
           <Button className="w-full h-10">
             Get Started
-            {" "}
             <ArrowRightIcon className="w-4 h-4" />
           </Button>
         </Link>
-        <Link to="/login" className="w-full">
+        <Link to="/auth/sign-in" className="w-full">
           <Button className="w-full h-10" variant="secondary">
-            Login
+            Sign In
           </Button>
         </Link>
       </div>

@@ -1,4 +1,5 @@
 import auth from "@/server/auth/auth.index";
+import exercises from "@/server/exercises/exercises.index";
 import configureOpenAPI from "@/server/lib/configure-open-api";
 import createApp from "@/server/lib/create-app";
 import sets from "@/server/sets/sets.index";
@@ -14,10 +15,11 @@ const routes = [
   workouts,
   workoutExercises,
   sets,
+  exercises,
 ] as const;
 
 routes.forEach((route) => {
-  app.route("/", route);
+  app.route("/api", route);
 });
 
 export type AppType = typeof routes[number];

@@ -1,28 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { workoutService } from "@/web/modules/workouts/api";
-import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
+import { workoutQueryKeys } from "@/web/modules/workouts/utils";
+import { UpdateWorkoutRequest } from "@/dtos/workouts/requests";
 
-export const useUpdateWorkoutExerciseSetMutation = ({
+export const useUpdateWorkoutMutation = ({
   workoutId,
-  workoutExerciseId,
 }: {
   workoutId: number;
-  workoutExerciseId: number;
 }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ setId, set }: { setId: number; set: UpdateWorkoutExerciseSetRequest }) =>
-      workoutService.updateWorkoutExerciseSet(workoutId, workoutExerciseId, setId, set),
+    mutationFn: (workout: UpdateWorkoutRequest) =>
+      workoutService.updateWorkout(workoutId, workout),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: workoutExerciseSetsQueryKeys.list(workoutId, workoutExerciseId),
+        queryKey: workoutQueryKeys.detail(workoutId),
       });
     },
-    onError: (error) => {
-      toast.error(error.message || "Failed to update workout exercise set");
+    onError: error => {
+      toast.error(error.message || "Failed to update workout");
     },
   });
 };

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types";
@@ -8,12 +8,12 @@ import db from "@/server/db";
 import { workoutExercise } from "@/server/db/schemas";
 
 export const deleteWorkoutExercise: AppRouteHandler<DeleteRoute> = async (c) => {
-  const { id } = c.req.valid("param");
+  const workoutExerciseIds = c.req.valid("json");
   const userId = c.get("auth").user.id;
 
   // Check if workout exercise exists and belongs to user
   const existingWorkoutExercise = await db.query.workoutExercise.findFirst({
-    where: eq(workoutExercise.id, id),
+    where: inArray(workoutExercise.id, workoutExerciseIds),
     with: {
       workout: true,
     },
@@ -35,7 +35,7 @@ export const deleteWorkoutExercise: AppRouteHandler<DeleteRoute> = async (c) => 
   }
 
   // Delete the workout exercise
-  await db.delete(workoutExercise).where(eq(workoutExercise.id, id));
+  await db.delete(workoutExercise).where(inArray(workoutExercise.id, workoutExerciseIds));
 
   return c.json(null);
 };

@@ -1,9 +1,9 @@
-import type { GetWorkoutExerciseSetsResponse } from "@fit-tracker/api-client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { workoutService } from "@/web/modules/workouts/api";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
+import { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
 
 export const useDeleteWorkoutExerciseSetMutation = (
@@ -35,7 +35,7 @@ export const useDeleteWorkoutExerciseSetMutation = (
       await queryClient.cancelQueries({ queryKey });
 
       // Snapshot the previous value
-      const previousSets = queryClient.getQueryData<GetWorkoutExerciseSetsResponse>(queryKey);
+      const previousSets = queryClient.getQueryData<WorkoutExerciseSet[]>(queryKey);
 
       // Optimistically remove the set
       if (previousSets) {
@@ -43,7 +43,7 @@ export const useDeleteWorkoutExerciseSetMutation = (
           ...previousSets,
           data: previousSets.data.filter(set => set.id !== setId),
         };
-        queryClient.setQueryData<GetWorkoutExerciseSetsResponse>(queryKey, updatedSets);
+        queryClient.setQueryData<WorkoutExerciseSet[]>(queryKey, updatedSets);
       }
 
       // Return a context object with the snapshotted value

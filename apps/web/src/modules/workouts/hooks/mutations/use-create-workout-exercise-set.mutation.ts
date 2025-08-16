@@ -1,10 +1,12 @@
-import type { CreateWorkoutExerciseSetRequest, GetWorkoutExerciseSetsResponse } from "@fit-tracker/api-client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { workoutService } from "@/web/modules/workouts/api";
+import type { CreateSetRequest } from "@/dtos/sets/requests";
+import type { SetResponse } from "@/dtos/sets/responses";
+
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
 import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
+import { WorkoutExerciseSet } from "../../types";
 
 export const useCreateWorkoutExerciseSetMutation = ({
   workoutId,
@@ -17,23 +19,23 @@ export const useCreateWorkoutExerciseSetMutation = ({
   const queryKey = workoutExerciseSetsQueryKeys.list(workoutId, workoutExerciseId);
 
   return useMutation({
-    mutationFn: (set: CreateWorkoutExerciseSetRequest) =>
-      workoutService.createWorkoutExerciseSet(workoutId, workoutExerciseId, set),
-    onMutate: async (newSet: CreateWorkoutExerciseSetRequest) => {
+    mutationFn: (set: CreateSetRequest) =>
+      workoutService.createWorkoutExerciseSet(workoutId, workoutExerciseId, set), 
+    onMutate: async (newSet: CreateSetRequest) => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey });
 
       // Snapshot the previous value
-      const previousSets = queryClient.getQueryData<GetWorkoutExerciseSetsResponse>(queryKey);
+      const previousSets = queryClient.getQueryData<SetResponse[]>(queryKey);
 
       // Create optimistic set with temporary ID
       const optimisticId = Math.random();
       const optimisticSet = {
         id: optimisticId, // Temporary ID, will be replaced with actual ID from server
+        workoutExerciseId,
         reps: newSet.reps,
         weight: newSet.weight,
         rir: newSet.rir ?? 0,
-        rpe: newSet.rpe ?? 0,
         notes: newSet.notes ?? "",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -41,10 +43,7 @@ export const useCreateWorkoutExerciseSetMutation = ({
 
       // Optimistically update to the new value
       if (previousSets) {
-        queryClient.setQueryData<GetWorkoutExerciseSetsResponse>(queryKey, {
-          ...previousSets,
-          data: [optimisticSet, ...previousSets.data],
-        });
+        queryClient.setQueryData<SetResponse[]>(queryKey, [optimisticSet, ...previousSets]);
       }
 
       // Return a context object with the snapshotted value and optimistic ID
@@ -62,13 +61,13 @@ export const useCreateWorkoutExerciseSetMutation = ({
         return;
 
       // Update the optimistic set with the real ID from server response
-      queryClient.setQueryData<GetWorkoutExerciseSetsResponse>(queryKey, (oldData) => {
+      queryClient.setQueryData<WorkoutExerciseSet[]>(queryKey, (oldData) => {
         if (!oldData)
           return oldData;
 
         return {
           ...oldData,
-          data: oldData.data.map(set =>
+          data: oldData.map(set =>
             set.id === context.optimisticId ? { ...set, id: data.id } : set,
           ),
         };

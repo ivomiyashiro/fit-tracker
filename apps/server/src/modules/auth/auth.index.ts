@@ -1,13 +1,13 @@
+import { auth } from "@/server/lib/auth";
 import { createRouter } from "@/server/lib/create-app";
 
-import * as endpoints from "./endpoints";
-import * as mutations from "./handlers/mutations";
-import * as queries from "./handlers/queries";
-
 const router = createRouter()
-  .openapi(endpoints.signIn, mutations.signIn)
-  .openapi(endpoints.signUp, mutations.signUp)
-  .openapi(endpoints.signOut, mutations.signOut)
-  .openapi(endpoints.getSession, queries.getSession);
+  .on(["POST", "GET"], "/auth/*", (c) => {
+    return auth.handler(c.req.raw);
+  });
+  // .openapi(endpoints.signIn, mutations.signIn)
+  // .openapi(endpoints.signUp, mutations.signUp)
+  // .openapi(endpoints.signOut, mutations.signOut)
+  // .openapi(endpoints.getSession, queries.getSession);
 
 export default router;

@@ -1,5 +1,7 @@
 import { Controller } from "react-hook-form";
 
+import type { SetResponse } from "@/dtos/sets/responses";
+
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
 import { useUpdateWorkoutExerciseSetForm } from "@/web/modules/workouts/hooks/forms";
 
@@ -11,7 +13,7 @@ export const UpdateSetForm = ({
 }: {
   workoutId: number;
   workoutExerciseId: number;
-  initialData: GetWorkoutExerciseSetsResponse["data"][number];
+  initialData: SetResponse;
   onSuccess?: () => void;
 }) => {
   const { form, handleSubmit, isPending, isValid } = useUpdateWorkoutExerciseSetForm({
@@ -90,30 +92,6 @@ export const UpdateSetForm = ({
               min={0}
               max={10}
               placeholder="2"
-            />
-          )}
-        />
-      </FormField>
-
-      <FormField
-        label="RPE (Rate of Perceived Exertion)"
-        id="rpe"
-        error={errors.rpe}
-        register={register("rpe", {
-          setValueAs: value => (value === "" || value === null ? undefined : Number(value)),
-        })}
-      >
-        <Controller
-          name="rpe"
-          control={control}
-          render={({ field }) => (
-            <IncrementInput
-              value={field.value?.toString() || ""}
-              onChange={value => field.onChange(value ? Number.parseInt(value) : undefined)}
-              step={1}
-              min={1}
-              max={10}
-              placeholder="8"
             />
           )}
         />

@@ -1,16 +1,13 @@
-import type {
-  GetExercisesResponse,
-  GetWorkoutByIdResponse,
-  GetWorkoutsResponse,
-  UpdateWorkoutRequest,
-} from "@fit-tracker/api-client";
+
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { exercisesQueryKeys } from "@/web/modules/exercises/exercises.query-keys";
-import { workoutService } from "@/web/modules/workouts/api";
+import { exercisesQueryKeys } from "@/web/modules/workouts/utils/exercises.query-keys";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
+import { UpdateWorkoutRequest } from "@/dtos/workouts/requests";
+import { Workout, Exercise } from "@/web/modules/workouts/types";
 
 type UseUpdateWorkoutByIdMutationProps = {
   onSuccess?: () => void;
@@ -26,7 +23,7 @@ export const useUpdateWorkoutByIdMutation = ({
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ workoutId, workout }: { workoutId: number; workout: UpdateWorkoutRequest }) =>
+    mutationFn: ({ workoutId, workout }: { workoutId: number; workout: UpdateWorkoutRequest}) =>
       workoutService.updateWorkout(workoutId, workout),
     onMutate: async ({ workoutId, workout }) => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
@@ -34,19 +31,19 @@ export const useUpdateWorkoutByIdMutation = ({
       await queryClient.cancelQueries({ queryKey: workoutQueryKeys.detail(workoutId) });
 
       // Snapshot the previous values
-      const previousWorkouts = queryClient.getQueryData<GetWorkoutsResponse>(workoutQueryKeys.all);
-      const previousWorkout = queryClient.getQueryData<GetWorkoutByIdResponse>(
+      const previousWorkouts = queryClient.getQueryData<Workout[]>(workoutQueryKeys.all);
+      const previousWorkout = queryClient.getQueryData<Workout>(
         workoutQueryKeys.detail(workoutId),
       );
 
       // Get exercises from cache to include in optimistic workout
-      const exercisesData = queryClient.getQueryData<GetExercisesResponse>(
+      const exercisesData = queryClient.getQueryData<Exercise[]>(
         exercisesQueryKeys.lists(),
       );
 
-      const selectedExercises = workout.exerciseIds
+        const selectedExercises = workout.exerciseIds
         .map(id => exercisesData?.find(e => e.id === id))
-        .filter(Boolean) as GetExercisesResponse[number][];
+        .filter(Boolean) as Exercise[];
 
       // Create optimistic update object
       const optimisticUpdate = {
@@ -63,7 +60,7 @@ export const useUpdateWorkoutByIdMutation = ({
 
       // Force immediate update of the individual workout query
       if (previousWorkout) {
-        queryClient.setQueryData<GetWorkoutByIdResponse>(workoutQueryKeys.detail(workoutId), {
+        queryClient.setQueryData<Workout>(workoutQueryKeys.detail(workoutId), {
           ...previousWorkout,
           ...optimisticUpdate,
         });
@@ -88,7 +85,7 @@ export const useUpdateWorkoutByIdMutation = ({
     },
     onSuccess: (data, variables) => {
       // Update the cache with the actual server response
-      queryClient.setQueryData<GetWorkoutsResponse>(workoutQueryKeys.all, (oldData) => {
+      queryClient.setQueryData<Workout[]>(workoutQueryKeys.all, (oldData) => {
         if (!oldData)
           return oldData;
         return oldData.map(workout =>
@@ -102,7 +99,7 @@ export const useUpdateWorkoutByIdMutation = ({
       });
 
       // Update individual workout query
-      queryClient.setQueryData<GetWorkoutByIdResponse>(
+      queryClient.setQueryData<Workout>(
         workoutQueryKeys.detail(variables.workoutId),
         (oldData) => {
           if (!oldData)

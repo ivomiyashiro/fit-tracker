@@ -1,27 +1,33 @@
-import type { GetExercisesResponse } from "@fit-tracker/api-client";
-
-import { createWorkoutSchema } from "@fit-tracker/api-client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
+
+
+import { createWorkoutSchema } from "@/dtos/workouts/requests";
+import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
 type UseWorkoutFormProps = {
   initialData?: {
     name?: string;
     exerciseIds?: number[];
   };
-  onSubmit: (data: { name: string; exerciseIds: number[] }) => void;
 };
 
-export const useWorkoutForm = ({ initialData, onSubmit }: UseWorkoutFormProps) => {
-  const [selectedExercises, setSelectedExercises] = useState<GetExercisesResponse[number][]>([]);
+export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
+  const navigate = useNavigate();
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<number[]>([]);
+
+  const { mutate: createWorkout, isPending } = useCreateWorkoutMutation();
 
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm<{ name: string; exerciseIds: number[] }>({
+  } = useForm<CreateWorkoutRequest>({
     resolver: zodResolver(createWorkoutSchema),
     mode: "onChange",
     defaultValues: {
@@ -30,34 +36,39 @@ export const useWorkoutForm = ({ initialData, onSubmit }: UseWorkoutFormProps) =
     },
   });
 
-  const toggleSelection = (exercise: GetExercisesResponse[number]) => {
-    setSelectedExercises((prev) => {
-      const newIds = prev.includes(exercise)
-        ? prev.filter(e => e.id !== exercise.id)
-        : [...prev, exercise];
+  const toggleSelection = (exerciseId: number) => {
+    setSelectedExerciseIds(prev => {
+      const newIds = prev.includes(exerciseId)
+        ? prev.filter(e => e !== exerciseId)
+        : [...prev, exerciseId];
 
       setValue(
         "exerciseIds",
-        newIds.map(e => e.id),
+        newIds,
       );
       return newIds;
     });
   };
 
-  const hasSelection = selectedExercises.length > 0;
+  const hasSelection = selectedExerciseIds.length > 0;
 
-  const wrappedHandleSubmit = handleSubmit((data) => {
-    onSubmit({ ...data, exerciseIds: selectedExercises.map(e => e.id) });
+  const onSubmit = handleSubmit(data => {
+    createWorkout({ ...data, exerciseIds: selectedExerciseIds }, {
+      onSuccess: () => {
+        navigate({ to: "/workouts" });
+      },
+    });
   });
 
   return {
     errors,
     isValid,
     register,
-    handleSubmit: wrappedHandleSubmit,
+    onSubmit,
     setValue,
-    selectedExercises,
+    selectedExerciseIds,
     toggleSelection,
     hasSelection,
+    isPending,
   };
 };

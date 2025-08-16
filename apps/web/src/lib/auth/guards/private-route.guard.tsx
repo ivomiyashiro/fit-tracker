@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "@tanstack/react-router";
 
-import { useSession } from "@/web/lib/auth";
 import { AppFallback } from "@/web/components/ui";
+import { useSession } from "@/web/lib/auth";
 
 export const PrivateRouteGuard = ({ redirectTo = "/login" }: { redirectTo?: string }) => {
   const { data: user, isPending } = useSession();

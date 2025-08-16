@@ -1,11 +1,8 @@
-import {
-  type CreateWorkoutExerciseSetRequest,
-  createWorkoutExerciseSetSchema,
-} from "@fit-tracker/api-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { type CreateSetRequest, createSetSchema } from "@/dtos/sets/requests";
 import { useCreateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
 
 export const useCreateWorkoutExerciseSetForm = ({
@@ -17,13 +14,14 @@ export const useCreateWorkoutExerciseSetForm = ({
   workoutExerciseId: number;
   onSuccess?: () => void;
 }) => {
-  const form = useForm<CreateWorkoutExerciseSetRequest>({
-    resolver: zodResolver(createWorkoutExerciseSetSchema),
+  const form = useForm<CreateSetRequest>({
+    resolver: zodResolver(createSetSchema),
     defaultValues: {
-      reps: undefined,
-      weight: undefined,
+      workoutExerciseId,
+      reps: 0,
+      weight: 0,
       rir: undefined,
-      notes: "",
+      notes: undefined,
     },
   });
 
@@ -32,13 +30,10 @@ export const useCreateWorkoutExerciseSetForm = ({
     workoutExerciseId,
   });
 
-  const handleSubmit = (data: CreateWorkoutExerciseSetRequest) => {
+  const handleSubmit = (data: CreateSetRequest) => {
     createSet(
       {
-        reps: data.reps,
-        weight: data.weight,
-        rir: data.rir,
-        notes: data.notes || undefined,
+        set: data,
       },
       {
         onSuccess: () => {

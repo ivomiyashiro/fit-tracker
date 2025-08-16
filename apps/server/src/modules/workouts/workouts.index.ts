@@ -13,6 +13,6 @@ router.openapi(endpoints.listWorkouts, queries.listWorkouts);
 router.openapi(endpoints.createWorkout, mutations.createWorkout);
 router.openapi(endpoints.getOneWorkout, queries.getOneWorkout);
 router.openapi(endpoints.updateWorkout, mutations.updateWorkout);
-router.openapi(endpoints.deleteWorkout, mutations.deleteWorkout);
+router.openapi(endpoints.bulkDeleteWorkout, mutations.bulkDeleteWorkout);
 
 export default router;

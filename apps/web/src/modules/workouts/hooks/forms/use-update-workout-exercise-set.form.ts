@@ -1,13 +1,12 @@
-import {
-  type GetWorkoutExerciseSetsResponse,
-  type UpdateWorkoutExerciseSetRequest,
-  updateWorkoutExerciseSetSchema,
-} from "@fit-tracker/api-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { useUpdateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
+import type { UpdateSetRequest } from "@/dtos/sets/requests";
+import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+
+import { updateSetSchema } from "@/dtos/sets/requests";
+import { useUpdateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
 export const useUpdateWorkoutExerciseSetForm = ({
   workoutId,
@@ -17,34 +16,31 @@ export const useUpdateWorkoutExerciseSetForm = ({
 }: {
   workoutId: number;
   workoutExerciseId: number;
-  initialData: GetWorkoutExerciseSetsResponse["data"][number];
+  initialData: WorkoutExerciseSet;
   onSuccess?: () => void;
 }) => {
-  const form = useForm<UpdateWorkoutExerciseSetRequest>({
-    resolver: zodResolver(updateWorkoutExerciseSetSchema),
+  const form = useForm<UpdateSetRequest>({
+    resolver: zodResolver(updateSetSchema),
     defaultValues: {
       reps: initialData.reps,
       weight: initialData.weight,
       rir: initialData.rir || undefined,
-      rpe: initialData.rpe || undefined,
       notes: initialData.notes || "",
     },
   });
 
-  const { mutate: updateSet, isPending } = useUpdateWorkoutExerciseSetMutation({
+  const { mutate: updateSet, isPending } = useUpdateWorkoutMutation({
     workoutId,
-    workoutExerciseId,
   });
 
-  const handleSubmit = (data: UpdateWorkoutExerciseSetRequest) => {
+  const handleSubmit = (data: UpdateSetRequest) => {
     updateSet(
       {
-        setId: initialData.id,
-        set: {
+        workoutId,
+        workout: {
           reps: data.reps,
           weight: data.weight,
           rir: data.rir,
-          rpe: data.rpe,
           notes: data.notes || undefined,
         },
       },
@@ -52,7 +48,7 @@ export const useUpdateWorkoutExerciseSetForm = ({
         onSuccess: () => {
           onSuccess?.();
         },
-        onError: (error) => {
+        onError: error => {
           toast.error(error.message || "Failed to update set");
         },
       },

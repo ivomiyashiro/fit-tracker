@@ -1,8 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useCache } from "@/web/hooks";
-import { workoutService } from "@/web/modules/workouts/api";
+import { workoutService } from "@/web/modules/workouts/services/workouts.service";
 import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
+import { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
 export const useWorkoutExerciseSetsSuspenseQuery = ({
   workoutId,
@@ -35,7 +36,7 @@ export const useCachedOrWorkoutExerciseSetsSuspenseQuery = ({
   };
 }) => {
   const queryKey = workoutExerciseSetsQueryKeys.list(workoutId, workoutExerciseId);
-  const cachedData = useCache<GetWorkoutExerciseSetsResponse>(queryKey);
+  const cachedData = useCache<WorkoutExerciseSet[]>(queryKey);
 
   return useSuspenseQuery({
     queryKey,

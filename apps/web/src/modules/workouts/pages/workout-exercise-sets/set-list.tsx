@@ -1,11 +1,11 @@
-import type { GetWorkoutExerciseSetsResponse } from "@fit-tracker/api-client";
-
 import { useNavigate } from "@tanstack/react-router";
 import { BicepsFlexedIcon, Repeat2Icon, WeightIcon } from "lucide-react";
 
 import { Badge } from "@/web/components/ui";
 import { EmptyState, ListContainer, ListItem } from "@/web/components/ui/list";
 import { cn } from "@/web/lib/cn";
+
+import type { WorkoutExerciseSet } from "../../types";
 
 const SetBadge = ({
   className,
@@ -41,16 +41,16 @@ export const SetList = ({
   workoutId,
   workoutExerciseId,
 }: {
-  sets: GetWorkoutExerciseSetsResponse["data"];
+  sets: WorkoutExerciseSet[];
   workoutId?: number;
   workoutExerciseId?: number;
 }) => {
   const navigate = useNavigate();
 
-  const handleSetClick = (set: GetWorkoutExerciseSetsResponse["data"][number]) => {
+  const handleSetClick = (set: WorkoutExerciseSet) => {
     if (workoutId && workoutExerciseId) {
       navigate({
-        to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/edit",
+        to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId",
         params: {
           workoutId: String(workoutId),
           workoutExerciseId: String(workoutExerciseId),
@@ -98,7 +98,7 @@ export const SetList = ({
                       <SetBadge
                         icon={<BicepsFlexedIcon />}
                         label="RIR"
-                        value={set.rir}
+                        value={set.rir ?? 0}
                         className="text-blue-500"
                       />
                     )}

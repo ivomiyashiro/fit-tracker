@@ -9,13 +9,11 @@ import { updateSetSchema } from "@/dtos/sets/requests";
 import { useUpdateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
 export const useUpdateWorkoutExerciseSetForm = ({
-  workoutId,
-  workoutExerciseId,
+  setId,
   initialData,
   onSuccess,
 }: {
-  workoutId: number;
-  workoutExerciseId: number;
+  setId: number;
   initialData: WorkoutExerciseSet;
   onSuccess?: () => void;
 }) => {
@@ -30,25 +28,17 @@ export const useUpdateWorkoutExerciseSetForm = ({
   });
 
   const { mutate: updateSet, isPending } = useUpdateWorkoutMutation({
-    workoutId,
+    setId,
   });
 
   const handleSubmit = (data: UpdateSetRequest) => {
     updateSet(
-      {
-        workoutId,
-        workout: {
-          reps: data.reps,
-          weight: data.weight,
-          rir: data.rir,
-          notes: data.notes || undefined,
-        },
-      },
+      data,
       {
         onSuccess: () => {
           onSuccess?.();
         },
-        onError: error => {
+        onError: (error) => {
           toast.error(error.message || "Failed to update set");
         },
       },

@@ -19,18 +19,7 @@ export const getPaginatedSets = createRoute({
   },
   tags,
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      z.object({
-        sets: z.array(setResponseSchema),
-        pagination: z.object({
-          page: z.number(),
-          limit: z.number(),
-          total: z.number(),
-          totalPages: z.number(),
-        }),
-      }),
-      "The paginated sets",
-    ),
+    [HttpStatusCodes.OK]: jsonContent(setResponseSchema, "The paginated sets"),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       z.object({ message: z.string() }),
       "Not found",

@@ -1,25 +1,17 @@
 import { Controller } from "react-hook-form";
 
-import type { SetResponse } from "@/dtos/sets/responses";
-
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
-import { useUpdateWorkoutExerciseSetForm } from "@/web/modules/workouts/hooks/forms";
+import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/hooks/forms";
 
-export const UpdateSetForm = ({
-  workoutId,
+export const CreateSetDrawerForm = ({
   workoutExerciseId,
-  initialData,
   onSuccess,
 }: {
-  workoutId: number;
   workoutExerciseId: number;
-  initialData: SetResponse;
   onSuccess?: () => void;
 }) => {
-  const { form, handleSubmit, isPending, isValid } = useUpdateWorkoutExerciseSetForm({
-    workoutId,
+  const { form, handleSubmit, isPending, isValid } = useCreateWorkoutExerciseSetDrawerForm({
     workoutExerciseId,
-    initialData,
     onSuccess,
   });
 
@@ -77,9 +69,7 @@ export const UpdateSetForm = ({
         label="RIR (Reps in Reserve)"
         id="rir"
         error={errors.rir}
-        register={register("rir", {
-          setValueAs: value => (value === "" || value === null ? undefined : Number(value)),
-        })}
+        register={register("rir", { valueAsNumber: true })}
       >
         <Controller
           name="rir"
@@ -91,21 +81,25 @@ export const UpdateSetForm = ({
               step={1}
               min={0}
               max={10}
-              placeholder="2"
+              placeholder="0-10"
             />
           )}
         />
       </FormField>
 
       <FormField label="Notes" id="notes" error={errors.notes} register={register("notes")}>
-        <Textarea placeholder="Add any notes about this set..." className="resize-none" rows={3} />
+        <Controller
+          name="notes"
+          control={control}
+          render={({ field }) => (
+            <Textarea {...field} id="notes" placeholder="Add any notes..." className="min-h-20" />
+          )}
+        />
       </FormField>
 
-      <div className="mt-4">
-        <Button type="submit" className="w-full" disabled={isPending || !isValid}>
-          {isPending ? "Updating..." : "Update Set"}
-        </Button>
-      </div>
+      <Button type="submit" disabled={!isValid || isPending} className="w-full mt-2">
+        {isPending ? "Recording..." : "Record Set"}
+      </Button>
     </form>
   );
 };

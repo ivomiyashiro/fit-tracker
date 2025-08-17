@@ -1,13 +1,12 @@
-
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { exercisesQueryKeys } from "@/web/modules/workouts/utils/exercises.query-keys";
+import type { UpdateWorkoutRequest } from "@/dtos/workouts/requests";
+import type { Exercise, Workout } from "@/web/modules/workouts/types";
+
 import { workoutService } from "@/web/modules/workouts/services/workouts.service";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
-import { UpdateWorkoutRequest } from "@/dtos/workouts/requests";
-import { Workout, Exercise } from "@/web/modules/workouts/types";
+import { exercisesQueryKeys } from "@/web/modules/workouts/utils/exercises.query-keys";
 
 type UseUpdateWorkoutByIdMutationProps = {
   onSuccess?: () => void;
@@ -23,7 +22,7 @@ export const useUpdateWorkoutByIdMutation = ({
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ workoutId, workout }: { workoutId: number; workout: UpdateWorkoutRequest}) =>
+    mutationFn: ({ workoutId, workout }: { workoutId: number; workout: UpdateWorkoutRequest }) =>
       workoutService.updateWorkout(workoutId, workout),
     onMutate: async ({ workoutId, workout }) => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
@@ -41,7 +40,7 @@ export const useUpdateWorkoutByIdMutation = ({
         exercisesQueryKeys.lists(),
       );
 
-        const selectedExercises = workout.exerciseIds
+      const selectedExercises = workout.exerciseIds
         .map(id => exercisesData?.find(e => e.id === id))
         .filter(Boolean) as Exercise[];
 

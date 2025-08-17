@@ -1,15 +1,16 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { ChevronRightIcon } from "lucide-react";
 
-import { ListItem } from "@/web/components/ui";
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
+
+import { ListItem } from "@/web/components/ui";
 
 type WorkoutExerciseListProps = {
   workoutExercise: WorkoutExercise;
   selectionEnabled: boolean;
   isSelected: boolean;
   onToggle: (workoutExercise: WorkoutExercise) => void;
-}
+};
 
 export const WorkoutExerciseItem = ({
   workoutExercise,

@@ -12,7 +12,7 @@ function RegisterPage() {
         meta={{ title: "Register", description: "Register" }}
         className="flex justify-center items-center h-screen"
       >
-        <Card className="w-full">
+        <Card className="w-full ">
           <CardHeader className="flex flex-col gap-2">
             <Logo asLink to="/" className="w-12 h-12" />
             <CardTitle>Register</CardTitle>

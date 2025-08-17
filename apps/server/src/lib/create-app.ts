@@ -9,6 +9,8 @@ import { pinoLogger } from "@/server/middlewares";
 
 import type { AppBindings, AppOpenAPI } from "./types";
 
+import { corsMiddleware } from "../middlewares/cors.middleware";
+
 export function createRouter() {
   return new OpenAPIHono<AppBindings>({
     strict: false,
@@ -19,6 +21,7 @@ export function createRouter() {
 export default function createApp() {
   const app = createRouter();
   app
+    .use(corsMiddleware())
     .use(requestId())
     .use(serveEmojiFavicon("📝"))
     .use(pinoLogger());

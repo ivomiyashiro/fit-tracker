@@ -1,27 +1,18 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { useMemo } from "react";
 
-import { useCachedOrWorkoutExerciseSetsSuspenseQuery } from "@/web/modules/workouts/hooks/queries";
 import { AppHeader } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
-import { UpdateSetForm, DeleteSetButton } from "@/web/modules/workouts/components/forms";
+import { UpdateSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form";
+import { DeleteSetButton } from "@/web/modules/workouts/pages/workout-exercise-set/delete-set-button";
+import { useWorkoutExerciseSetByIdQuery } from "@/web/modules/workouts/hooks/queries/use-workout-exercise-set-by-id.query";
 
 const UpdateWorkoutExerciseSetPage = () => {
-  const { workoutId, workoutExerciseId, setId } = useParams({ from: "/workouts/$workoutId/$workoutExerciseId/$setId" });
+  const { workoutId, workoutExerciseId, setId } = useParams({
+    from: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/",
+  });
   const navigate = useNavigate();
 
-  const { data } = useCachedOrWorkoutExerciseSetsSuspenseQuery({
-    workoutId: Number(workoutId),
-    workoutExerciseId: Number(workoutExerciseId),
-    pagination: {
-      cursor: 0,
-      limit: 100, // Get all sets to find the one we're updating
-    },
-  });
-
-  const setToUpdate = useMemo(() => {
-    return data.data.find(set => set.id === Number(setId));
-  }, [data.data, setId]);
+  const { data: setToUpdate } = useWorkoutExerciseSetByIdQuery(Number(setId));
 
   const handleSuccess = () => {
     navigate({
@@ -31,13 +22,6 @@ const UpdateWorkoutExerciseSetPage = () => {
   };
 
   const handleBackClick = () => {
-    navigate({
-      to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets",
-      params: { workoutId: String(workoutId), workoutExerciseId: String(workoutExerciseId) },
-    });
-  };
-
-  const handleDeleteSuccess = () => {
     navigate({
       to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets",
       params: { workoutId: String(workoutId), workoutExerciseId: String(workoutExerciseId) },
@@ -68,17 +52,11 @@ const UpdateWorkoutExerciseSetPage = () => {
         className="flex flex-col gap-4"
       >
         <UpdateSetForm
-          workoutId={Number(workoutId)}
-          workoutExerciseId={Number(workoutExerciseId)}
+          setId={Number(setId)}
           initialData={setToUpdate}
           onSuccess={handleSuccess}
         />
-        <DeleteSetButton
-          workoutId={Number(workoutId)}
-          workoutExerciseId={Number(workoutExerciseId)}
-          setId={Number(setId)}
-          onSuccess={handleDeleteSuccess}
-        />
+        <DeleteSetButton setId={Number(setId)} />
       </PageLayout>
     </>
   );

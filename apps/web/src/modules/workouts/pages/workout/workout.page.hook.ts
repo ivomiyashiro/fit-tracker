@@ -1,9 +1,10 @@
-import { useParams, useNavigate } from "@tanstack/react-router";
-import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
-import { useDeleteWorkoutExerciseMutation } from "@/web/modules/workouts/hooks/mutations/use-delete-workout-exercise.mutation";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 
-const useWorkoutExercisesSelectionForm = () => {
+import { useDeleteWorkoutExerciseMutation } from "@/web/modules/workouts/hooks/mutations/use-delete-workout-exercise.mutation";
+import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
+
+const useWorkoutExercisesSelection = () => {
   const [selectedExerciseIds, setSelectedExerciseIds] = useState<number[]>([]);
   const [selectionEnabled, setSelectionEnabled] = useState(false);
 
@@ -11,11 +12,11 @@ const useWorkoutExercisesSelectionForm = () => {
     setSelectionEnabled(prev => !prev);
   };
 
-  const toggleSelection = (exerciseId: number) => {
+  const toggleSelection = (weId: number) => {
     setSelectedExerciseIds(prev =>
-      prev.includes(exerciseId)
-        ? prev.filter(e => e !== exerciseId)
-        : [...prev, exerciseId],
+      prev.includes(weId)
+        ? prev.filter(e => e !== weId)
+        : [...prev, weId],
     );
   };
 
@@ -32,14 +33,13 @@ const useWorkoutExercisesSelectionForm = () => {
   };
 };
 
-
 export const useWorkout = () => {
   const { workoutId } = useParams({ from: "/workouts/$workoutId/" });
   const navigate = useNavigate();
 
   const { mutate: deleteWorkoutExercise } = useDeleteWorkoutExerciseMutation();
   const { data: workouts } = useWorkoutsQuery();
-  
+
   const workout = workouts?.find(w => w.id === Number(workoutId));
 
   const {
@@ -48,7 +48,7 @@ export const useWorkout = () => {
     selectedExerciseIds,
     toggleSelection,
     clearSelection,
-  } = useWorkoutExercisesSelectionForm();
+  } = useWorkoutExercisesSelection();
 
   const handleDeleteWorkoutExercise = () => {
     deleteWorkoutExercise(selectedExerciseIds);
@@ -60,22 +60,17 @@ export const useWorkout = () => {
     navigate({ to: "/workouts" });
   };
 
-  const selectedWorkoutExercises = workout?.workoutExercises.filter(we => 
-    selectedExerciseIds.includes(we.exercise.id)
-  ) || [];
-
   return {
     // Data
     workout,
     workoutId,
-    
+
     // Selection state
     selectionEnabled,
     toggleSelectionEnabled,
     selectedExerciseIds,
     toggleSelection,
-    selectedWorkoutExercises,
-    
+
     // Actions
     handleDeleteWorkoutExercise,
     handleBackNavigation,

@@ -12,21 +12,21 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
   const userId = c.get("auth").user.id;
 
   // Get user's workout exercise IDs to filter sets
-  const userWorkoutExercises = await db.query.workoutExercise.findMany({
-    with: {
-      workout: true,
-    },
+  const userWorkouts = await db.query.workout.findMany({
     where: eq(workout.userId, userId),
+    with: {
+      workoutExercises: true,
+    },
   });
 
-  const userWorkoutExerciseIds = userWorkoutExercises.map(we => we.id);
+  const userWorkoutExerciseIds = userWorkouts.flatMap(w => w.workoutExercises.map(we => we.id));
 
   // Build where conditions
   const whereConditions = [inArray(workoutExerciseSet.workoutExerciseId, userWorkoutExerciseIds)];
 
   if (workoutExerciseId) {
     // Verify the workout exercise belongs to the user
-    const workoutExercise = userWorkoutExercises.find(we => we.id === workoutExerciseId);
+    const workoutExercise = userWorkoutExerciseIds.includes(workoutExerciseId);
     if (!workoutExercise) {
       return c.json(
         { message: "Workout exercise not found" },
@@ -55,7 +55,7 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
   });
 
   const result = {
-    sets: sets.map(set => ({
+    data: sets.map(set => ({
       id: set.id,
       workoutExerciseId: set.workoutExerciseId!,
       reps: set.reps,

@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
@@ -17,31 +18,26 @@ import { cn } from "@/web/lib/cn";
 import { useDeleteWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
 
 export const DeleteSetButton = ({
-  workoutId,
-  workoutExerciseId,
   setId,
-  onSuccess,
   className,
 }: {
-  workoutId: number;
-  workoutExerciseId: number;
   setId: number;
-  onSuccess?: () => void;
   className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const deleteSetMutation = useDeleteWorkoutExerciseSetMutation({
-    workoutId,
-    workoutExerciseId,
-    onSuccess: () => {
-      setIsOpen(false);
-      onSuccess?.();
-    },
+  const navigate = useNavigate();
+  const { workoutId, workoutExerciseId } = useParams({
+    from: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/",
   });
 
+  const { mutate: deleteSetMutation, isPending } = useDeleteWorkoutExerciseSetMutation();
+
   const handleDelete = () => {
-    deleteSetMutation.mutate({ setId });
+    deleteSetMutation({ setId });
+    navigate({
+      to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets",
+      params: { workoutId: String(workoutId), workoutExerciseId: String(workoutExerciseId) },
+    });
   };
 
   return (
@@ -50,7 +46,7 @@ export const DeleteSetButton = ({
         <Button
           variant="outline"
           className={cn("text-destructive", className)}
-          disabled={deleteSetMutation.isPending}
+          disabled={isPending}
         >
           <Trash2 />
           <span>Delete Set</span>
@@ -68,9 +64,9 @@ export const DeleteSetButton = ({
           <AlertDialogAction
             onClick={handleDelete}
             className="bg-destructive text-white hover:bg-destructive/90"
-            disabled={deleteSetMutation.isPending}
+            disabled={isPending}
           >
-            {deleteSetMutation.isPending ? "Deleting..." : "Delete"}
+            {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

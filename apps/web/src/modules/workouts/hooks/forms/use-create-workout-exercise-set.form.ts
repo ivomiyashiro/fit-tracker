@@ -5,12 +5,10 @@ import { toast } from "sonner";
 import { type CreateSetRequest, createSetSchema } from "@/dtos/sets/requests";
 import { useCreateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
 
-export const useCreateWorkoutExerciseSetForm = ({
-  workoutId,
+export const useCreateWorkoutExerciseSetDrawerForm = ({
   workoutExerciseId,
   onSuccess,
 }: {
-  workoutId: number;
   workoutExerciseId: number;
   onSuccess?: () => void;
 }) => {
@@ -20,20 +18,21 @@ export const useCreateWorkoutExerciseSetForm = ({
       workoutExerciseId,
       reps: 0,
       weight: 0,
-      rir: undefined,
-      notes: undefined,
+      rir: 0,
+      notes: "",
     },
   });
 
-  const { mutate: createSet, isPending } = useCreateWorkoutExerciseSetMutation({
-    workoutId,
-    workoutExerciseId,
-  });
+  const { mutate: createSet, isPending } = useCreateWorkoutExerciseSetMutation();
 
   const handleSubmit = (data: CreateSetRequest) => {
     createSet(
       {
-        set: data,
+        workoutExerciseId,
+        reps: data.reps,
+        weight: data.weight,
+        rir: data.rir,
+        notes: data.notes,
       },
       {
         onSuccess: () => {

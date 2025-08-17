@@ -1,0 +1,72 @@
+import { useNavigate, useParams } from "@tanstack/react-router";
+import { useState } from "react";
+
+import {
+  useInfiniteWorkoutExerciseSetsQuery,
+  useWorkoutsQuery,
+} from "@/web/modules/workouts/hooks/queries";
+
+export const useWorkoutExerciseSets = () => {
+  const { workoutId, workoutExerciseId } = useParams({
+    from: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/",
+  });
+  const navigate = useNavigate();
+
+  const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
+
+  const { data: workouts } = useWorkoutsQuery();
+  const workout = workouts?.find(w => w.id === Number(workoutId));
+  const exercise = workout?.workoutExercises.find(
+    we => we.id === Number(workoutExerciseId),
+  )?.exercise;
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = useInfiniteWorkoutExerciseSetsQuery(Number(workoutExerciseId), 10);
+
+  const allSets = data?.pages.flatMap(page => page.data) || [];
+
+  const handleCreateDrawerClose = () => {
+    setIsCreateDrawerOpen(false);
+  };
+
+  const handleCreateDrawerOpen = () => {
+    setIsCreateDrawerOpen(true);
+  };
+
+  const handleBackNavigation = () => {
+    navigate({
+      to: "/workouts/$workoutId",
+      params: { workoutId: String(workoutId) },
+    });
+  };
+
+  return {
+    // Data
+    workout,
+    exercise,
+    workoutId: Number(workoutId),
+    workoutExerciseId: Number(workoutExerciseId),
+    allSets,
+
+    // Query state
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+
+    // UI state
+    isCreateDrawerOpen,
+
+    // Actions
+    handleCreateDrawerClose,
+    handleCreateDrawerOpen,
+    handleBackNavigation,
+  };
+};

@@ -1,9 +1,9 @@
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+import type { Workout } from "@/web/modules/workouts/types";
+
 import { workoutService } from "@/web/modules/workouts/services/workouts.service";
-import { Workout } from "@/web/modules/workouts/types";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
 
 export const useDeleteWorkoutByIdMutation = ({

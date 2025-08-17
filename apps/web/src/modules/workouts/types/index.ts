@@ -6,7 +6,7 @@ export type Workout = WorkoutResponse;
 
 export type WorkoutExercise = WorkoutResponse["workoutExercises"][number];
 
-export type WorkoutExerciseSet = SetResponse;
+export type WorkoutExerciseSet = SetResponse["data"][number];
 
 export type Exercise = ExerciseResponse["data"][number];
 

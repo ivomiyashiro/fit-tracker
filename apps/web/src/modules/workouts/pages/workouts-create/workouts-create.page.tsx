@@ -53,6 +53,8 @@ const CreateWorkoutPage = () => {
           <ExerciseSelectionList
             selectedExerciseIds={selectedExerciseIds}
             toggleSelection={toggleSelection}
+            title="Select exercises for workout"
+            searchPlaceholder="Search exercises to include in workout..."
           />
           <div className="mt-4">
             <Button

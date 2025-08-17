@@ -1,5 +1,6 @@
-import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import { workoutExerciseService } from "@/web/modules/workouts/services/workout-exercise.service";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils/workout-keys";
 

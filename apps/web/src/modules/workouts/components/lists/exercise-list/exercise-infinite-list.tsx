@@ -1,9 +1,8 @@
-import { useInfiniteScroll } from "@/web/hooks";
+import type { Exercise } from "@/web/modules/workouts/types";
 
 import { EmptyState } from "@/web/components/ui";
-import type { Exercise } from "@/web/modules/workouts/types";
+import { useInfiniteScroll } from "@/web/hooks";
 import { ExerciseItem } from "@/web/modules/workouts/components/lists/exercise-list/exercise-list-item";
-
 
 type InfiniteExerciseListProps = {
   isLoading: boolean;
@@ -11,17 +10,15 @@ type InfiniteExerciseListProps = {
   exercises: Exercise[];
   selectedExerciseIds: number[];
   toggleSelection: (exerciseId: number) => void;
-  isExerciseInWorkout: boolean;
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
-}
+};
 
 export const InfiniteExerciseList = ({
   exercises,
   selectedExerciseIds,
   toggleSelection,
-  isExerciseInWorkout,
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
@@ -29,7 +26,7 @@ export const InfiniteExerciseList = ({
   isError,
 }: InfiniteExerciseListProps) => {
   const itemHeight = 60;
-  
+
   const {
     containerRef,
     loadMoreRef,
@@ -72,7 +69,6 @@ export const InfiniteExerciseList = ({
                   exercise={exercise}
                   isSelected={selectedExerciseIds.includes(exercise.id)}
                   onToggle={() => toggleSelection(exercise.id)}
-                  isAlreadyInWorkout={isExerciseInWorkout}
                 />
               </div>
             ))}
@@ -91,11 +87,13 @@ export const InfiniteExerciseList = ({
               justifyContent: "center",
             }}
           >
-            {isFetchingNextPage ? (
-              <div className="text-sm text-muted-foreground">Loading more...</div>
-            ) : (
-              <div className="text-sm text-muted-foreground">Scroll to load more</div>
-            )}
+            {isFetchingNextPage
+              ? (
+                  <div className="text-sm text-muted-foreground">Loading more...</div>
+                )
+              : (
+                  <div className="text-sm text-muted-foreground">Scroll to load more</div>
+                )}
           </div>
         )}
       </div>

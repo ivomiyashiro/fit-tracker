@@ -8,13 +8,17 @@ import { useWorkout } from "./workout.page.hook";
 
 const WorkoutPage = () => {
   const {
+    // Data
     workout,
     workoutId,
+
+    // Selection state
     selectionEnabled,
     toggleSelectionEnabled,
     selectedExerciseIds,
     toggleSelection,
-    selectedWorkoutExercises,
+
+    // Actions
     handleDeleteWorkoutExercise,
     handleBackNavigation,
   } = useWorkout();
@@ -48,7 +52,7 @@ const WorkoutPage = () => {
         <WorkoutExerciseList
           workoutExercises={workout.workoutExercises}
           selectionEnabled={selectionEnabled}
-          selectedWorkoutExercises={selectedWorkoutExercises}
+          selectedExerciseIds={selectedExerciseIds}
           onToggle={(workoutExercise) => toggleSelection(workoutExercise.id)}
         />
         <div className="flex justify-end flex-col gap-2">

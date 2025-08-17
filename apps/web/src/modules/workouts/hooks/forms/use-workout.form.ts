@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 
 import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
 
-
 import { createWorkoutSchema } from "@/dtos/workouts/requests";
 import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
@@ -37,7 +36,7 @@ export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
   });
 
   const toggleSelection = (exerciseId: number) => {
-    setSelectedExerciseIds(prev => {
+    setSelectedExerciseIds((prev) => {
       const newIds = prev.includes(exerciseId)
         ? prev.filter(e => e !== exerciseId)
         : [...prev, exerciseId];
@@ -52,7 +51,7 @@ export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
 
   const hasSelection = selectedExerciseIds.length > 0;
 
-  const onSubmit = handleSubmit(data => {
+  const onSubmit = handleSubmit((data) => {
     createWorkout({ ...data, exerciseIds: selectedExerciseIds }, {
       onSuccess: () => {
         navigate({ to: "/workouts" });

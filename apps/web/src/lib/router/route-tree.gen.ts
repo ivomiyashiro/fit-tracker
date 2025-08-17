@@ -17,6 +17,8 @@ import { Route as WorkoutsWorkoutIdIndexRouteImport } from './routes/workouts/$w
 import { Route as AuthSignUpIndexRouteImport } from './routes/auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/auth/sign-in/index'
 import { Route as WorkoutsWorkoutIdAddExercisesIndexRouteImport } from './routes/workouts/$workoutId/add-exercises/index'
+import { Route as WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRouteImport } from './routes/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/index'
+import { Route as WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRouteImport } from './routes/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/index'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -58,6 +60,22 @@ const WorkoutsWorkoutIdAddExercisesIndexRoute =
     path: '/workouts/$workoutId/add-exercises/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute =
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRouteImport.update(
+    {
+      id: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/',
+      path: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
+const WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute =
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRouteImport.update(
+    {
+      id: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/',
+      path: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -67,6 +85,8 @@ export interface FileRoutesByFullPath {
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdIndexRoute
   '/workouts/create': typeof WorkoutsCreateIndexRoute
   '/workouts/$workoutId/add-exercises': typeof WorkoutsWorkoutIdAddExercisesIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,6 +96,8 @@ export interface FileRoutesByTo {
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdIndexRoute
   '/workouts/create': typeof WorkoutsCreateIndexRoute
   '/workouts/$workoutId/add-exercises': typeof WorkoutsWorkoutIdAddExercisesIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,6 +109,8 @@ export interface FileRoutesById {
   '/workouts/$workoutId/': typeof WorkoutsWorkoutIdIndexRoute
   '/workouts/create/': typeof WorkoutsCreateIndexRoute
   '/workouts/$workoutId/add-exercises/': typeof WorkoutsWorkoutIdAddExercisesIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute
+  '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/': typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,6 +122,8 @@ export interface FileRouteTypes {
     | '/workouts/$workoutId'
     | '/workouts/create'
     | '/workouts/$workoutId/add-exercises'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -107,6 +133,8 @@ export interface FileRouteTypes {
     | '/workouts/$workoutId'
     | '/workouts/create'
     | '/workouts/$workoutId/add-exercises'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId'
   id:
     | '__root__'
     | '/'
@@ -117,6 +145,8 @@ export interface FileRouteTypes {
     | '/workouts/$workoutId/'
     | '/workouts/create/'
     | '/workouts/$workoutId/add-exercises/'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/'
+    | '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,6 +158,8 @@ export interface RootRouteChildren {
   WorkoutsWorkoutIdIndexRoute: typeof WorkoutsWorkoutIdIndexRoute
   WorkoutsCreateIndexRoute: typeof WorkoutsCreateIndexRoute
   WorkoutsWorkoutIdAddExercisesIndexRoute: typeof WorkoutsWorkoutIdAddExercisesIndexRoute
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute: typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute: typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -188,6 +220,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkoutsWorkoutIdAddExercisesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/': {
+      id: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/'
+      path: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets'
+      fullPath: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets'
+      preLoaderRoute: typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/': {
+      id: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/'
+      path: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId'
+      fullPath: '/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId'
+      preLoaderRoute: typeof WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -201,6 +247,10 @@ const rootRouteChildren: RootRouteChildren = {
   WorkoutsCreateIndexRoute: WorkoutsCreateIndexRoute,
   WorkoutsWorkoutIdAddExercisesIndexRoute:
     WorkoutsWorkoutIdAddExercisesIndexRoute,
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute:
+    WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsIndexRoute,
+  WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute:
+    WorkoutsWorkoutIdWorkoutExercisesWorkoutExerciseIdSetsSetIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

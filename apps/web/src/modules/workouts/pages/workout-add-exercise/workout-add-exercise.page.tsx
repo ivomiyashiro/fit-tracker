@@ -10,8 +10,6 @@ const WorkoutAddExercisePage = () => {
     toggleSelection,
     handleAddExercises,
     handleBackNavigation,
-    isExerciseInWorkout,
-    isPending,
     isLoading,
   } = useWorkoutAddExercise();
 
@@ -39,7 +37,8 @@ const WorkoutAddExercisePage = () => {
         <ExerciseSelectionList
           selectedExerciseIds={selectedExerciseIds}
           toggleSelection={toggleSelection}
-          isExerciseInWorkout={isExerciseInWorkout}
+          title="Select exercises to add"
+          searchPlaceholder="Search exercises to add to workout..."
         />
         <div className="flex justify-end">
           <Button

@@ -1,7 +1,9 @@
-import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
-import { useDeleteWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useState } from "react";
-import { Workout } from "../../types";
+
+import type { Workout } from "@/web/modules/workouts/types";
+
+import { useDeleteWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
+import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
 
 const useWorkoutsSelectionForm = () => {
   const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
@@ -33,7 +35,6 @@ const useWorkoutsSelectionForm = () => {
   };
 };
 
-
 export const useWorkoutsList = () => {
   const {
     selectionEnabled,
@@ -58,13 +59,12 @@ export const useWorkoutsList = () => {
     toggleSelectionEnabled,
     selectedWorkouts,
     toggleSelection,
-    
+
     // Data
     workouts,
-    
+
     // Actions
     handleDeleteWorkouts,
     isDeletingWorkouts,
   };
 };
-

@@ -15,7 +15,7 @@ importers:
         version: 1.18.1(hono@4.8.12)
       '@hono/zod-openapi':
         specifier: ^0.19.8
-        version: 0.19.10(hono@4.8.12)(zod@3.25.76)
+        version: 0.19.10(hono@4.8.12)(zod@4.0.14)
       '@libsql/client':
         specifier: ^0.15.8
         version: 0.15.10
@@ -36,7 +36,7 @@ importers:
         version: 0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4)
       drizzle-zod:
         specifier: ^0.8.2
-        version: 0.8.2(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4))(zod@3.25.76)
+        version: 0.8.2(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4))(zod@4.0.14)
       hono:
         specifier: ^4.7.11
         version: 4.8.12
@@ -51,10 +51,10 @@ importers:
         version: 13.1.1
       stoker:
         specifier: 1.4.3
-        version: 1.4.3(@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.76))(@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@3.25.76))(hono@4.8.12)(openapi3-ts@4.5.0)
+        version: 1.4.3(@asteasolutions/zod-to-openapi@7.3.4(zod@4.0.14))(@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@4.0.14))(hono@4.8.12)(openapi3-ts@4.5.0)
       zod:
-        specifier: ^3.25.51
-        version: 3.25.76
+        specifier: ^4.0.5
+        version: 4.0.14
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^4.13.3
@@ -4510,10 +4510,10 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.76)':
+  '@asteasolutions/zod-to-openapi@7.3.4(zod@4.0.14)':
     dependencies:
       openapi3-ts: 4.5.0
-      zod: 3.25.76
+      zod: 4.0.14
 
   '@auth/core@0.37.4':
     dependencies:
@@ -5229,18 +5229,18 @@ snapshots:
     dependencies:
       hono: 4.8.12
 
-  '@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@4.0.14)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-validator': 0.7.2(hono@4.8.12)(zod@3.25.76)
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@4.0.14)
+      '@hono/zod-validator': 0.7.2(hono@4.8.12)(zod@4.0.14)
       hono: 4.8.12
       openapi3-ts: 4.5.0
-      zod: 3.25.76
+      zod: 4.0.14
 
-  '@hono/zod-validator@0.7.2(hono@4.8.12)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.2(hono@4.8.12)(zod@4.0.14)':
     dependencies:
       hono: 4.8.12
-      zod: 3.25.76
+      zod: 4.0.14
 
   '@hookform/resolvers@5.2.1(react-hook-form@7.62.0(react@19.1.1))':
     dependencies:
@@ -6672,10 +6672,10 @@ snapshots:
       '@libsql/client': 0.15.10
       kysely: 0.28.4
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4))(zod@3.25.76):
+  drizzle-zod@0.8.2(drizzle-orm@0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4))(zod@4.0.14):
     dependencies:
       drizzle-orm: 0.44.4(@cloudflare/workers-types@4.20250803.0)(@libsql/client@0.15.10)(kysely@0.28.4)
-      zod: 3.25.76
+      zod: 4.0.14
 
   electron-to-chromium@1.5.194: {}
 
@@ -8610,12 +8610,12 @@ snapshots:
 
   std-env@3.9.0: {}
 
-  stoker@1.4.3(@asteasolutions/zod-to-openapi@7.3.4(zod@3.25.76))(@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@3.25.76))(hono@4.8.12)(openapi3-ts@4.5.0):
+  stoker@1.4.3(@asteasolutions/zod-to-openapi@7.3.4(zod@4.0.14))(@hono/zod-openapi@0.19.10(hono@4.8.12)(zod@4.0.14))(hono@4.8.12)(openapi3-ts@4.5.0):
     dependencies:
       hono: 4.8.12
     optionalDependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
-      '@hono/zod-openapi': 0.19.10(hono@4.8.12)(zod@3.25.76)
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@4.0.14)
+      '@hono/zod-openapi': 0.19.10(hono@4.8.12)(zod@4.0.14)
       openapi3-ts: 4.5.0
 
   string-ts@2.2.1: {}

@@ -1,37 +1,31 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { toast } from "sonner";
 
-import { useExerciseSelection } from "@/web/modules/workouts/hooks/forms/use-exercise-selection.hook";
+import { useExerciseSelection } from "@/web/modules/workouts/components/exercise-list/use-exercise-selection.hook";
 import { useUpdateWorkoutByIdMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useWorkoutByIdQuery } from "@/web/modules/workouts/hooks/queries";
 
 export const useWorkoutAddExercise = () => {
-  const { workoutId } = useParams({ from: "/workouts/$workoutId/add-exercises/" });
   const navigate = useNavigate();
+  const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/we/$workoutExerciseId/add-exercises/" });
 
   const { data: workout, isLoading } = useWorkoutByIdQuery(Number(workoutId));
 
   const { selectedExerciseIds, toggleSelection } = useExerciseSelection({
-    initialIds: workout?.workoutExercises?.map(we => we.exercise.id) ?? [],
+    selectedIds: workout?.workoutExercises?.map(we => we.exercise.id) ?? [],
   });
 
-  const { mutate: updateWorkout, isPending } = useUpdateWorkoutByIdMutation({
-    onSuccess: () => {
-      navigate({ to: "/workouts/$workoutId", params: { workoutId: String(workoutId) } });
-    },
-    onError: error => toast.error(error.message || "Failed to update workout"),
-  });
+  const { mutate: updateWorkout, isPending } = useUpdateWorkoutByIdMutation(Number(workoutId));
 
   const handleAddExercises = () => {
-    if (!workout)
-      return;
+    if (!workout) return;
 
     updateWorkout({
-      workoutId: Number(workoutId),
-      workout: {
-        name: workout.name,
-        exerciseIds: selectedExerciseIds,
-      },
+      name: workout.name,
+      exerciseIds: selectedExerciseIds,
+    }, {
+      onSuccess: () => {
+        navigate({ to: "/workouts/$workoutId", params: { workoutId: String(workoutId) } });
+      }
     });
   };
 

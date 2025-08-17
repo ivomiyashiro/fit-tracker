@@ -12,6 +12,8 @@ export default createConfig({
     "@tanstack/query/exhaustive-deps": "error",
     "react-refresh/only-export-components": "off",
     "eslint-comments/no-unlimited-disable": "off",
+    "react/no-unstable-default-props": "off",
+    "react/prefer-shorthand-boolean": "off",
     "unicorn/filename-case": ["error", {
       case: "kebabCase",
       ignore: ["README.md", "~__root.tsx"],

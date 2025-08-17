@@ -8,7 +8,7 @@ import {
 
 export const useWorkoutExerciseSets = () => {
   const { workoutId, workoutExerciseId } = useParams({
-    from: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/",
+    from: "/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/",
   });
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ export const useWorkoutExerciseSets = () => {
   const handleBackNavigation = () => {
     navigate({
       to: "/workouts/$workoutId",
-      params: { workoutId: String(workoutId) },
+      params: { workoutId },
     });
   };
 

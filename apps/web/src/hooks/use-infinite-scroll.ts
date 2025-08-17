@@ -1,4 +1,6 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type UseInfiniteScrollOptions = {
   itemHeight: number;
@@ -8,7 +10,7 @@ type UseInfiniteScrollOptions = {
   fetchNextPage: () => void;
   threshold?: number;
   bufferSize?: number;
-}
+};
 
 type UseInfiniteScrollReturn<T> = {
   containerRef: RefObject<HTMLDivElement | null>;
@@ -19,11 +21,11 @@ type UseInfiniteScrollReturn<T> = {
   totalHeight: number;
   offsetY: number;
   handleScroll: () => void;
-}
+};
 
 export const useInfiniteScroll = <T>(
   items: T[],
-  options: UseInfiniteScrollOptions
+  options: UseInfiniteScrollOptions,
 ): UseInfiniteScrollReturn<T> => {
   const {
     itemHeight,
@@ -39,8 +41,9 @@ export const useInfiniteScroll = <T>(
   const containerRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
+  const handleScroll = useCallback(() => {
+    if (!containerRef.current)
+      return;
 
     const { scrollTop, clientHeight, scrollHeight } = containerRef.current;
     const newStartIndex = Math.floor(scrollTop / itemHeight);
@@ -55,11 +58,12 @@ export const useInfiniteScroll = <T>(
     if (scrollTop + clientHeight >= scrollHeight - 100 && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  };
+  }, [containerRef, itemHeight, bufferSize, items, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container)
+      return;
 
     container.addEventListener("scroll", handleScroll);
     handleScroll();
@@ -68,7 +72,8 @@ export const useInfiniteScroll = <T>(
   }, [handleScroll]);
 
   useEffect(() => {
-    if (!loadMoreRef.current || !hasNextPage || isFetchingNextPage) return;
+    if (!loadMoreRef.current || !hasNextPage || isFetchingNextPage)
+      return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -76,7 +81,7 @@ export const useInfiniteScroll = <T>(
           fetchNextPage();
         }
       },
-      { threshold }
+      { threshold },
     );
 
     observer.observe(loadMoreRef.current);

@@ -27,7 +27,7 @@ export const DeleteSetButton = ({
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { workoutId, workoutExerciseId } = useParams({
-    from: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId/",
+    from: "/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/$setId/",
   });
 
   const { mutate: deleteSetMutation, isPending } = useDeleteWorkoutExerciseSetMutation();
@@ -35,8 +35,8 @@ export const DeleteSetButton = ({
   const handleDelete = () => {
     deleteSetMutation({ setId });
     navigate({
-      to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets",
-      params: { workoutId: String(workoutId), workoutExerciseId: String(workoutExerciseId) },
+      to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
+      params: { workoutId, workoutExerciseId },
     });
   };
 

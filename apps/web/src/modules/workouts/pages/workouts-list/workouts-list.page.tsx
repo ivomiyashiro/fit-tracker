@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button } from "@/web/components/ui";
-import { WorkoutsList } from "@/web/modules/workouts/components/lists/workout-list/workout-list.index";
+import { WorkoutsList } from "@/web/modules/workouts/pages/workouts-list/workout-list/workout-list.index";
 import { useWorkoutsList } from "./workouts-list.page.hook";
 
 export default function WorkoutsListPage() {
@@ -13,7 +13,7 @@ export default function WorkoutsListPage() {
     selectionEnabled,
     toggleSelectionEnabled,
     selectedWorkouts,
-    toggleSelection,
+    setSelectedWorkoutsFromList,
 
     // Data
     workouts,
@@ -47,7 +47,7 @@ export default function WorkoutsListPage() {
           workouts={workouts}
           selectionEnabled={selectionEnabled}
           selectedWorkouts={selectedWorkouts}
-          onToggle={toggleSelection}
+          onSelectionChanged={setSelectedWorkoutsFromList}
         />
         <div className="flex justify-end flex-col gap-2">
           {selectedWorkouts.length > 0 && (

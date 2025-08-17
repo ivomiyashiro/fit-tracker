@@ -34,7 +34,7 @@ const useWorkoutExercisesSelection = () => {
 };
 
 export const useWorkout = () => {
-  const { workoutId } = useParams({ from: "/workouts/$workoutId/" });
+  const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
   const navigate = useNavigate();
 
   const { mutate: deleteWorkoutExercise } = useDeleteWorkoutExerciseMutation();

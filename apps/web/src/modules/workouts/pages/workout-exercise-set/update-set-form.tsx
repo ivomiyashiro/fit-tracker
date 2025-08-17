@@ -3,21 +3,18 @@ import { Controller } from "react-hook-form";
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
-import { useUpdateWorkoutExerciseSetForm } from "@/web/modules/workouts/hooks/forms";
+import { useUpdateWorkoutExerciseSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form.hook";
 
 export const UpdateSetForm = ({
   setId,
   initialData,
-  onSuccess,
 }: {
   setId: number;
   initialData: WorkoutExerciseSet;
-  onSuccess?: () => void;
 }) => {
   const { form, handleSubmit, isPending, isValid } = useUpdateWorkoutExerciseSetForm({
     setId,
     initialData,
-    onSuccess,
   });
 
   const {

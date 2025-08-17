@@ -22,6 +22,10 @@ const useWorkoutsSelectionForm = () => {
     );
   };
 
+  const setSelectedWorkoutsFromList = (workouts: Workout[]) => {
+    setSelectedWorkouts(workouts);
+  };
+
   const clearSelection = () => {
     setSelectedWorkouts([]);
   };
@@ -31,6 +35,7 @@ const useWorkoutsSelectionForm = () => {
     selectionEnabled,
     toggleSelectionEnabled,
     toggleSelection,
+    setSelectedWorkoutsFromList,
     clearSelection,
   };
 };
@@ -40,7 +45,7 @@ export const useWorkoutsList = () => {
     selectionEnabled,
     toggleSelectionEnabled,
     selectedWorkouts,
-    toggleSelection,
+    setSelectedWorkoutsFromList,
     clearSelection,
   } = useWorkoutsSelectionForm();
 
@@ -58,7 +63,7 @@ export const useWorkoutsList = () => {
     selectionEnabled,
     toggleSelectionEnabled,
     selectedWorkouts,
-    toggleSelection,
+    setSelectedWorkoutsFromList,
 
     // Data
     workouts,

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
 
 import { createWorkoutSchema } from "@/dtos/workouts/requests";
-import { useExerciseSelection } from "@/web/modules/workouts/hooks/forms/use-exercise-selection.hook";
+import { useExerciseSelection } from "@/web/modules/workouts/components/exercise-list/use-exercise-selection.hook";
 import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
 type UseWorkoutFormProps = {

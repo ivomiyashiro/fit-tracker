@@ -1,11 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { BicepsFlexedIcon, Repeat2Icon, WeightIcon } from "lucide-react";
 
+import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+
 import { Badge } from "@/web/components/ui";
 import { EmptyState, ListContainer, ListItem } from "@/web/components/ui/list";
 import { cn } from "@/web/lib/cn";
-
-import type { WorkoutExerciseSet } from "../../types";
 
 const SetBadge = ({
   className,
@@ -50,7 +50,7 @@ export const SetList = ({
   const handleSetClick = (set: WorkoutExerciseSet) => {
     if (workoutId && workoutExerciseId) {
       navigate({
-        to: "/workouts/$workoutId/workout-exercises/$workoutExerciseId/sets/$setId",
+        to: "/workouts/$workoutId/we/$workoutExerciseId/sets/$setId",
         params: {
           workoutId: String(workoutId),
           workoutExerciseId: String(workoutExerciseId),

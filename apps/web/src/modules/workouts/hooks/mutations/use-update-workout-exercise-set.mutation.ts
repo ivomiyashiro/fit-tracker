@@ -6,11 +6,7 @@ import type { UpdateSetRequest } from "@/dtos/sets/requests";
 import { workoutExerciseSetService } from "@/web/modules/workouts/services/workout-exercise-set.service";
 import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
 
-export const useUpdateWorkoutMutation = ({
-  setId,
-}: {
-  setId: number;
-}) => {
+export const useUpdateWorkoutExerciseSetMutation = (setId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({

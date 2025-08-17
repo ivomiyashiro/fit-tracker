@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
 
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
-import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/hooks/forms";
+import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer-form.hook";
 
 export const CreateSetDrawerForm = ({
   workoutExerciseId,

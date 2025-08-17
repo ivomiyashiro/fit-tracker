@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button, FormField } from "@/web/components/ui";
-import { ExerciseSelectionList } from "@/web/modules/workouts/components/lists/exercise-list/exercise-list.index";
+import { ExerciseSelectionList } from "@/web/modules/workouts/components/exercise-list/exercise-list.index";
 import { useWorkoutForm, useCreateWorkout } from "./workouts-create.page.hook";
 
 const CreateWorkoutPage = () => {

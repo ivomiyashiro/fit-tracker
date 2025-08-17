@@ -1,7 +1,7 @@
 import { SquareMousePointerIcon, PlusIcon } from "lucide-react";
 import { Link, Navigate } from "@tanstack/react-router";
 
-import { WorkoutExerciseList } from "@/web/modules/workouts/components/lists";
+import { WorkoutExerciseList } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list.index";
 import { AppHeader, Button } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
 import { useWorkout } from "./workout.page.hook";
@@ -65,7 +65,7 @@ const WorkoutPage = () => {
               Remove Exercises
             </Button>
           )}
-          <Link to="/workouts/$workoutId/add-exercises" params={{ workoutId }} className="w-full">
+          <Link to="/workouts/$workoutId/we/$workoutExerciseId/add-exercises" params={{ workoutId, workoutExerciseId: "1" }} className="w-full">
             <Button className="w-full">
               <PlusIcon className="w-4 h-4 mr-2" />
               Add Exercises

@@ -14,8 +14,8 @@ const CreateWorkoutPage = () => {
     handleSubmit,
     errors,
     selectedExerciseIds,
-    toggleSelection,
-    hasSelection
+    hasSelection,
+    handleSelectionChanged,
   } = useWorkoutForm({
     initialData: {
       name: "",
@@ -51,10 +51,9 @@ const CreateWorkoutPage = () => {
             />
           </div>
           <ExerciseSelectionList
-            selectedExerciseIds={selectedExerciseIds}
-            toggleSelection={toggleSelection}
-            title="Select exercises for workout"
+            onSelectionChanged={handleSelectionChanged}
             searchPlaceholder="Search exercises to include in workout..."
+            title="Select exercises for workout"
           />
           <div className="mt-4">
             <Button

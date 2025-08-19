@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
-import { EmptyState } from "@/web/components/ui";
-
 import { SetList } from "./set-list";
 
 type InfiniteSetListProps = {
@@ -39,7 +37,6 @@ export const InfiniteSetList = ({
   fetchNextPage,
   isFetchingNextPage,
   isLoading,
-  isError,
   workoutId,
   workoutExerciseId,
 }: InfiniteSetListProps) => {
@@ -78,18 +75,11 @@ export const InfiniteSetList = ({
     );
   }
 
-  if (isError) {
-    return (
-      <EmptyState
-        title="Error loading sets"
-        description="There was an error loading sets. Please try again."
-      />
-    );
-  }
-
   if (allSets.length === 0) {
     return (
-      <EmptyState title="No sets recorded yet" description="Add your first set to get started!" />
+      <div className="flex flex-col gap-2 text-center items-center justify-center py-8">
+        <p className="text-sm text-muted-foreground">No sets recorded yet</p>
+      </div>
     );
   }
 

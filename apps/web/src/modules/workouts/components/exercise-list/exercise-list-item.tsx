@@ -1,34 +1,22 @@
 import type { Exercise } from "@/web/modules/workouts/types";
 
-import { ListItem } from "@/web/components/ui";
-
 type ExerciseItemProps = {
   exercise: Exercise;
-  isSelected: boolean;
-  onSelectionChange: (exerciseId: number) => void;
 };
 
 export const ExerciseListItem = ({
   exercise,
-  isSelected,
-  onSelectionChange,
 }: ExerciseItemProps) => {
   return (
-    <ListItem
-      selectionEnabled
-      isSelected={isSelected}
-      onSelectionChange={onSelectionChange}
-    >
-      <div className="flex-1">
-        <p className="font-medium">
-          {exercise.name}
+    <div className="flex-1">
+      <p className="font-medium">
+        {exercise.name}
+      </p>
+      {exercise.muscleGroups && exercise.muscleGroups.length > 0 && (
+        <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+          {exercise.muscleGroups.map(mg => mg.name).join(", ")}
         </p>
-        {exercise.muscleGroups && exercise.muscleGroups.length > 0 && (
-          <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
-            {exercise.muscleGroups.map(mg => mg.name).join(", ")}
-          </p>
-        )}
-      </div>
-    </ListItem>
+      )}
+    </div>
   );
 };

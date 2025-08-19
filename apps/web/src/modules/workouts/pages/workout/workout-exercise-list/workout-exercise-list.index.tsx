@@ -1,7 +1,10 @@
+import { useNavigate, useParams } from "@tanstack/react-router";
+
+import type { ItemClickEvent, SelectionChangedEvent } from "@/web/components/ui/list/list.types";
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
 
-import { EmptyState, List } from "@/web/components/ui";
-import { WorkoutExerciseItem } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";
+import { List } from "@/web/components/ui";
+import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";
 
 export const WorkoutExerciseList = ({
   workoutExercises,
@@ -14,26 +17,49 @@ export const WorkoutExerciseList = ({
   selectedExerciseIds: number[];
   onToggle: (workoutExercise: WorkoutExercise) => void;
 }) => {
+  const navigate = useNavigate();
+  const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
+
   if (workoutExercises.length === 0) {
     return (
-      <EmptyState
-        title="Oops! No exercises found"
-        description="You don't have any exercises yet. Create a new exercise to get started."
-      />
+      <div className="text-center p-8">
+        <h3 className="text-lg font-semibold mb-2">Oops! No exercises found</h3>
+        <p className="text-muted-foreground">You don't have any exercises yet. Create a new exercise to get started.</p>
+      </div>
     );
   }
 
+  const handleSelectionChanged = (e: SelectionChangedEvent<WorkoutExercise>) => {
+    e.addedItems.forEach(item => onToggle(item));
+    e.removedItems.forEach(item => onToggle(item));
+  };
+
+  const handleItemClick = (e: ItemClickEvent<WorkoutExercise>) => {
+    navigate({
+      to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
+      params: { workoutId, workoutExerciseId: String(e.item.id) },
+    });
+  };
+
   return (
-    <List title="Workout exercises">
-      {workoutExercises.map(we => (
-        <WorkoutExerciseItem
-          key={we.id}
-          workoutExercise={we}
+    <List
+      dataSource={workoutExercises}
+      displayExpr="name"
+      keyExpr="id"
+      noDataText="No workout exercises found"
+      onItemClick={handleItemClick}
+      onSelectionChanged={handleSelectionChanged}
+      selectByClick={true}
+      selectedItemKeys={selectedExerciseIds}
+      selectionMode={selectionEnabled ? "multiple" : "none"}
+      showSelectionControls={selectionEnabled}
+      title="Workout exercises"
+      itemTemplate={({ itemData: workoutExercise }) => (
+        <WorkoutExerciseListItemTemplate
+          workoutExercise={workoutExercise}
           selectionEnabled={selectionEnabled}
-          isSelected={selectedExerciseIds.includes(we.id)}
-          onToggle={onToggle}
         />
-      ))}
-    </List>
+      )}
+    />
   );
 };

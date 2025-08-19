@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
+import type { Exercise } from "@/web/modules/workouts/types";
 
 import { createWorkoutSchema } from "@/dtos/workouts/requests";
-import { useExerciseSelection } from "@/web/modules/workouts/components/exercise-list/use-exercise-selection.hook";
 import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 
 type UseWorkoutFormProps = {
@@ -16,6 +17,10 @@ type UseWorkoutFormProps = {
 };
 
 export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<number[]>(
+    initialData?.exerciseIds || [],
+  );
+
   const {
     register,
     handleSubmit,
@@ -30,18 +35,20 @@ export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
     },
   });
 
-  const { selectedExerciseIds, toggleSelection, hasSelection } = useExerciseSelection({
-    initialIds: initialData?.exerciseIds || [],
-    onChange: exerciseIds => setValue("exerciseIds", exerciseIds),
-  });
+  const handleSelectionChanged = (exercises: Exercise[]) => {
+    console.log(exercises);
+  };
+
+  const hasSelection = selectedExerciseIds.length > 0;
 
   return {
     errors,
     isValid,
     register,
     handleSubmit,
+    setValue,
     selectedExerciseIds,
-    toggleSelection,
+    handleSelectionChanged,
     hasSelection,
   };
 };

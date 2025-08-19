@@ -11,7 +11,7 @@ export * from "./form-field";
 export * from "./increment-input";
 export * from "./input";
 export * from "./label";
-export * from "./list/list.index";
+export * from "./list";
 export * from "./logo";
 export * from "./search-input";
 export * from "./sonner";

@@ -79,6 +79,14 @@ export type ListProps<T> = {
   searchValue?: string;
   searchPlaceholder?: string;
 
+  // Infinite Scroll Props
+  infiniteScrollEnabled?: boolean;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
+  onLoadMore?: () => void;
+  loadMoreText?: string;
+  loadingMoreText?: string;
+
   // Styling Props
   className?: string;
   itemClassName?: string | ((params: { itemData: T; itemIndex: number; itemKey: string | number | T }) => string);

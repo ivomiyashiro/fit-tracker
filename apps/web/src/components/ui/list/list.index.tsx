@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Card, Checkbox, Label, SearchInput } from "@/web/components/ui";
 
@@ -30,6 +30,14 @@ export const List = <T,>({
   searchValue: controlledSearchValue,
   searchPlaceholder = "Search...",
 
+  // Infinite Scroll Props
+  infiniteScrollEnabled = false,
+  hasNextPage = false,
+  isFetchingNextPage = false,
+  onLoadMore,
+  loadMoreText = "Load more",
+  loadingMoreText = "Loading more...",
+
   // Styling Props
   className = "",
   itemClassName = "",
@@ -51,6 +59,12 @@ export const List = <T,>({
   // Internal state for selection
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number | T)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number>(-1);
+
+  // Ref for infinite scroll trigger element
+  const loadMoreRef = useRef<HTMLLIElement>(null);
+
+  // Ref to store the latest onLoadMore callback
+  const onLoadMoreRef = useRef(onLoadMore);
 
   // Use controlled or internal search value
   const searchValue = controlledSearchValue !== undefined ? controlledSearchValue : internalSearchValue;
@@ -175,6 +189,42 @@ export const List = <T,>({
     }
   }, [disabled, showSelectionControls, handleItemSelection, filteredData.length]);
 
+  // Update the ref whenever onLoadMore changes
+  useEffect(() => {
+    onLoadMoreRef.current = onLoadMore;
+  }, [onLoadMore]);
+
+  // Intersection observer for infinite scroll
+  useEffect(() => {
+    if (!infiniteScrollEnabled) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry?.isIntersecting && hasNextPage && !isFetchingNextPage && onLoadMoreRef.current) {
+          onLoadMoreRef.current();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "100px",
+      },
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [infiniteScrollEnabled, hasNextPage, isFetchingNextPage]);
+
   if (!visible) {
     return null;
   }
@@ -182,99 +232,109 @@ export const List = <T,>({
   return (
     <div
       className={`flex flex-col gap-2 ${className}`}
-      style={{ height, width }}
     >
       {title && <Label className="px-3">{title}</Label>}
-
       {searchEnabled && (
-        <div className="px-3">
-          <SearchInput
-            value={searchValue}
-            onChange={handleSearchChange}
-            placeholder={searchPlaceholder}
-          />
-        </div>
+        <SearchInput
+          value={searchValue}
+          onChange={handleSearchChange}
+          placeholder={searchPlaceholder}
+        />
       )}
+      <Card style={{ height, width }} className="overflow-auto">
+        {filteredData.length === 0
+          ? (
+              <div className="p-4 text-center text-muted-foreground">
+                {noDataText}
+              </div>
+            )
+          : (
+              <ul className="flex flex-col py-2 px-4">
+                {filteredData.map((item, index) => {
+                  const itemKey = getItemKey(item, keyExpr);
+                  const isSelected = currentSelectedKeys.includes(itemKey);
+                  const isHovered = hoveredIndex === index;
 
-      <Card>
-        <div className="overflow-auto">
-          {filteredData.length === 0
-            ? (
-                <div className="p-4 text-center text-muted-foreground">
-                  {noDataText}
-                </div>
-              )
-            : (
-                <ul className="flex flex-col py-2 px-4">
-                  {filteredData.map((item, index) => {
-                    const itemKey = getItemKey(item, keyExpr);
-                    const isSelected = currentSelectedKeys.includes(itemKey);
-                    const isHovered = hoveredIndex === index;
+                  const itemClassNames = [
+                    "text-sm py-2 border-b last:border-b-0 group flex gap-2",
+                    !disabled ? "cursor-pointer" : "",
+                    typeof itemClassName === "function"
+                      ? itemClassName({ itemData: item, itemIndex: index, itemKey })
+                      : itemClassName,
+                    isHovered ? hoveredItemClassName : "",
+                    disabled ? disabledItemClassName : "",
+                  ].filter(Boolean).join(" ");
 
-                    const itemClassNames = [
-                      "text-sm py-2 border-b last:border-b-0 group flex gap-2",
-                      !disabled ? "cursor-pointer" : "",
-                      typeof itemClassName === "function"
-                        ? itemClassName({ itemData: item, itemIndex: index, itemKey })
-                        : itemClassName,
-                      isHovered ? hoveredItemClassName : "",
-                      disabled ? disabledItemClassName : "",
-                    ].filter(Boolean).join(" ");
+                  return (
+                    <li
+                      key={String(itemKey)}
+                      className={itemClassNames}
+                      onClick={e => handleItemClick(item, itemKey, index, e)}
+                      onContextMenu={(e) => {
+                        onItemContextMenu?.({
+                          item,
+                          itemData: item,
+                          itemIndex: index,
+                          itemKey,
+                          event: e,
+                        });
+                      }}
+                      onKeyDown={e => handleKeyDown(e, item, itemKey, index)}
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(-1)}
+                      tabIndex={disabled ? -1 : 0}
+                      role="option"
+                      aria-selected={isSelected}
+                    >
+                      {showSelectionControls && selectionMode !== "none" && (
+                        <Checkbox
+                          className="mt-0.5"
+                          checked={isSelected}
+                          disabled={disabled}
+                          onCheckedChange={() => !disabled && handleItemSelection(item, itemKey)}
+                        />
+                      )}
+                      <div className="flex items-center gap-2 justify-between w-full">
+                        <Label
+                          className={`text-sm w-full ${!disabled ? "cursor-pointer" : ""} ${disabled ? "text-muted-foreground" : ""}`}
+                        >
+                          {itemTemplate
+                            ? (
+                                typeof itemTemplate === "function"
+                                  ? (
+                                      itemTemplate({ itemData: item, itemIndex: index, itemKey })
+                                    )
+                                  : (
+                                      itemTemplate
+                                    )
+                              )
+                            : (
+                                getItemDisplay(item, displayExpr)
+                              )}
+                        </Label>
+                      </div>
+                    </li>
+                  );
+                })}
 
-                    return (
-                      <li
-                        key={String(itemKey)}
-                        className={itemClassNames}
-                        onClick={e => handleItemClick(item, itemKey, index, e)}
-                        onContextMenu={(e) => {
-                          onItemContextMenu?.({
-                            item,
-                            itemData: item,
-                            itemIndex: index,
-                            itemKey,
-                            event: e,
-                          });
-                        }}
-                        onKeyDown={e => handleKeyDown(e, item, itemKey, index)}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(-1)}
-                        tabIndex={disabled ? -1 : 0}
-                        role="option"
-                        aria-selected={isSelected}
-                      >
-                        {showSelectionControls && selectionMode !== "none" && (
-                          <Checkbox
-                            className="mt-0.5"
-                            checked={isSelected}
-                            disabled={disabled}
-                            onCheckedChange={() => !disabled && handleItemSelection(item, itemKey)}
-                          />
-                        )}
-                        <div className="flex items-center gap-2 justify-between w-full">
-                          <Label
-                            className={`text-sm w-full ${!disabled ? "cursor-pointer" : ""} ${disabled ? "text-muted-foreground" : ""}`}
-                          >
-                            {itemTemplate
-                              ? (
-                                  typeof itemTemplate === "function"
-                                    ? (
-                                        itemTemplate({ itemData: item, itemIndex: index, itemKey })
-                                      )
-                                    : (
-                                        itemTemplate
-                                      )
-                                )
-                              : (
-                                  getItemDisplay(item, displayExpr)
-                                )}
-                          </Label>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-        </div>
+                {/* Infinite scroll trigger */}
+                {infiniteScrollEnabled && hasNextPage && (
+                  <li
+                    ref={loadMoreRef}
+                    className="px-2 py-4 text-center border-t"
+                  >
+                    <button
+                      type="button"
+                      onClick={onLoadMore}
+                      disabled={isFetchingNextPage}
+                      className="text-sm text-muted-foreground hover:text-foreground disabled:opacity-50 transition-colors cursor-pointer"
+                    >
+                      {isFetchingNextPage ? loadingMoreText : loadMoreText}
+                    </button>
+                  </li>
+                )}
+              </ul>
+            )}
       </Card>
     </div>
   );

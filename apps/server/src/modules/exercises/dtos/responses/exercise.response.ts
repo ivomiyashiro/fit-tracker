@@ -4,8 +4,6 @@ export const exerciseResponseSchema = z.object({
   data: z.array(z.object({
     id: z.number(),
     name: z.string(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
     muscleGroups: z.array(z.object({
       id: z.number(),
       name: z.string(),

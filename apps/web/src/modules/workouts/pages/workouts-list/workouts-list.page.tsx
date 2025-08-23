@@ -1,4 +1,4 @@
-import { SquareMousePointerIcon } from "lucide-react";
+import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
 
 import { Link } from "@tanstack/react-router";
 
@@ -64,6 +64,7 @@ export default function WorkoutsListPage() {
           )}
           <Link to="/workouts/create" className="w-full">
             <Button className="w-full" disabled={isDeletingWorkouts}>
+              <PlusIcon className="w-4 h-4 mr-1 mt-0.5" />
               Create Workout
             </Button>
           </Link>

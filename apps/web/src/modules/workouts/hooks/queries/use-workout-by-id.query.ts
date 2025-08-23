@@ -5,7 +5,7 @@ import { workoutQueryKeys } from "@/web/modules/workouts/utils";
 
 export const useWorkoutByIdQuery = (workoutId: number) => {
   return useSuspenseQuery({
-    queryKey: [workoutQueryKeys.detail(workoutId)],
+    queryKey: workoutQueryKeys.detail(workoutId),
     queryFn: () => workoutService.getWorkoutById(workoutId),
   });
 };

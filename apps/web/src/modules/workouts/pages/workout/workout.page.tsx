@@ -1,4 +1,4 @@
-import { SquareMousePointerIcon, PlusIcon } from "lucide-react";
+import { EditIcon } from "lucide-react";
 import { Link, Navigate } from "@tanstack/react-router";
 
 import { WorkoutExerciseList } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list.index";
@@ -13,14 +13,7 @@ const WorkoutPage = () => {
     workout,
     workoutId,
 
-    // Selection state
-    selectionEnabled,
-    toggleSelectionEnabled,
-    selectedExerciseIds,
-    toggleSelection,
-
     // Actions
-    handleDeleteWorkoutExercise,
     handleBackNavigation,
   } = useWorkout();
 
@@ -34,17 +27,7 @@ const WorkoutPage = () => {
         title={workout.name}
         showBackButton
         onBackButtonClick={handleBackNavigation}
-        actionButtonComponent={
-          <Button
-            variant="secondary"
-            className="w-9 h-9 text-muted-foreground"
-            onClick={toggleSelectionEnabled}
-          >
-            <SquareMousePointerIcon className="w-4 h-4" />
-          </Button>
-        }
-        onActionButtonClick={toggleSelectionEnabled}
-        showActionButton={workout.workoutExercises.length > 0}
+        showActionButton={false}
       />
       <PageLayout
         meta={{ title: "Workout", description: "Workout" }}
@@ -53,24 +36,12 @@ const WorkoutPage = () => {
         <WorkoutExerciseList
           isSuccess={isSuccess}
           workoutExercises={workout.workoutExercises}
-          selectionEnabled={selectionEnabled}
-          selectedExerciseIds={selectedExerciseIds}
-          onToggle={(workoutExercise) => toggleSelection(workoutExercise.id)}
         />
         <div className="flex justify-end flex-col gap-2">
-          {selectedExerciseIds.length > 0 && (
-            <Button
-              variant="destructive"
-              className="w-full"
-              onClick={handleDeleteWorkoutExercise}
-            >
-              Remove Exercises
-            </Button>
-          )}
           <Link to="/workouts/$workoutId/we/$workoutExerciseId/add-exercises" params={{ workoutId, workoutExerciseId: "1" }} className="w-full">
             <Button className="w-full">
-              <PlusIcon className="w-4 h-4 mr-2" />
-              Add Exercises
+              <EditIcon className="w-4 h-4 mr-1 mt-0.5" />
+              Edit Workout Exercises
             </Button>
           </Link>
         </div>

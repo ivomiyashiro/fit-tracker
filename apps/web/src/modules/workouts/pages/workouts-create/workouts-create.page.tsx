@@ -20,7 +20,7 @@ const CreateWorkoutPage = () => {
     // Actions
     handleCreateWorkout,
     isPending,
-  } = useCreateWorkout({});
+  } = useCreateWorkout();
 
   return (
     <>

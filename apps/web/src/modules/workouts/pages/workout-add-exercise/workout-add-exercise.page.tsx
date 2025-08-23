@@ -5,23 +5,14 @@ import { useWorkoutAddExercise } from "./workout-add-exercise.page.hook";
 
 const WorkoutAddExercisePage = () => {
   const {
-    workout,
-    selectedExerciseIds,
-    toggleSelection,
+    // Data
+    selectedExercises,
+    handleSelectionChanged,
+
+    // Actions
     handleAddExercises,
     handleBackNavigation,
-    isLoading,
   } = useWorkoutAddExercise();
-
-  if (isLoading || !workout) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p>Loading workout...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -35,16 +26,15 @@ const WorkoutAddExercisePage = () => {
         className="flex flex-col gap-8"
       >
         <ExerciseSelectionList
-          selectedExerciseIds={selectedExerciseIds}
-          toggleSelection={toggleSelection}
-          title="Select exercises to add"
-          searchPlaceholder="Search exercises to add to workout..."
+          selectedExercises={selectedExercises}
+          onSelectionChanged={handleSelectionChanged}
+          searchPlaceholder="Search exercises to include in workout..."
         />
         <div className="flex justify-end">
           <Button
             className="w-full"
             onClick={handleAddExercises}
-            disabled={selectedExerciseIds.length === 0}
+            disabled={selectedExercises.length === 0}
           >
             Add exercise
           </Button>

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 
-import type { ItemClickEvent, SelectionChangedEvent } from "@/web/components/ui/list/list.types";
+import type { ItemClickEvent } from "@/web/components/ui/list/list.types";
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
 
 import { List } from "@/web/components/ui";
@@ -8,16 +8,10 @@ import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/wo
 
 export const WorkoutExerciseList = ({
   isSuccess,
-  selectedExerciseIds,
-  selectionEnabled,
   workoutExercises,
-  onToggle,
 }: {
   isSuccess: boolean;
-  selectedExerciseIds: number[];
-  selectionEnabled: boolean;
   workoutExercises: WorkoutExercise[];
-  onToggle: (workoutExercise: WorkoutExercise) => void;
 }) => {
   const navigate = useNavigate();
   const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
@@ -30,11 +24,6 @@ export const WorkoutExerciseList = ({
       </div>
     );
   }
-
-  const handleSelectionChanged = (e: SelectionChangedEvent<WorkoutExercise>) => {
-    e.addedItems.forEach(item => onToggle(item));
-    e.removedItems.forEach(item => onToggle(item));
-  };
 
   const handleItemClick = (e: ItemClickEvent<WorkoutExercise>) => {
     navigate({
@@ -51,15 +40,11 @@ export const WorkoutExerciseList = ({
       keyExpr="id"
       noDataText="No workout exercises found"
       onItemClick={handleItemClick}
-      onSelectionChanged={handleSelectionChanged}
       selectByClick={true}
-      selectedItemKeys={selectedExerciseIds}
-      selectionMode={selectionEnabled ? "multiple" : "none"}
-      showSelectionControls={selectionEnabled}
+      selectionMode="none"
       itemTemplate={({ itemData: workoutExercise }) => (
         <WorkoutExerciseListItemTemplate
           workoutExercise={workoutExercise}
-          selectionEnabled={selectionEnabled}
         />
       )}
     />

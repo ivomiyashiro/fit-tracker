@@ -37,7 +37,10 @@ export const listWorkouts: AppRouteHandler<ListRoute> = async (c) => {
       exercise: {
         id: we.exercise!.id,
         name: we.exercise!.name,
-        muscleGroups: we.exercise!.exerciseMuscleGroups.map(emg => emg.muscleGroup!.name),
+        muscleGroups: we.exercise!.exerciseMuscleGroups.map(emg => ({
+          id: emg.muscleGroup!.id,
+          name: emg.muscleGroup!.name,
+        })),
       },
       createdAt: we.createdAt.toISOString(),
       updatedAt: we.updatedAt.toISOString(),

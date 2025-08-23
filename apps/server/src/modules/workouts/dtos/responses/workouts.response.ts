@@ -8,13 +8,16 @@ export const workoutResponseSchema = z.object({
     exercise: z.object({
       id: z.number(),
       name: z.string(),
-      muscleGroups: z.array(z.string()),
+      muscleGroups: z.array(z.object({
+        id: z.number(),
+        name: z.string(),
+      })),
     }),
-    createdAt: z.string().datetime(),
-    updatedAt: z.string().datetime(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
   })),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 
 export type WorkoutResponse = z.infer<typeof workoutResponseSchema>;

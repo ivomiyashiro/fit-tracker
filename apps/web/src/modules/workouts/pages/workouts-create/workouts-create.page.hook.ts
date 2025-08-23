@@ -37,8 +37,9 @@ const useWorkoutForm = ({ initialData }: UseWorkoutFormProps = {}) => {
   });
 
   const handleSelectionChanged = useCallback((exercises: Exercise[]) => {
+    setValue("exerciseIds", exercises.map(e => e.id));
     setSelectedExercises(exercises);
-  }, []);
+  }, [setValue]);
 
   const hasSelection = selectedExercises.length > 0;
 

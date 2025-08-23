@@ -3,10 +3,10 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { GetPaginatedExercisesRoute } from "@/server/exercises/endpoints";
 import type { AppRouteHandler } from "@/server/lib/types";
+import type { ExerciseResponse } from "@/server/modules/exercises/dtos/responses";
 
 import db from "@/server/db";
 import { exercise } from "@/server/db/schemas";
-import type { ExerciseResponse } from "@/server/modules/exercises/dtos/responses";
 
 export const getPaginatedExercises: AppRouteHandler<GetPaginatedExercisesRoute> = async (c) => {
   const { page = 1, limit = 10, search } = c.req.valid("query");
@@ -47,8 +47,6 @@ export const getPaginatedExercises: AppRouteHandler<GetPaginatedExercisesRoute> 
     data: exercises.map(exercise => ({
       id: exercise.id,
       name: exercise.name,
-      createdAt: exercise.createdAt.toISOString(),
-      updatedAt: exercise.updatedAt.toISOString(),
       muscleGroups: exercise.exerciseMuscleGroups.map(emg => ({
         id: emg.muscleGroup!.id,
         name: emg.muscleGroup!.name,

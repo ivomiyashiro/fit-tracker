@@ -2,6 +2,7 @@ import { and, count, eq, inArray } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types";
+import type { SetPaginatedResponse } from "@/server/modules/sets/dtos/responses/set.response";
 import type { GetPaginatedSetsRoute } from "@/server/sets/endpoints";
 
 import db from "@/server/db";
@@ -54,7 +55,7 @@ export const getPaginatedSets: AppRouteHandler<GetPaginatedSetsRoute> = async (c
     offset,
   });
 
-  const result = {
+  const result: SetPaginatedResponse = {
     data: sets.map(set => ({
       id: set.id,
       workoutExerciseId: set.workoutExerciseId!,

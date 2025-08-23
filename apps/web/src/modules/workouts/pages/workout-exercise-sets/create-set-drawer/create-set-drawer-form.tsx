@@ -1,15 +1,17 @@
 import { Controller } from "react-hook-form";
 
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
-import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer-form.hook";
+import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer-form.hook";
+
+type Props = {
+  workoutExerciseId: number;
+  onSuccess?: () => void;
+};
 
 export const CreateSetDrawerForm = ({
   workoutExerciseId,
   onSuccess,
-}: {
-  workoutExerciseId: number;
-  onSuccess?: () => void;
-}) => {
+}: Props) => {
   const { form, handleSubmit, isPending, isValid } = useCreateWorkoutExerciseSetDrawerForm({
     workoutExerciseId,
     onSuccess,

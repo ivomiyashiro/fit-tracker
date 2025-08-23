@@ -5,13 +5,15 @@ import { toast } from "sonner";
 import { type CreateSetRequest, createSetSchema } from "@/dtos/sets/requests";
 import { useCreateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
 
+type Props = {
+  workoutExerciseId: number;
+  onSuccess?: () => void;
+};
+
 export const useCreateWorkoutExerciseSetDrawerForm = ({
   workoutExerciseId,
   onSuccess,
-}: {
-  workoutExerciseId: number;
-  onSuccess?: () => void;
-}) => {
+}: Props) => {
   const form = useForm<CreateSetRequest>({
     resolver: zodResolver(createSetSchema),
     defaultValues: {

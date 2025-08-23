@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { IPaginated } from "@/server/types/paginated.type";
+
 export const setResponseSchema = z.object({
   id: z.number(),
   workoutExerciseId: z.number(),
@@ -7,8 +9,9 @@ export const setResponseSchema = z.object({
   weight: z.number(),
   rir: z.number().nullable(),
   notes: z.string().nullable(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 
 export type SetResponse = z.infer<typeof setResponseSchema>;
+export type SetPaginatedResponse = IPaginated<z.infer<typeof setResponseSchema>>;

@@ -4,6 +4,7 @@ import { jsonContent } from "stoker/openapi/helpers";
 import { z } from "zod";
 
 import { setResponseSchema } from "@/server/sets/dtos/responses";
+import { generatePaginatedSchema } from "@/server/utils";
 
 const tags = ["Sets"];
 
@@ -19,7 +20,7 @@ export const getPaginatedSets = createRoute({
   },
   tags,
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(setResponseSchema, "The paginated sets"),
+    [HttpStatusCodes.OK]: jsonContent(generatePaginatedSchema(setResponseSchema), "The paginated sets"),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       z.object({ message: z.string() }),
       "Not found",

@@ -6,20 +6,20 @@ import type { SetResponse } from "@/server/sets/dtos/responses";
 import type { CreateSetRoute } from "@/server/sets/endpoints";
 
 import db from "@/server/db";
-import { workout, workoutExerciseSet } from "@/server/db/schemas";
+import { workoutExercise, workoutExerciseSet } from "@/server/db/schemas";
 
 export const createSet: AppRouteHandler<CreateSetRoute> = async (c) => {
   const { workoutExerciseId, reps, weight, rir, notes } = c.req.valid("json");
   const userId = c.get("auth").user.id;
 
-  const userWorkout = await db.query.workout.findFirst({
-    where: eq(workout.userId, userId),
+  const userWorkoutExercise = await db.query.workoutExercise.findFirst({
+    where: eq(workoutExercise.id, workoutExerciseId),
     with: {
-      workoutExercises: true,
+      workout: true,
     },
   });
 
-  if (!userWorkout || !userWorkout.workoutExercises.some(we => we.id === workoutExerciseId)) {
+  if (!userWorkoutExercise || userWorkoutExercise.workout?.userId !== userId) {
     return c.json(
       { message: "Workout exercise not found" },
       HttpStatusCodes.NOT_FOUND,

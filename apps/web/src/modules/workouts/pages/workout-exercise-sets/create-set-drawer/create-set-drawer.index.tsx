@@ -2,18 +2,18 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/web/componen
 
 import { CreateSetDrawerForm } from "./create-set-drawer-form";
 
+type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+  workoutExerciseId: number;
+};
+
 export const CreateSetDrawer = ({
   isOpen,
   onClose,
   workoutExerciseId,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  workoutExerciseId: number;
-}) => {
-  const handleSuccess = () => {
-    onClose();
-  };
+}: Props) => {
+  const handleSuccess = () => onClose();
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>

@@ -1,7 +1,9 @@
+import { PlusIcon } from "lucide-react";
+
 import { AppHeader, Button } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
-import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/infinite-set-list";
-import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer";
+import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/set-list/set-list.index";
+import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer.index";
 import { useWorkoutExerciseSets } from "./workout-exercise-sets.page.hook";
 
 const WorkoutExerciseSetsPage = () => {
@@ -10,14 +12,6 @@ const WorkoutExerciseSetsPage = () => {
     exercise,
     workoutId,
     workoutExerciseId,
-    allSets,
-
-    // Query state
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
 
     // UI state
     isCreateDrawerOpen,
@@ -40,16 +34,13 @@ const WorkoutExerciseSetsPage = () => {
         className="flex flex-col gap-8"
       >
         <InfiniteSetList
-          isLoading={isLoading}
-          isError={isError}
-          allSets={allSets}
-          hasNextPage={!!hasNextPage}
-          fetchNextPage={fetchNextPage}
-          isFetchingNextPage={isFetchingNextPage}
           workoutId={workoutId}
           workoutExerciseId={workoutExerciseId}
         />
-        <Button onClick={handleCreateDrawerOpen}>Add Set</Button>
+        <Button onClick={handleCreateDrawerOpen}>
+          <PlusIcon className="w-4 h-4 mt-0.5" />
+          Add Set
+        </Button>
         <CreateSetDrawer
           isOpen={isCreateDrawerOpen}
           onClose={handleCreateDrawerClose}

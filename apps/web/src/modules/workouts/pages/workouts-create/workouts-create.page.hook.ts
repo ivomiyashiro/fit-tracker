@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
@@ -12,61 +12,82 @@ import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations
 type UseWorkoutFormProps = {
   initialData?: {
     name?: string;
-    exerciseIds?: number[];
+    exercises?: Exercise[];
   };
 };
 
-export const useWorkoutForm = ({ initialData }: UseWorkoutFormProps) => {
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState<number[]>(
-    initialData?.exerciseIds || [],
+const useWorkoutForm = ({ initialData }: UseWorkoutFormProps = {}) => {
+  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>(
+    initialData?.exercises || [],
   );
 
   const {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isValid },
   } = useForm<CreateWorkoutRequest>({
     resolver: zodResolver(createWorkoutSchema),
     mode: "onChange",
     defaultValues: {
       name: initialData?.name || "",
-      exerciseIds: initialData?.exerciseIds || [],
+      exerciseIds: initialData?.exercises?.map(e => e.id) || [],
     },
   });
 
-  const handleSelectionChanged = (exercises: Exercise[]) => {
-    console.log(exercises);
-  };
+  const handleSelectionChanged = useCallback((exercises: Exercise[]) => {
+    setSelectedExercises(exercises);
+  }, []);
 
-  const hasSelection = selectedExerciseIds.length > 0;
+  const hasSelection = selectedExercises.length > 0;
 
   return {
     errors,
-    isValid,
-    register,
-    handleSubmit,
-    setValue,
-    selectedExerciseIds,
     handleSelectionChanged,
+    handleSubmit,
     hasSelection,
+    isValid,
+    control,
+    register,
+    selectedExercises,
+    setValue,
   };
 };
 
-export const useCreateWorkout = () => {
+export const useCreateWorkout = ({ initialData }: UseWorkoutFormProps = {}) => {
+  const {
+    register,
+    handleSubmit,
+    selectedExercises,
+    handleSelectionChanged,
+    hasSelection,
+    errors,
+    control,
+  } = useWorkoutForm({ initialData });
+
   const navigate = useNavigate();
   const { mutate: createWorkout, isPending } = useCreateWorkoutMutation();
 
-  const handleCreateWorkout = (data: CreateWorkoutRequest) => {
+  const handleCreateWorkout = handleSubmit((data: CreateWorkoutRequest) => {
     createWorkout(data, {
       onSuccess: () => {
         navigate({ to: "/workouts" });
       },
     });
-  };
+  });
 
   return {
-    createWorkout: handleCreateWorkout,
+    // Form state
+    errors,
+    handleSelectionChanged,
+    hasSelection,
+    register,
+    selectedExercises,
+    control,
+
+    // Actions
+    handleCreateWorkout,
     isPending,
   };
 };

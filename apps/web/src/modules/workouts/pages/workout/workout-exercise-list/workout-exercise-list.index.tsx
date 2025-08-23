@@ -7,14 +7,16 @@ import { List } from "@/web/components/ui";
 import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";
 
 export const WorkoutExerciseList = ({
-  workoutExercises,
-  selectionEnabled,
+  isSuccess,
   selectedExerciseIds,
+  selectionEnabled,
+  workoutExercises,
   onToggle,
 }: {
-  workoutExercises: WorkoutExercise[];
-  selectionEnabled: boolean;
+  isSuccess: boolean;
   selectedExerciseIds: number[];
+  selectionEnabled: boolean;
+  workoutExercises: WorkoutExercise[];
   onToggle: (workoutExercise: WorkoutExercise) => void;
 }) => {
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ export const WorkoutExerciseList = ({
     <List
       dataSource={workoutExercises}
       displayExpr="name"
+      isSuccess={isSuccess}
       keyExpr="id"
       noDataText="No workout exercises found"
       onItemClick={handleItemClick}
@@ -53,7 +56,6 @@ export const WorkoutExerciseList = ({
       selectedItemKeys={selectedExerciseIds}
       selectionMode={selectionEnabled ? "multiple" : "none"}
       showSelectionControls={selectionEnabled}
-      title="Workout exercises"
       itemTemplate={({ itemData: workoutExercise }) => (
         <WorkoutExerciseListItemTemplate
           workoutExercise={workoutExercise}

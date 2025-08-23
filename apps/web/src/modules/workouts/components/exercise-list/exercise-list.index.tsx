@@ -10,44 +10,34 @@ import { useInfiniteExercisesQuery } from "@/web/modules/workouts/hooks/queries/
 import { ExerciseListItem } from "./exercise-list-item";
 
 type ExerciseSelectionListProps = {
-  selectedExerciseIds?: number[];
-  onSelectionChanged: (exercises: Exercise[]) => void;
-  title?: string;
+  onSelectionChanged?: (exercises: Exercise[]) => void;
   searchPlaceholder?: string;
+  selectedExercises?: Exercise[];
 };
 
 export const ExerciseSelectionList = ({
-  selectedExerciseIds,
   onSelectionChanged,
-  title = "Available exercises",
   searchPlaceholder = "Search exercises by name or muscle group...",
+  selectedExercises,
 }: ExerciseSelectionListProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const selectedExercisesIds = selectedExercises?.map(e => e.id) || [];
 
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
     isError,
+    isSuccess,
   } = useInfiniteExercisesQuery(debouncedSearchTerm);
 
-  const totalCount = data?.pages[0]?.pagination.total || 0;
   const allExercises = data?.pages.flatMap(page => page.data ?? []) || [];
 
   const handleSelectionChanged = (e: SelectionChangedEvent<Exercise>) => {
     onSelectionChanged?.(e.selectedItems);
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col gap-2 text-center items-center justify-center py-8">
-        <p className="text-sm text-muted-foreground">Loading exercises...</p>
-      </div>
-    );
-  }
 
   if (isError) {
     return (
@@ -59,32 +49,30 @@ export const ExerciseSelectionList = ({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <List
-        dataSource={allExercises}
-        hasNextPage={hasNextPage}
-        height="400px"
-        infiniteScrollEnabled={true}
-        isFetchingNextPage={isFetchingNextPage}
-        keyExpr="id"
-        loadingMoreText="Loading more exercises..."
-        loadMoreText="Load more exercises"
-        noDataText={searchTerm ? `No exercises match "${searchTerm}". Try a different search term.` : "No exercises available."}
-        onLoadMore={fetchNextPage}
-        onSearchValueChanged={setSearchTerm}
-        onSelectionChanged={handleSelectionChanged}
-        searchEnabled={true}
-        searchPlaceholder={searchPlaceholder}
-        searchValue={searchTerm}
-        selectByClick={true}
-        selectedItemKeys={selectedExerciseIds}
-        selectionMode="multiple"
-        showSelectionControls={true}
-        title={`${title} (${totalCount} total)`}
-        itemTemplate={({ itemData: exercise }) => (
-          <ExerciseListItem exercise={exercise} />
-        )}
-      />
-    </div>
+    <List
+      dataSource={allExercises}
+      hasNextPage={hasNextPage}
+      height="400px"
+      infiniteScrollEnabled={true}
+      isFetchingNextPage={isFetchingNextPage}
+      isSuccess={isSuccess}
+      keyExpr="id"
+      loadingMoreText="Loading more exercises..."
+      loadMoreText="Load more exercises"
+      noDataText={searchTerm ? `No exercises match "${searchTerm}". Try a different search term.` : "No exercises available."}
+      onLoadMore={fetchNextPage}
+      onSearchValueChanged={setSearchTerm}
+      onSelectionChanged={handleSelectionChanged}
+      searchEnabled={true}
+      searchPlaceholder={searchPlaceholder}
+      searchValue={searchTerm}
+      selectByClick={true}
+      selectedItemKeys={selectedExercisesIds}
+      selectionMode="multiple"
+      showSelectionControls={true}
+      itemTemplate={({ itemData: exercise }) => (
+        <ExerciseListItem exercise={exercise} />
+      )}
+    />
   );
 };

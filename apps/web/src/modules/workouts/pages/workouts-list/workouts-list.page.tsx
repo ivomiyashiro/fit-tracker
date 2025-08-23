@@ -15,12 +15,13 @@ export default function WorkoutsListPage() {
     selectedWorkouts,
     setSelectedWorkoutsFromList,
 
-    // Data
-    workouts,
-
     // Actions
     handleDeleteWorkouts,
     isDeletingWorkouts,
+
+    // Data
+    isSuccess,
+    workouts,
   } = useWorkoutsList();
 
   return (
@@ -36,7 +37,7 @@ export default function WorkoutsListPage() {
           </Button>
         }
         onActionButtonClick={toggleSelectionEnabled}
-        showActionButton={workouts.length > 0}
+        showActionButton={true}
         title="Workouts"
       />
       <PageLayout
@@ -44,6 +45,7 @@ export default function WorkoutsListPage() {
         className="flex flex-col gap-8"
       >
         <WorkoutsList
+          isSuccess={isSuccess}
           workouts={workouts}
           selectionEnabled={selectionEnabled}
           selectedWorkouts={selectedWorkouts}

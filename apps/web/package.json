@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --force",
+    "dev": "pnpx vite --force",
     "build": "pnpm run generate-routes && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

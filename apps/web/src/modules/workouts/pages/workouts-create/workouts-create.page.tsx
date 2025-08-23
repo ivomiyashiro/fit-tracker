@@ -1,34 +1,26 @@
+import { useId } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button, FormField } from "@/web/components/ui";
 import { ExerciseSelectionList } from "@/web/modules/workouts/components/exercise-list/exercise-list.index";
-import { useWorkoutForm, useCreateWorkout } from "./workouts-create.page.hook";
+import { useCreateWorkout } from "./workouts-create.page.hook";
 
 const CreateWorkoutPage = () => {
+  const formId = useId();
   const navigate = useNavigate();
-  const { createWorkout, isPending } = useCreateWorkout();
 
   const {
-    register,
-    handleSubmit,
     errors,
-    selectedExerciseIds,
-    hasSelection,
     handleSelectionChanged,
-  } = useWorkoutForm({
-    initialData: {
-      name: "",
-      exerciseIds: [],
-    },
-  });
+    hasSelection,
+    register,
+    selectedExercises,
 
-  const onSubmit = handleSubmit(data => {
-    createWorkout({
-      name: data.name,
-      exerciseIds: selectedExerciseIds,
-    });
-  });
+    // Actions
+    handleCreateWorkout,
+    isPending,
+  } = useCreateWorkout({});
 
   return (
     <>
@@ -41,30 +33,31 @@ const CreateWorkoutPage = () => {
         meta={{ title: "Create Workout", description: "Create a new workout" }}
         className="flex flex-col gap-8"
       >
-        <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-          <div className="flex flex-col gap-2">
-            <FormField
-              label="Workout Name"
-              error={errors.name}
-              register={register("name")}
-              placeholder="Enter workout name"
-            />
-          </div>
-          <ExerciseSelectionList
-            onSelectionChanged={handleSelectionChanged}
-            searchPlaceholder="Search exercises to include in workout..."
-            title="Select exercises for workout"
+        <div className="flex flex-col gap-4">
+        <form id={formId} onSubmit={handleCreateWorkout}>
+          <FormField
+            label="Workout Name"
+            error={errors.name}
+            register={register("name")}
+            placeholder="Enter workout name"
           />
-          <div className="mt-4">
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isPending || !hasSelection}
-            >
-              Create Workout
-            </Button>
-          </div>
         </form>
+        <ExerciseSelectionList
+          selectedExercises={selectedExercises}
+          onSelectionChanged={handleSelectionChanged}
+          searchPlaceholder="Search exercises to include in workout..."
+        />
+        <div className="mt-4">
+          <Button
+            form={formId}
+            type="submit"
+            className="w-full"
+            disabled={isPending || !hasSelection}
+          >
+            Create Workout
+          </Button>
+        </div>
+        </div>
       </PageLayout>
     </>
   );

@@ -4,10 +4,10 @@ import { exercisesService } from "@/web/modules/workouts/services/exercises.serv
 import { exercisesQueryKeys } from "@/web/modules/workouts/utils/exercises.query-keys";
 
 // Hook to get exercises
-export const useExercisesQuery = () => {
+export const useExercisesQuery = (search: string) => {
   return useSuspenseQuery({
-    queryKey: exercisesQueryKeys.lists(),
-    queryFn: () => exercisesService.getExercises({ page: 1, limit: 20 }),
+    queryKey: exercisesQueryKeys.detail(search),
+    queryFn: () => exercisesService.getExercises({ page: 1, limit: 20, search }),
   });
 };
 
@@ -15,9 +15,9 @@ export const useExercisesQuery = () => {
 export const useInfiniteExercisesQuery = (search: string) => {
   return useInfiniteQuery({
     queryKey: exercisesQueryKeys.infinite(search),
-    queryFn: ({ pageParam = 1 }) => 
-      exercisesService.getExercises({ 
-        page: pageParam, 
+    queryFn: ({ pageParam = 1 }) =>
+      exercisesService.getExercises({
+        page: pageParam,
         limit: 20,
         search,
       }),

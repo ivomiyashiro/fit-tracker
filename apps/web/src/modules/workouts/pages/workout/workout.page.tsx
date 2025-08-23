@@ -9,6 +9,7 @@ import { useWorkout } from "./workout.page.hook";
 const WorkoutPage = () => {
   const {
     // Data
+    isSuccess,
     workout,
     workoutId,
 
@@ -50,6 +51,7 @@ const WorkoutPage = () => {
         className="flex flex-col gap-8"
       >
         <WorkoutExerciseList
+          isSuccess={isSuccess}
           workoutExercises={workout.workoutExercises}
           selectionEnabled={selectionEnabled}
           selectedExerciseIds={selectedExerciseIds}

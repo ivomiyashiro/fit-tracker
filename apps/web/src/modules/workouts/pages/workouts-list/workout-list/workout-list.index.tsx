@@ -8,6 +8,7 @@ import { List } from "@/web/components/ui";
 import { WorkoutListItemTemplate } from "./workout-list-item-template";
 
 type WorkoutsListProps = {
+  isSuccess: boolean;
   workouts: Workout[];
   selectionEnabled?: boolean;
   selectedWorkouts?: Workout[];
@@ -16,9 +17,10 @@ type WorkoutsListProps = {
 };
 
 export const WorkoutsList = ({
-  workouts,
-  selectionEnabled = false,
+  isSuccess,
   selectedWorkouts = [],
+  selectionEnabled = false,
+  workouts,
   onSelectionChanged,
   onWorkoutClick,
 }: WorkoutsListProps) => {
@@ -47,6 +49,7 @@ export const WorkoutsList = ({
       dataSource={workouts}
       displayExpr="name"
       keyExpr="id"
+      isSuccess={isSuccess}
       noDataText="You don't have any workouts yet. Create a new workout to get started."
       onItemClick={handleItemClick}
       onSelectionChanged={handleSelectionChanged}
@@ -54,7 +57,6 @@ export const WorkoutsList = ({
       selectedItemKeys={selectedWorkoutIds}
       selectionMode={selectionEnabled ? "multiple" : "none"}
       showSelectionControls={selectionEnabled}
-      title="Your workouts"
       itemTemplate={({ itemData: workout }) => (
         <WorkoutListItemTemplate
           workout={workout}

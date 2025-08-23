@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 
-import { useExerciseSelection } from "@/web/modules/workouts/components/exercise-list/use-exercise-selection.hook";
 import { useUpdateWorkoutByIdMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useWorkoutByIdQuery } from "@/web/modules/workouts/hooks/queries";
+import { useExerciseSelection } from "@/web/modules/workouts/components/exercise-list/use-exercise-selection.hook";
 
 export const useWorkoutAddExercise = () => {
   const navigate = useNavigate();
@@ -17,7 +17,8 @@ export const useWorkoutAddExercise = () => {
   const { mutate: updateWorkout, isPending } = useUpdateWorkoutByIdMutation(Number(workoutId));
 
   const handleAddExercises = () => {
-    if (!workout) return;
+    if (!workout)
+      return;
 
     updateWorkout({
       name: workout.name,
@@ -25,7 +26,7 @@ export const useWorkoutAddExercise = () => {
     }, {
       onSuccess: () => {
         navigate({ to: "/workouts/$workoutId", params: { workoutId: String(workoutId) } });
-      }
+      },
     });
   };
 

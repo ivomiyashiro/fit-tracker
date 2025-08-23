@@ -1,11 +1,11 @@
 export { List } from "./list.index";
-export type { 
-  ListProps, 
-  SelectionChangedEvent, 
-  ItemClickEvent, 
-  ItemContextMenuEvent, 
-  ItemDeletingEvent, 
-  ItemDeletedEvent, 
-  ItemRenderedEvent, 
-  ScrollEvent 
+export type {
+  ItemClickEvent,
+  ItemContextMenuEvent,
+  ItemDeletedEvent,
+  ItemDeletingEvent,
+  ItemRenderedEvent,
+  ListProps,
+  ScrollEvent,
+  SelectionChangedEvent,
 } from "./list.types";

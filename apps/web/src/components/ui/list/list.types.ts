@@ -78,6 +78,7 @@ export type ListProps<T> = {
   searchExpr?: string | string[];
   searchValue?: string;
   searchPlaceholder?: string;
+  isSuccess?: boolean;
 
   // Infinite Scroll Props
   infiniteScrollEnabled?: boolean;
@@ -99,8 +100,4 @@ export type ListProps<T> = {
   onItemClick?: (e: ItemClickEvent<T>) => void;
   onItemContextMenu?: (e: ItemContextMenuEvent<T>) => void;
   onSearchValueChanged?: (searchValue: string) => void;
-
-  // Legacy props for backward compatibility
-  title?: string;
-  children?: ReactNode;
 };

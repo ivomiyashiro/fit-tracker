@@ -14,6 +14,7 @@ export * from "./label";
 export * from "./list";
 export * from "./logo";
 export * from "./search-input";
+export * from "./skeleton";
 export * from "./sonner";
 export * from "./spinner";
 export * from "./textarea";

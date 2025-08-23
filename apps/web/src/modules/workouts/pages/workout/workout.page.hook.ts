@@ -38,7 +38,7 @@ export const useWorkout = () => {
   const navigate = useNavigate();
 
   const { mutate: deleteWorkoutExercise } = useDeleteWorkoutExerciseMutation();
-  const { data: workouts } = useWorkoutsQuery();
+  const { data: workouts, isSuccess } = useWorkoutsQuery();
 
   const workout = workouts?.find(w => w.id === Number(workoutId));
 
@@ -62,6 +62,7 @@ export const useWorkout = () => {
 
   return {
     // Data
+    isSuccess,
     workout,
     workoutId,
 

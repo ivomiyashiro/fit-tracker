@@ -5,7 +5,7 @@ import type { Workout } from "@/web/modules/workouts/types";
 import { useDeleteWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
 
-const useWorkoutsSelectionForm = () => {
+const useWorkoutsSelection = () => {
   const [selectedWorkouts, setSelectedWorkouts] = useState<Workout[]>([]);
   const [selectionEnabled, setSelectionEnabled] = useState(false);
 
@@ -47,10 +47,10 @@ export const useWorkoutsList = () => {
     selectedWorkouts,
     setSelectedWorkoutsFromList,
     clearSelection,
-  } = useWorkoutsSelectionForm();
+  } = useWorkoutsSelection();
 
-  const { data: workouts } = useWorkoutsQuery();
   const { mutate: deleteWorkouts, isPending: isDeletingWorkouts } = useDeleteWorkoutMutation();
+  const { data: workouts, isSuccess } = useWorkoutsQuery();
 
   const handleDeleteWorkouts = () => {
     deleteWorkouts(selectedWorkouts.map(w => w.id));
@@ -65,11 +65,12 @@ export const useWorkoutsList = () => {
     selectedWorkouts,
     setSelectedWorkoutsFromList,
 
-    // Data
-    workouts,
-
     // Actions
     handleDeleteWorkouts,
     isDeletingWorkouts,
+
+    // Data
+    isSuccess,
+    workouts,
   };
 };

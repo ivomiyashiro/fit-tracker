@@ -41,11 +41,11 @@ class ApiClient {
     let url = endpoint;
     if (options.query) {
       const searchParams = new URLSearchParams(
-        Object.entries(options.query).map(([key, value]) => [key, String(value)])
+        Object.entries(options.query).map(([key, value]) => [key, String(value)]),
       );
       url += `?${searchParams.toString()}`;
     }
-    
+
     return await this.request<T>(url, {
       ...options,
       method: "GET",

@@ -14,6 +14,7 @@ export default createConfig({
     "eslint-comments/no-unlimited-disable": "off",
     "react/no-unstable-default-props": "off",
     "react/prefer-shorthand-boolean": "off",
+    "style/indent": "off",
     "unicorn/filename-case": ["error", {
       case: "kebabCase",
       ignore: ["README.md", "~__root.tsx"],

@@ -1,6 +1,7 @@
-import { AppHeader } from "@/web/components/ui";
-import { PageLayout } from "@/web/components/layouts";
 import { createRoute } from "@tanstack/react-router";
+
+import { PageLayout } from "@/web/components/layouts";
+import { AppHeader } from "@/web/components/ui";
 import { rootRoute } from "@/web/lib/router/routes/__root";
 
 export const calendarRoute = createRoute({
@@ -15,7 +16,7 @@ function CalendarPage() {
       <AppHeader title="Calendar" />
       <PageLayout meta={{ title: "Calendar", description: "Calendar" }}>
         <div>CalendarPage</div>
-      </PageLayout> 
+      </PageLayout>
     </>
   );
 };

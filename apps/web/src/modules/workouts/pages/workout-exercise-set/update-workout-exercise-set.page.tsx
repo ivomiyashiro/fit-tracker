@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 
-import { AppHeader } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
-import { UpdateSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form";
-import { DeleteSetButton } from "@/web/modules/workouts/pages/workout-exercise-set/delete-set-button";
+import { AppHeader } from "@/web/components/ui";
 import { useWorkoutExerciseSetByIdQuery } from "@/web/modules/workouts/hooks/queries/use-workout-exercise-set-by-id.query";
+import { DeleteSetButton } from "@/web/modules/workouts/pages/workout-exercise-set/delete-set-button";
+import { UpdateSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form";
 
 const UpdateWorkoutExerciseSetPage = () => {
   const navigate = useNavigate();

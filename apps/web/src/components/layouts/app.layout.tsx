@@ -1,11 +1,12 @@
 import { Outlet } from "@tanstack/react-router";
+
 import { AppNavbar } from "@/web/components/ui";
 
-type AppLayoutProps = {
+type Props = {
   children?: React.ReactNode;
 };
 
-export const AppLayout = ({ children }: AppLayoutProps) => {
+export const AppLayout = ({ children }: Props) => {
   return (
     <>
       {children ?? <Outlet />}

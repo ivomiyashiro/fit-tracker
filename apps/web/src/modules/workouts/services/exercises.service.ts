@@ -6,7 +6,7 @@ type GetExercisesParams = {
   page: number;
   limit: number;
   search?: string;
-}
+};
 
 class ExercisesService {
   async getExercises(query: GetExercisesParams): Promise<ExerciseResponse> {

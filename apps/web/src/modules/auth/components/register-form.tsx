@@ -90,12 +90,14 @@ export const RegisterForm = () => {
 
       <div className="mt-8">
         <Button type="submit" className="w-full" disabled={!isValid || isLoading}>
-          {isLoading ? (
+          {isLoading
+? (
             <>
               <Spinner className="mr-1" />
               <span>Creating Account...</span>
             </>
-          ) : (
+          )
+: (
             "Create Account"
           )}
         </Button>

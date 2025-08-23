@@ -54,12 +54,14 @@ export const LoginForm = () => {
 
       <div className="mt-8">
         <Button type="submit" className="w-full" disabled={!isValid || isLoading}>
-          {isLoading ? (
+          {isLoading
+? (
             <>
               <Spinner className="mr-1" />
               <span>Signing In...</span>
             </>
-          ) : (
+          )
+: (
             "Sign In"
           )}
         </Button>

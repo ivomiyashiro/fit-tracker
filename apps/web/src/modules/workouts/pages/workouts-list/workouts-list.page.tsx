@@ -1,10 +1,10 @@
-import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
-
 import { Link } from "@tanstack/react-router";
+import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button } from "@/web/components/ui";
 import { WorkoutsList } from "@/web/modules/workouts/pages/workouts-list/workout-list/workout-list.index";
+
 import { useWorkoutsList } from "./workouts-list.page.hook";
 
 export default function WorkoutsListPage() {
@@ -27,7 +27,7 @@ export default function WorkoutsListPage() {
   return (
     <>
       <AppHeader
-        actionButtonComponent={
+        actionButtonComponent={(
           <Button
             variant="secondary"
             className="w-9 h-9 text-muted-foreground"
@@ -35,7 +35,7 @@ export default function WorkoutsListPage() {
           >
             <SquareMousePointerIcon className="w-4 h-4" />
           </Button>
-        }
+        )}
         onActionButtonClick={toggleSelectionEnabled}
         showActionButton={true}
         title="Workouts"

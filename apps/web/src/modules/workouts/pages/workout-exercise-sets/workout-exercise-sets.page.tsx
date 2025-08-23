@@ -1,9 +1,10 @@
 import { PlusIcon } from "lucide-react";
 
-import { AppHeader, Button } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
-import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/set-list/set-list.index";
+import { AppHeader, Button } from "@/web/components/ui";
 import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer.index";
+import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/set-list/set-list.index";
+
 import { useWorkoutExerciseSets } from "./workout-exercise-sets.page.hook";
 
 const WorkoutExerciseSetsPage = () => {

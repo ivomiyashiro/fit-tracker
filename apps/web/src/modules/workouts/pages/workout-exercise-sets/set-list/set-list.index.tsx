@@ -1,5 +1,4 @@
 import { List } from "@/web/components/ui";
-import { dateFormat } from "@/web/utils/date-format";
 
 import { SetListItem } from "./set-list-item";
 import { useSetList } from "./set-list.index.hook";

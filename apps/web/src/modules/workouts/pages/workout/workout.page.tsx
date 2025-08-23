@@ -1,9 +1,10 @@
-import { EditIcon } from "lucide-react";
 import { Link, Navigate } from "@tanstack/react-router";
+import { EditIcon } from "lucide-react";
 
-import { WorkoutExerciseList } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list.index";
-import { AppHeader, Button } from "@/web/components/ui";
 import { PageLayout } from "@/web/components/layouts";
+import { AppHeader, Button } from "@/web/components/ui";
+import { WorkoutExerciseList } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list.index";
+
 import { useWorkout } from "./workout.page.hook";
 
 const WorkoutPage = () => {

@@ -162,7 +162,7 @@
 }
 
 body {
-  letter-spacing: var(--tracking-normal);
+  letter-spacing: var(--tracking-wide);
 }
 
 @layer base {

@@ -3,22 +3,30 @@ import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
 
 import { Button } from "@/web/components/ui";
 
-const ActionButton = ({
-  actionButtonComponent,
-  onActionButtonClick,
-}: {
+type ActionButtonProps = {
   actionButtonComponent?: React.ReactNode;
   onActionButtonClick?: () => void;
-}) => {
+};
+
+const ActionButton = ({ actionButtonComponent, onActionButtonClick }: ActionButtonProps) => {
   if (actionButtonComponent) {
     return actionButtonComponent;
   }
 
   return (
-    <Button variant="ghost" className="w-9 h-9" onClick={() => onActionButtonClick?.()}>
+    <Button variant="ghost" className="w-8 h-8" onClick={() => onActionButtonClick?.()}>
       <MoreVerticalIcon />
     </Button>
   );
+};
+
+type Props = {
+  onBackButtonClick?: () => void;
+  onActionButtonClick?: () => void;
+  actionButtonComponent?: React.ReactNode;
+  showBackButton?: boolean;
+  showActionButton?: boolean;
+  title: string;
 };
 
 export const AppHeader = ({
@@ -28,14 +36,7 @@ export const AppHeader = ({
   showBackButton,
   showActionButton,
   title,
-}: {
-  onBackButtonClick?: () => void;
-  onActionButtonClick?: () => void;
-  actionButtonComponent?: React.ReactNode;
-  showBackButton?: boolean;
-  showActionButton?: boolean;
-  title: string;
-}) => {
+}: Props) => {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
@@ -52,13 +53,13 @@ export const AppHeader = ({
       <div className="relative flex items-center justify-center p-4 sm:px-0 sm:max-w-md sm:mx-auto">
         {showBackButton && (
           <div className="absolute left-0">
-            <Button variant="secondary" className="w-9 h-9" onClick={handleBackButtonClick}>
+            <Button variant="secondary" className="w-8 h-8" onClick={handleBackButtonClick}>
               <ArrowLeftIcon />
             </Button>
           </div>
         )}
 
-        <h1 className="text-2xl font-bold">{title}</h1>
+        <h1 className="text-xl font-bold">{title}</h1>
 
         {showActionButton && (
           <div className="absolute right-0">

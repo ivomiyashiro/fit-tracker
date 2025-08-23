@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as R404RouteImport } from './routes/404'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AuthenticatedWorkoutsIndexRouteImport } from './routes/_authenticated/workouts.index'
 import { Route as PublicAuthSignInRouteImport } from './routes/_public/auth.sign-in'
@@ -27,6 +28,11 @@ const PublicRoute = PublicRouteImport.update({
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
@@ -86,6 +92,7 @@ const AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsSetIdIndexRoute =
   )
 
 export interface FileRoutesByFullPath {
+  '/404': typeof R404Route
   '/': typeof PublicIndexRoute
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/workouts/$workoutId/we/$workoutExerciseId/sets/$setId': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsSetIdIndexRoute
 }
 export interface FileRoutesByTo {
+  '/404': typeof R404Route
   '/': typeof PublicIndexRoute
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
@@ -109,6 +117,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/404': typeof R404Route
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_public/': typeof PublicIndexRoute
@@ -124,6 +133,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/404'
     | '/'
     | '/workouts/create'
     | '/auth/register'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/workouts/$workoutId/we/$workoutExerciseId/sets/$setId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/404'
     | '/'
     | '/workouts/create'
     | '/auth/register'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '/workouts/$workoutId/we/$workoutExerciseId/sets/$setId'
   id:
     | '__root__'
+    | '/404'
     | '/_authenticated'
     | '/_public'
     | '/_public/'
@@ -160,6 +172,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  R404Route: typeof R404Route
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -288,6 +308,7 @@ const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  R404Route: R404Route,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
 }

@@ -3,6 +3,8 @@ import type { Session, User } from "better-auth";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
+import NotFoundPage from "@/web/modules/not-found/not-found.page";
+
 type RootRouteContext = {
   auth: {
     user: User | null;
@@ -17,4 +19,5 @@ export const Route = createRootRouteWithContext<RootRouteContext>()({
       <TanStackRouterDevtools />
     </main>
   ),
+  notFoundComponent: NotFoundPage,
 });

@@ -14,14 +14,14 @@ const LandingPage = () => {
       }}
     >
       <div className="flex flex-col items-center justify-center">
-        <LandingSVG className="" />
+        <LandingSVG />
       </div>
       <div className="text-center font-extrabold text-4xl">
         <h1>Train. Track. Progress.</h1>
         <p className="text-muted-foreground">Your fitness journey starts now.</p>
       </div>
       <div className="flex flex-col items-center justify-center gap-4 mt-12">
-        <Link to="/auth/sign-up" className="w-full">
+        <Link to="/auth/register" className="w-full">
           <Button className="w-full h-10">
             Get Started
             <ArrowRightIcon className="w-4 h-4" />

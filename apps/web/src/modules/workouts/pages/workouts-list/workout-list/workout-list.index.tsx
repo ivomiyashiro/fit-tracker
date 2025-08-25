@@ -44,13 +44,21 @@ export const WorkoutsList = ({
     }
   };
 
+  if (workouts.length === 0) {
+    return (
+      <div className="text-center pt-8">
+        <h3 className="text-lg font-semibold mb-2">You don't have any workouts yet.</h3>
+        <p className="text-muted-foreground">Create a new workout to get started.</p>
+      </div>
+    );
+  }
+
   return (
     <List
       dataSource={workouts}
       displayExpr="name"
       keyExpr="id"
       isSuccess={isSuccess}
-      noDataText="You don't have any workouts yet. Create a new workout to get started."
       onItemClick={handleItemClick}
       onSelectionChanged={handleSelectionChanged}
       selectByClick={true}

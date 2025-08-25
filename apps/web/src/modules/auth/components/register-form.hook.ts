@@ -40,7 +40,7 @@ export const useRegisterForm = () => {
     }
 
     reset();
-    navigate({ to: "/login" });
+    navigate({ to: "/auth/sign-in" });
   };
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);

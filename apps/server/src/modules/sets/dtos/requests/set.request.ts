@@ -2,15 +2,15 @@ import { z } from "zod";
 
 export const createSetSchema = z.object({
   workoutExerciseId: z.number({
-    required_error: "Workout exercise ID is required",
+    message: "Workout exercise ID is required",
   }),
   reps: z.number({
-    required_error: "Reps is required",
+    message: "Reps is required",
   }).min(1, {
     message: "Reps must be at least 1",
   }),
   weight: z.number({
-    required_error: "Weight is required",
+    message: "Weight is required",
   }).min(0, {
     message: "Weight must be at least 0",
   }),

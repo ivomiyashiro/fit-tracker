@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { IPaginated } from "@/server/types/paginated.type";
+import type { IPaginated } from "../../../../types/paginated.type";
 
 export const setResponseSchema = z.object({
   id: z.number(),

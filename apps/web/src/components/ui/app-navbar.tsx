@@ -55,7 +55,7 @@ export const AppNavbar = () => {
         <NavbarItem
           icon={<CalendarIcon className="w-5 h-5" />}
           path="/calendar"
-          onClick={() => navigate({ to: "/calendar" })}
+          onClick={() => navigate({ to: "/" })}
         />
         <NavbarItem
           icon={theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}

@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useId } from "react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button, FormField } from "@/web/components/ui";
+import { AppHeader, Button, FormField, Spinner } from "@/web/components/ui";
 import { ExerciseSelectionList } from "@/web/modules/workouts/components/exercise-list/exercise-list.index";
 
 import { useCreateWorkout } from "./workouts-create.page.hook";
@@ -55,6 +55,7 @@ const CreateWorkoutPage = () => {
             className="w-full"
             disabled={isPending || !hasSelection}
           >
+            { isPending && <Spinner />}
             Create Workout
           </Button>
         </div>

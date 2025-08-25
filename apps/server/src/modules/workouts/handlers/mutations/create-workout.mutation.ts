@@ -1,92 +1,48 @@
-import { inArray } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
-import type { Exercise, ExerciseMuscleGroup, MuscleGroup, WorkoutExercise } from "@/server/db/schemas";
+import type { WorkoutExercise } from "@/server/db/schemas";
 import type { AppRouteHandler } from "@/server/lib/types";
+import type { WorkoutExerciseWithExercise } from "@/server/modules/workouts/utils";
 import type { WorkoutResponse } from "@/server/workouts/dtos/responses";
 import type { CreateRoute } from "@/server/workouts/endpoints";
 
 import db from "@/server/db";
-import { exercise, exerciseMuscleGroup, muscleGroup, workout, workoutExercise } from "@/server/db/schemas";
+import { workout, workoutExercise } from "@/server/db/schemas";
+import { getExercisesWithMuscleGroups, mapWorkoutExercisesToResponse } from "@/server/modules/workouts/utils/exercise-utils";
 
 export const createWorkout: AppRouteHandler<CreateRoute> = async (c) => {
-  const { name, exerciseIds } = c.req.valid("json");
+  const { name, exerciseIds = [] } = c.req.valid("json");
   const userId = c.get("auth").user.id;
 
-  let newWorkoutExercises: WorkoutExercise[] = [];
-  let exercises: Exercise[] = [];
-  let muscleGroups: MuscleGroup[] = [];
-  let exerciseMuscleGroups: ExerciseMuscleGroup[] = [];
-
+  // Create workout
   const [newWorkout] = await db.insert(workout).values({
     name,
     userId,
   }).returning();
 
-  if (exerciseIds) {
-    newWorkoutExercises = await db.insert(workoutExercise).values(exerciseIds.map(id => ({
-      workoutId: newWorkout.id,
-      exerciseId: id,
-    }))).returning();
+  let newWorkoutExercises: WorkoutExercise[] = [];
+  let workoutExercisesResponse: WorkoutExerciseWithExercise[] = [];
 
-    exercises = await db.query.exercise.findMany({
-      where: inArray(exercise.id, exerciseIds),
-    });
+  if (exerciseIds.length > 0) {
+    // Create workout exercises and get exercises with muscle groups in parallel
+    const [workoutExercisesResult, exercisesWithMuscleGroups] = await Promise.all([
+      db.insert(workoutExercise).values(
+        exerciseIds.map(id => ({
+          workoutId: newWorkout.id,
+          exerciseId: id,
+        })),
+      ).returning(),
+      getExercisesWithMuscleGroups(exerciseIds),
+    ]);
 
-    // Get muscle groups for the exercises through the junction table
-    exerciseMuscleGroups = await db.query.exerciseMuscleGroup.findMany({
-      where: inArray(exerciseMuscleGroup.exerciseId, exerciseIds),
-    });
-
-    const muscleGroupIds = exerciseMuscleGroups
-      .map(rel => rel.muscleGroupId)
-      .filter((id): id is number => id !== null);
-
-    muscleGroups = await db.query.muscleGroup.findMany({
-      where: inArray(muscleGroup.id, muscleGroupIds),
-    });
-  }
-
-  // Create a map of exercise ID to muscle group names for efficient lookup
-  const exerciseMuscleGroupMap = new Map<number, string[]>();
-
-  if (exerciseIds) {
-    // Group muscle group IDs by exercise ID
-    const exerciseToMuscleGroups = new Map<number, number[]>();
-    exerciseMuscleGroups.forEach((rel) => {
-      if (rel.exerciseId !== null && rel.muscleGroupId !== null) {
-        const existing = exerciseToMuscleGroups.get(rel.exerciseId) || [];
-        existing.push(rel.muscleGroupId);
-        exerciseToMuscleGroups.set(rel.exerciseId, existing);
-      }
-    });
-
-    // Create muscle group name lookup
-    const muscleGroupMap = new Map(muscleGroups.map(mg => [mg.id, mg.name]));
-
-    // Build the final map
-    exercises.forEach((ex) => {
-      const muscleGroupIds = exerciseToMuscleGroups.get(ex.id) || [];
-      const muscleGroupNames = muscleGroupIds
-        .map(id => muscleGroupMap.get(id))
-        .filter((name): name is string => name !== undefined);
-      exerciseMuscleGroupMap.set(ex.id, muscleGroupNames);
-    });
+    newWorkoutExercises = workoutExercisesResult;
+    workoutExercisesResponse = mapWorkoutExercisesToResponse(newWorkoutExercises, exercisesWithMuscleGroups);
   }
 
   const result: WorkoutResponse = {
     id: newWorkout.id,
     name: newWorkout.name,
-    workoutExercises: newWorkoutExercises.map(we => ({
-      id: we.id,
-      exercises: exercises.map(e => ({
-        id: e.id,
-        name: e.name,
-        muscleGroups: exerciseMuscleGroupMap.get(e.id) || [],
-      })),
-      createdAt: we.createdAt.toISOString(),
-      updatedAt: we.updatedAt.toISOString(),
-    })),
+    workoutExercises: workoutExercisesResponse,
     createdAt: newWorkout.createdAt.toISOString(),
     updatedAt: newWorkout.updatedAt.toISOString(),
   };

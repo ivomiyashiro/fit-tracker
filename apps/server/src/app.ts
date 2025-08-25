@@ -1,3 +1,5 @@
+import { serveStatic } from "@hono/node-server/serve-static";
+
 import auth from "@/server/auth/auth.index";
 import exercises from "@/server/exercises/exercises.index";
 import configureOpenAPI from "@/server/lib/configure-open-api";
@@ -21,6 +23,9 @@ const routes = [
 routes.forEach((route) => {
   app.route("/api", route);
 });
+
+app.use("/*", serveStatic({ root: "./dist/public" }));
+app.get("*", serveStatic({ path: "./dist/public/index.html" }));
 
 export type AppType = typeof routes[number];
 

@@ -1,4 +1,4 @@
-import { serveStatic } from "@hono/node-server/serve-static";
+import { serveStatic } from "hono/bun";
 
 import auth from "@/server/auth/auth.index";
 import exercises from "@/server/exercises/exercises.index";

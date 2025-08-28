@@ -7,7 +7,7 @@ import { ErrorSVG } from "./error.svg";
 
 type Props = {
   error?: Error;
-}
+};
 
 export default function ErrorPage({ error }: Props) {
   const router = useRouter();

@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <NotFoundSVG  />
+        <NotFoundSVG />
         <p className="mt-4 text-xl">Page not found</p>
         <p className="mt-2 text-muted-foreground">
           The page you're looking for doesn't exist.

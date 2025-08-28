@@ -1,4 +1,3 @@
-
 export const NotFoundSVG = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" {...props}>
     <path
@@ -349,4 +348,4 @@ export const NotFoundSVG = (props: React.SVGProps<SVGSVGElement>) => (
       transform="rotate(-154.76 339.74 416.765)"
     />
   </svg>
-)
+);

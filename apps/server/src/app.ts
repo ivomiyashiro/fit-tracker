@@ -8,6 +8,8 @@ import sets from "@/server/sets/sets.index";
 import workoutExercises from "@/server/workout-exercises/workout-exercises.index";
 import workouts from "@/server/workouts/workouts.index";
 
+import env from "./env";
+
 const app = createApp();
 
 configureOpenAPI(app);
@@ -24,8 +26,10 @@ routes.forEach((route) => {
   app.route("/api", route);
 });
 
-app.use("/*", serveStatic({ root: "./dist/public" }));
-app.get("*", serveStatic({ path: "./dist/public/index.html" }));
+if (env.NODE_ENV === "production") {
+  app.use("/*", serveStatic({ root: "./dist/public" }));
+  app.get("*", serveStatic({ path: "./dist/public/index.html" }));
+}
 
 export type AppType = typeof routes[number];
 

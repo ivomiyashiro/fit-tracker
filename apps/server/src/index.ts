@@ -2,6 +2,7 @@ import { serve } from "bun";
 
 import app from "./app";
 import env from "./env";
+import "./db/seeds";
 
 const port = env.PORT;
 // eslint-disable-next-line no-console

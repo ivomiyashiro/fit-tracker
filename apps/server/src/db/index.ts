@@ -1,14 +1,16 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
+import env from "@/server/env";
+
 import * as schema from "./schemas";
 
 const db = drizzle({
   client: createClient({
-    url: "file:dev.db",
+    url: env.DATABASE_URL,
   }),
   schema,
-  logger: true,
+  logger: env.NODE_ENV === "development",
 });
 
 export default db;

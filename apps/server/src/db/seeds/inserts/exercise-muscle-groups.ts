@@ -1,9 +1,15 @@
-import type { database } from "../../index";
+import type { database } from "@/server/db";
 
-import { exercise, exerciseMuscleGroup, muscleGroup } from "../../schemas";
-import exerciseMuscleGroupsData from "../data/exercise-muscle-groups.json";
+import { exercise, exerciseMuscleGroup, muscleGroup } from "@/server/db/schemas";
+import exerciseMuscleGroupsData from "@/server/db/seeds/data/exercise-muscle-groups.json";
 
 export default async function seed(db: database) {
+  const existingCount = await db.select({ count: exerciseMuscleGroup.exerciseId }).from(exerciseMuscleGroup).limit(1);
+
+  if (existingCount.length > 0) {
+    return;
+  }
+
   await db.transaction(async (tx) => {
     const exercises = await tx.select({ id: exercise.id, name: exercise.name }).from(exercise);
     const muscleGroups = await tx.select({ id: muscleGroup.id, name: muscleGroup.name }).from(muscleGroup);

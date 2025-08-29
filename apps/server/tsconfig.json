@@ -17,6 +17,6 @@
       "@/dtos/workouts/*": ["./src/modules/workouts/dtos/*"]
     },
     "typeRoots": ["./node_modules/@types"],
-    "outDir": "./dist"
+    "outDir": "../../dist"
   }
 }

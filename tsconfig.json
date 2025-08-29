@@ -6,6 +6,7 @@
     ],
     "moduleDetection": "force",
     "useDefineForClassFields": true,
+    "baseUrl": "./",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
@@ -14,7 +15,6 @@
     "noUnusedParameters": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "noUncheckedSideEffectImports": true,
-    "baseUrl": "./",
+    "noUncheckedSideEffectImports": true
   }
 }

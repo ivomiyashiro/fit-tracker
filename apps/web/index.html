@@ -5,6 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fit Tracker</title>
+    <script>
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+    <style>
+      html.light {
+        background-color: oklch(0.994 0 0);
+        color: black;
+      }
+      html.dark {
+        background-color: oklch(0.2223 0.006 271.1393);
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

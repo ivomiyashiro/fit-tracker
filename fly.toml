@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for fit-tracker-twilight-lake-3496 on 2025-08-31T01:26:46-03:00
+# fly.toml app configuration file generated for fit-tracker-app on 2025-09-06T17:06:06-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'fit-tracker-twilight-lake-3496'
+app = 'fit-tracker-app'
 primary_region = 'eze'
 
 [build]
@@ -24,9 +24,9 @@ primary_region = 'eze'
   processes = ['app']
 
   [[http_service.checks]]
-    interval = '15s'
-    timeout = '2s'
-    grace_period = '5s'
+    interval = '1m0s'
+    timeout = '5s'
+    grace_period = '30s'
     method = 'GET'
     path = '/api/health'
 

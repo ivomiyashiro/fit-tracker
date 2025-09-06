@@ -7,7 +7,7 @@ import { LoginForm } from "@/web/modules/auth/components/login-form";
 
 function SignInPage() {
   return (
-    <PublicRouteGuard>
+    <PublicRouteGuard redirectIfAuthenticated={true}>
       <PageLayout
         meta={{ title: "Sign In", description: "Sign In" }}
         className="flex justify-center items-center h-screen"

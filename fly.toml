@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for fit-tracker-twilight-lake-3496 on 2025-08-31T01:26:46-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'fit-tracker-twilight-lake-3496'
+primary_region = 'dfw'
+
+[build]
+
+[deploy]
+  release_command = 'pnpm --filter @fit-tracker/server db:migrate'
+
+[env]
+  NODE_ENV = 'production'
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  [[http_service.checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'GET'
+    path = '/health'
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1

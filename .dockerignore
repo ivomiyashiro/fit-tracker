@@ -1,0 +1,46 @@
+# Ignore environment files except production
+.env*
+!.env.production
+
+# Ignore OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode
+
+# Ignore logs
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignore build output
+dist
+**/dist
+
+# Ignore dependency folders
+node_modules
+**/node_modules
+.pnpm
+**/.pnpm
+.pnpm-store
+
+# Ignore git and version control files
+.git
+.github
+.gitignore
+
+# Ignore other config and temp files
+Dockerfile
+README.md
+fly.toml
+prod.db
+apps/.gitignore
+.tansktack
+.claude
+
+# Windows-specific system files
+$RECYCLE.BIN/
+System Volume Information/
+*.tmp
+*.temp

@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "baseUrl": "./",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/server/*": ["./src/*"],
+      "@/server/auth/*": ["./src/modules/auth/*"],
+      "@/server/exercises/*": ["./src/modules/exercises/*"],
+      "@/server/sets/*": ["./src/modules/sets/*"],
+      "@/server/workout-exercises/*": ["./src/modules/workout-exercises/*"],
+      "@/server/workouts/*": ["./src/modules/workouts/*"],
+      "@/dtos/auth/*": ["./src/modules/auth/dtos/*"],
+      "@/dtos/exercises/*": ["./src/modules/exercises/dtos/*"],
+      "@/dtos/sets/*": ["./src/modules/sets/dtos/*"],
+      "@/dtos/workouts/*": ["./src/modules/workouts/dtos/*"]
+    },
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"],
+    "outDir": "./dist"
+  }
+}

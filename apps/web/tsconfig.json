@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/web/*": ["./src/*"],
+      "@/dtos/auth/*": ["../server/src/modules/auth/dtos/*"],
+      "@/dtos/exercises/*": ["../server/src/modules/exercises/dtos/*"],
+      "@/dtos/sets/*": ["../server/src/modules/sets/dtos/*"],
+      "@/dtos/workouts/*": ["../server/src/modules/workouts/dtos/*"]
+    }
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "files": [],
+  "exclude": ["node_modules", "dist"]
+}

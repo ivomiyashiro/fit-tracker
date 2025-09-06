@@ -1,0 +1,16 @@
+{
+  "name": "@fit-tracker/app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter ./apps/server dev\" \"pnpm --filter ./apps/web dev\"",
+    "build": "pnpm --filter \"./apps/server\" build && pnpm --filter \"./apps/web\" build",
+    "lint": "pnpm --filter \"./apps/*\" lint",
+    "start": "node ./apps/server/dist/src/index.js",
+    "start:local": "cross-env NODE_ENV=development DATABASE_URL=file:dev.db node ./apps/server/dist/src/index.js"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "concurrently": "9.2.1"
+  }
+}

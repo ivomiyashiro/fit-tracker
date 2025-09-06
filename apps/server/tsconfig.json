@@ -9,6 +9,7 @@
       "@/server/*": ["./src/*"],
       "@/server/auth/*": ["./src/modules/auth/*"],
       "@/server/exercises/*": ["./src/modules/exercises/*"],
+      "@/server/health/*": ["./src/modules/health/*"],
       "@/server/sets/*": ["./src/modules/sets/*"],
       "@/server/workout-exercises/*": ["./src/modules/workout-exercises/*"],
       "@/server/workouts/*": ["./src/modules/workouts/*"],

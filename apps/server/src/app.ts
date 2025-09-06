@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import auth from "@/server/auth/auth.index.js";
 import exercises from "@/server/exercises/exercises.index.js";
+import health from "@/server/health/health.index.js";
 import configureOpenAPI from "@/server/lib/configure-open-api.js";
 import createApp from "@/server/lib/create-app.js";
 import sets from "@/server/sets/sets.index.js";
@@ -16,15 +17,16 @@ const app = createApp();
 
 configureOpenAPI(app);
 
-// Health check route
-app.get("/health", (c) => c.text("OK"));
-
 const routes = [
+  // public routes
   auth,
-  workouts,
-  workoutExercises,
-  sets,
+  health,
+
+  // protected routes
   exercises,
+  sets,
+  workoutExercises,
+  workouts,
 ] as const;
 
 routes.forEach((route) => {

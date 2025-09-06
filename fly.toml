@@ -4,7 +4,7 @@
 #
 
 app = 'fit-tracker-twilight-lake-3496'
-primary_region = 'dfw'
+primary_region = 'eze'
 
 [build]
 
@@ -28,7 +28,7 @@ primary_region = 'dfw'
     timeout = '2s'
     grace_period = '5s'
     method = 'GET'
-    path = '/health'
+    path = '/api/health'
 
 [[vm]]
   memory = '256mb'

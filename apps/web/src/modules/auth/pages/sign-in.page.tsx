@@ -23,7 +23,7 @@ function SignInPage() {
               Don&apos;t have an account?
               <Link
                 to="/auth/register"
-                className="font-medium hover:underline text-primary-foreground ml-1"
+                className="font-medium hover:underline text-foreground ml-1"
               >
                 Register
               </Link>

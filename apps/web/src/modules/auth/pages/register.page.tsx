@@ -21,7 +21,7 @@ function RegisterPage() {
             <RegisterForm />
             <div className="text-center text-sm text-muted-foreground ">
               Already have an account?
-              <Link to="/auth/sign-in" className="font-medium hover:underline text-primary-foreground ml-1">
+              <Link to="/auth/sign-in" className="font-medium hover:underline text-foreground ml-1">
                 Sign In
               </Link>
             </div>

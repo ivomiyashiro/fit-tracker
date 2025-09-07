@@ -14,7 +14,6 @@ on:
         type: choice
         options:
           - production
-          - staging
 
 jobs:
   deploy:
@@ -41,15 +40,29 @@ jobs:
             echo "Using latest main SHA: $LATEST_SHA"
           fi
       
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.build_sha.outputs.sha }}
-      
-      - name: Build Docker image for deployment
+      - name: Get workflow run ID for artifacts
+        id: get_run_id
         run: |
-          echo "Building Docker image for deployment from commit ${{ steps.build_sha.outputs.sha }}"
-          docker build -t fit-tracker:latest .
+          # Find the workflow run that built the artifacts for this SHA
+          RUN_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/runs?head_sha=${{ steps.build_sha.outputs.sha }}&status=success" | \
+            jq -r '.workflow_runs[0].id')
+          echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
+          echo "Found build run ID: $RUN_ID for SHA: ${{ steps.build_sha.outputs.sha }}"
+      
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image-${{ steps.build_sha.outputs.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.get_run_id.outputs.run_id }}
+      
+      - name: Load Docker image
+        run: |
+          echo "Loading pre-built Docker image from artifact"
+          docker load -i fit-tracker-${{ steps.build_sha.outputs.sha }}.tar.gz
+          docker tag fit-tracker:${{ steps.build_sha.outputs.sha }} fit-tracker:latest
       
       - name: Setup Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master

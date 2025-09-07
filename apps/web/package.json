@@ -4,17 +4,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "pnpx vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
+    "dev": "pnpx vite",
     "generate-routes": "tsr generate",
-    "watch-routes": "tsr watch",
-    "test": "vitest",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "watch-routes": "tsr watch"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",

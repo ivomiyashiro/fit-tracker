@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"pnpm --filter ./apps/server dev\" \"pnpm --filter ./apps/web dev\"",
     "build": "pnpm --filter \"./apps/server\" build && pnpm --filter \"./apps/web\" build",
-    "lint": "pnpm --filter \"./apps/*\" lint",
+    "dev": "concurrently \"pnpm --filter ./apps/server dev\" \"pnpm --filter ./apps/web dev\"",
     "lint:fix": "pnpm --filter \"./apps/*\" lint --fix",
-    "typecheck": "pnpm --filter \"./apps/*\" typecheck",
+    "lint": "pnpm --filter \"./apps/*\" lint",
+    "start": "pnpm --filter ./apps/server start",
     "test": "pnpm --filter \"./apps/*\" test",
-    "start": "node ./apps/server/dist/src/index.js",
-    "start:local": "cross-env NODE_ENV=development DATABASE_URL=file:dev.db node ./apps/server/dist/src/index.js",
+    "typecheck": "pnpm --filter \"./apps/*\" typecheck",
     "prepare": "husky"
   },
   "dependencies": {

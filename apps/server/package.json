@@ -8,17 +8,17 @@
     "./schema": "./src/db/schema/index.ts"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
     "build": "tsc && tsc-alias",
-    "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "pnpm run lint --fix",
-    "test": "cross-env NODE_ENV=test vitest",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/db/seeds/index.ts",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx src/db/seeds/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "lint:fix": "pnpm run lint --fix",
+    "lint": "eslint .",
+    "start": "node -r dotenv/config dist/src/index.js dotenv_config_path=.env.production",
+    "test": "cross-env NODE_ENV=test vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.4",

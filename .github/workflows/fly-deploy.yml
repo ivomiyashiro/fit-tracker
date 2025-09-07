@@ -40,6 +40,14 @@ jobs:
             echo "Using latest main SHA: $LATEST_SHA"
           fi
       
+      - name: Checkout code for fly.toml
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.build_sha.outputs.sha }}
+          sparse-checkout: |
+            fly.toml
+          sparse-checkout-cone-mode: false
+      
       - name: Get workflow run ID for artifacts
         id: get_run_id
         run: |

@@ -45,7 +45,7 @@ if (env.NODE_ENV === "production") {
   // Serve index.html for all non-API routes (SPA fallback)
   app.get("*", serveStatic({
     root: publicPath,
-    index: "index.html",
+    rewriteRequestPath: () => "/index.html",
   }));
 }
 

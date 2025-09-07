@@ -6,11 +6,34 @@
     "dev": "concurrently \"pnpm --filter ./apps/server dev\" \"pnpm --filter ./apps/web dev\"",
     "build": "pnpm --filter \"./apps/server\" build && pnpm --filter \"./apps/web\" build",
     "lint": "pnpm --filter \"./apps/*\" lint",
+    "lint:fix": "pnpm --filter \"./apps/*\" lint --fix",
+    "typecheck": "pnpm --filter \"./apps/*\" typecheck",
+    "test": "pnpm --filter \"./apps/*\" test",
     "start": "node ./apps/server/dist/src/index.js",
-    "start:local": "cross-env NODE_ENV=development DATABASE_URL=file:dev.db node ./apps/server/dist/src/index.js"
+    "start:local": "cross-env NODE_ENV=development DATABASE_URL=file:dev.db node ./apps/server/dist/src/index.js",
+    "prepare": "husky"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
-    "concurrently": "9.2.1"
+    "concurrently": "9.2.1",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6"
+  },
+  "lint-staged": {
+    "apps/web/src/**/*.{js,jsx,ts,tsx}": [
+      "pnpm --filter @fit-tracker/web lint --fix",
+      "pnpm --filter @fit-tracker/web typecheck"
+    ],
+    "apps/server/src/**/*.{js,ts}": [
+      "pnpm --filter @fit-tracker/server lint --fix",
+      "pnpm --filter @fit-tracker/server typecheck"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

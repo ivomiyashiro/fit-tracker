@@ -3,37 +3,66 @@ name: Deploy to Production
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to deploy'
-        required: true
-        default: 'main'
+      build_sha:
+        description: 'Git commit SHA to deploy (uses latest main build if empty)'
+        required: false
         type: string
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
 
 jobs:
   deploy:
-    name: Deploy to Production
+    name: Deploy to ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ inputs.environment }}
     concurrency: 
-      group: deploy-production
+      group: deploy-${{ inputs.environment }}
       cancel-in-progress: false
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Determine build SHA
+        id: build_sha
+        run: |
+          if [ -n "${{ inputs.build_sha }}" ]; then
+            echo "sha=${{ inputs.build_sha }}" >> $GITHUB_OUTPUT
+            echo "Using provided SHA: ${{ inputs.build_sha }}"
+          else
+            # Get latest main commit SHA
+            LATEST_SHA=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/commits/main" | \
+              jq -r '.sha')
+            echo "sha=$LATEST_SHA" >> $GITHUB_OUTPUT
+            echo "Using latest main SHA: $LATEST_SHA"
+          fi
+      
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v4
         with:
-          ref: ${{ inputs.branch }}
+          name: docker-image-${{ steps.build_sha.outputs.sha }}
+          
+      - name: Load Docker image
+        run: |
+          docker load < fit-tracker-${{ steps.build_sha.outputs.sha }}.tar.gz
+          docker tag fit-tracker:${{ steps.build_sha.outputs.sha }} fit-tracker:latest
       
       - name: Setup Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
           
-      - name: Deploy to production
-        run: flyctl deploy --remote-only
+      - name: Deploy to ${{ inputs.environment }}
+        run: |
+          # Deploy using the pre-built Docker image
+          flyctl deploy --image fit-tracker:latest --strategy immediate
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           
       - name: Deployment summary
         run: |
-          echo "🚀 Successfully deployed to production"
-          echo "📝 Branch: ${{ inputs.branch }}"
+          echo "🚀 Successfully deployed to ${{ inputs.environment }}"
+          echo "📝 Build SHA: ${{ steps.build_sha.outputs.sha }}"
           echo "🔗 App URL: https://$(flyctl info --json | jq -r '.Hostname')"

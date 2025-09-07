@@ -24,13 +24,11 @@
     "lint-staged": "^16.1.6"
   },
   "lint-staged": {
-    "apps/web/src/**/*.{js,jsx,ts,tsx}": [
-      "pnpm --filter @fit-tracker/web lint --fix",
-      "pnpm --filter @fit-tracker/web typecheck"
+    "apps/web/**/*.{js,jsx,ts,tsx}": [
+      "pnpm --filter @fit-tracker/web lint:fix"
     ],
-    "apps/server/src/**/*.{js,ts}": [
-      "pnpm --filter @fit-tracker/server lint --fix",
-      "pnpm --filter @fit-tracker/server typecheck"
+    "apps/server/**/*.{js,ts}": [
+      "pnpm --filter @fit-tracker/server lint:fix"
     ]
   }
 }

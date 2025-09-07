@@ -31,9 +31,6 @@
     "apps/server/src/**/*.{js,ts}": [
       "pnpm --filter @fit-tracker/server lint --fix",
       "pnpm --filter @fit-tracker/server typecheck"
-    ],
-    "*.{json,md,yml,yaml}": [
-      "prettier --write"
     ]
   }
 }

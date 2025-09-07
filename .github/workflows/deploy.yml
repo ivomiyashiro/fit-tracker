@@ -1,5 +1,5 @@
 # Manual deployment pipeline - builds and deploys from source
-name: Deploy to Production
+name: Deploy
 on:
   workflow_dispatch:
     inputs:

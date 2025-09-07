@@ -20,6 +20,13 @@ FROM base AS builder
 WORKDIR /app
 COPY . .
 RUN pnpm install --frozen-lockfile
+
+# Run quality checks
+RUN pnpm run lint
+RUN pnpm run typecheck
+RUN pnpm test
+
+# Build applications
 RUN pnpm run build
 
 # Production runtime

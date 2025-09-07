@@ -78,7 +78,7 @@ jobs:
       - name: Deploy to ${{ inputs.environment }}
         run: |
           # Deploy using the pre-built Docker image
-          flyctl deploy --local-only --strategy immediate
+          flyctl deploy --image fit-tracker:latest --local-only --strategy immediate
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           

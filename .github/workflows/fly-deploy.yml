@@ -1,4 +1,4 @@
-# Manual deployment pipeline for production
+# Manual deployment pipeline - builds and deploys from source
 name: Deploy to Production
 on:
   workflow_dispatch:
@@ -41,15 +41,15 @@ jobs:
             echo "Using latest main SHA: $LATEST_SHA"
           fi
       
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          name: docker-image-${{ steps.build_sha.outputs.sha }}
-          
-      - name: Load Docker image
+          ref: ${{ steps.build_sha.outputs.sha }}
+      
+      - name: Build Docker image for deployment
         run: |
-          docker load < fit-tracker-${{ steps.build_sha.outputs.sha }}.tar.gz
-          docker tag fit-tracker:${{ steps.build_sha.outputs.sha }} fit-tracker:latest
+          echo "Building Docker image for deployment from commit ${{ steps.build_sha.outputs.sha }}"
+          docker build -t fit-tracker:latest .
       
       - name: Setup Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master

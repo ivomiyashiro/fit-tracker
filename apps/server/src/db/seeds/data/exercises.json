@@ -1,45 +1,437 @@
 [
-  { "name": "Bench Press" },
-  { "name": "Incline Bench Press" },
-  { "name": "Decline Bench Press" },
-  { "name": "Dumbbell Press" },
-  { "name": "Incline Dumbbell Press" },
-  { "name": "Push-ups" },
-  { "name": "Chest Fly" },
-  { "name": "Cable Crossover" },
-  { "name": "Deadlift" },
-  { "name": "Pull-ups" },
-  { "name": "Chin-ups" },
-  { "name": "Barbell Rows" },
-  { "name": "Dumbbell Rows" },
-  { "name": "Lat Pulldown" },
-  { "name": "Cable Rows" },
-  { "name": "T-Bar Rows" },
-  { "name": "Overhead Press" },
-  { "name": "Dumbbell Shoulder Press" },
-  { "name": "Lateral Raises" },
-  { "name": "Front Raises" },
-  { "name": "Rear Delt Fly" },
-  { "name": "Upright Rows" },
-  { "name": "Arnold Press" },
-  { "name": "Barbell Curls" },
-  { "name": "Dumbbell Curls" },
-  { "name": "Hammer Curls" },
-  { "name": "Tricep Dips" },
-  { "name": "Close-Grip Bench Press" },
-  { "name": "Tricep Pushdown" },
-  { "name": "Overhead Tricep Extension" },
-  { "name": "Squats" },
-  { "name": "Leg Press" },
-  { "name": "Lunges" },
-  { "name": "Leg Curls" },
-  { "name": "Leg Extensions" },
-  { "name": "Calf Raises" },
-  { "name": "Romanian Deadlift" },
-  { "name": "Bulgarian Split Squats" },
-  { "name": "Plank" },
-  { "name": "Crunches" },
-  { "name": "Russian Twists" },
-  { "name": "Hanging Leg Raises" },
-  { "name": "Bicycle Crunches" }
+  {
+    "name": "Bench Press"
+  },
+  {
+    "name": "Incline Bench Press"
+  },
+  {
+    "name": "Decline Bench Press"
+  },
+  {
+    "name": "Dumbbell Press"
+  },
+  {
+    "name": "Incline Dumbbell Press"
+  },
+  {
+    "name": "Decline Dumbbell Press"
+  },
+  {
+    "name": "Push-ups"
+  },
+  {
+    "name": "Wide Push-ups"
+  },
+  {
+    "name": "Diamond Push-ups"
+  },
+  {
+    "name": "Weighted Push-ups"
+  },
+  {
+    "name": "Chest Fly"
+  },
+  {
+    "name": "Incline Chest Fly"
+  },
+  {
+    "name": "Decline Chest Fly"
+  },
+  {
+    "name": "Cable Crossover"
+  },
+  {
+    "name": "High Cable Crossover"
+  },
+  {
+    "name": "Low Cable Crossover"
+  },
+  {
+    "name": "Pec Deck Machine"
+  },
+  {
+    "name": "Smith Machine Bench Press"
+  },
+  {
+    "name": "Smith Machine Incline Press"
+  },
+  {
+    "name": "Machine Chest Press"
+  },
+  {
+    "name": "Iso-Lateral Chest Press"
+  },
+  {
+    "name": "Single Arm Dumbbell Press"
+  },
+  {
+    "name": "Deadlift"
+  },
+  {
+    "name": "Rack Pulls"
+  },
+  {
+    "name": "Sumo Deadlift"
+  },
+  {
+    "name": "Trap Bar Deadlift"
+  },
+  {
+    "name": "Pull-ups"
+  },
+  {
+    "name": "Weighted Pull-ups"
+  },
+  {
+    "name": "Chin-ups"
+  },
+  {
+    "name": "Neutral Grip Pull-ups"
+  },
+  {
+    "name": "Barbell Rows"
+  },
+  {
+    "name": "Dumbbell Rows"
+  },
+  {
+    "name": "Chest Supported Rows"
+  },
+  {
+    "name": "Lat Pulldown"
+  },
+  {
+    "name": "Close Grip Lat Pulldown"
+  },
+  {
+    "name": "Wide Grip Lat Pulldown"
+  },
+  {
+    "name": "Straight Arm Pulldown"
+  },
+  {
+    "name": "Cable Rows"
+  },
+  {
+    "name": "Seated Cable Rows"
+  },
+  {
+    "name": "T-Bar Rows"
+  },
+  {
+    "name": "Meadows Rows"
+  },
+  {
+    "name": "Inverted Rows"
+  },
+  {
+    "name": "Overhead Press"
+  },
+  {
+    "name": "Seated Overhead Press"
+  },
+  {
+    "name": "Dumbbell Shoulder Press"
+  },
+  {
+    "name": "Arnold Press"
+  },
+  {
+    "name": "Smith Machine Shoulder Press"
+  },
+  {
+    "name": "Machine Shoulder Press"
+  },
+  {
+    "name": "Lateral Raises"
+  },
+  {
+    "name": "Incline Lateral Raises"
+  },
+  {
+    "name": "Cable Lateral Raises"
+  },
+  {
+    "name": "Front Raises"
+  },
+  {
+    "name": "Barbell Front Raise"
+  },
+  {
+    "name": "Dumbbell Front Raise"
+  },
+  {
+    "name": "Rear Delt Fly"
+  },
+  {
+    "name": "Incline Rear Delt Fly"
+  },
+  {
+    "name": "Cable Rear Delt Fly"
+  },
+  {
+    "name": "Face Pulls"
+  },
+  {
+    "name": "Upright Rows"
+  },
+  {
+    "name": "Dumbbell Shrugs"
+  },
+  {
+    "name": "Barbell Shrugs"
+  },
+  {
+    "name": "Overhead Dumbbell Shrugs"
+  },
+  {
+    "name": "Barbell Curls"
+  },
+  {
+    "name": "Dumbbell Curls"
+  },
+  {
+    "name": "Incline Dumbbell Curl"
+  },
+  {
+    "name": "Concentration Curl"
+  },
+  {
+    "name": "Preacher Curl"
+  },
+  {
+    "name": "Hammer Curls"
+  },
+  {
+    "name": "Cross Body Hammer Curl"
+  },
+  {
+    "name": "Cable Curl"
+  },
+  {
+    "name": "EZ Bar Curl"
+  },
+  {
+    "name": "Spider Curl"
+  },
+  {
+    "name": "Tricep Dips"
+  },
+  {
+    "name": "Weighted Dips"
+  },
+  {
+    "name": "Bench Dips"
+  },
+  {
+    "name": "Close-Grip Bench Press"
+  },
+  {
+    "name": "JM Press"
+  },
+  {
+    "name": "Tricep Pushdown"
+  },
+  {
+    "name": "Rope Pushdown"
+  },
+  {
+    "name": "Overhead Tricep Extension"
+  },
+  {
+    "name": "Dumbbell Kickback"
+  },
+  {
+    "name": "Skull Crushers"
+  },
+  {
+    "name": "EZ Bar Skull Crushers"
+  },
+  {
+    "name": "Cable Overhead Extension"
+  },
+  {
+    "name": "Squats"
+  },
+  {
+    "name": "Back Squat"
+  },
+  {
+    "name": "Front Squat"
+  },
+  {
+    "name": "Box Squat"
+  },
+  {
+    "name": "Pause Squat"
+  },
+  {
+    "name": "Overhead Squat"
+  },
+  {
+    "name": "Leg Press"
+  },
+  {
+    "name": "Single Leg Press"
+  },
+  {
+    "name": "Hack Squat"
+  },
+  {
+    "name": "Sissy Squat"
+  },
+  {
+    "name": "Split Squat"
+  },
+  {
+    "name": "Bulgarian Split Squats"
+  },
+  {
+    "name": "Walking Lunges"
+  },
+  {
+    "name": "Stationary Lunges"
+  },
+  {
+    "name": "Step-Ups"
+  },
+  {
+    "name": "Leg Curls"
+  },
+  {
+    "name": "Seated Leg Curl"
+  },
+  {
+    "name": "Lying Leg Curl"
+  },
+  {
+    "name": "Standing Leg Curl"
+  },
+  {
+    "name": "Leg Extensions"
+  },
+  {
+    "name": "Single Leg Extension"
+  },
+  {
+    "name": "Nordic Hamstring Curl"
+  },
+  {
+    "name": "Calf Raises"
+  },
+  {
+    "name": "Standing Calf Raise"
+  },
+  {
+    "name": "Seated Calf Raise"
+  },
+  {
+    "name": "Donkey Calf Raise"
+  },
+  {
+    "name": "Romanian Deadlift"
+  },
+  {
+    "name": "Stiff Leg Deadlift"
+  },
+  {
+    "name": "Good Mornings"
+  },
+  {
+    "name": "Glute Bridge"
+  },
+  {
+    "name": "Hip Thrusts"
+  },
+  {
+    "name": "Cable Kickbacks"
+  },
+  {
+    "name": "Kettlebell Swings"
+  },
+  {
+    "name": "Plank"
+  },
+  {
+    "name": "Weighted Plank"
+  },
+  {
+    "name": "Side Plank"
+  },
+  {
+    "name": "Crunches"
+  },
+  {
+    "name": "Weighted Crunches"
+  },
+  {
+    "name": "Cable Crunches"
+  },
+  {
+    "name": "Russian Twists"
+  },
+  {
+    "name": "Weighted Russian Twists"
+  },
+  {
+    "name": "Hanging Leg Raises"
+  },
+  {
+    "name": "Toes to Bar"
+  },
+  {
+    "name": "Knee Raises"
+  },
+  {
+    "name": "Hanging Knee Raises"
+  },
+  {
+    "name": "Bicycle Crunches"
+  },
+  {
+    "name": "V-Ups"
+  },
+  {
+    "name": "Mountain Climbers"
+  },
+  {
+    "name": "Ab Rollouts"
+  },
+  {
+    "name": "Dragon Flags"
+  },
+  {
+    "name": "Farmer\u2019s Carry"
+  },
+  {
+    "name": "Overhead Carry"
+  },
+  {
+    "name": "Yoke Walk"
+  },
+  {
+    "name": "Sled Push"
+  },
+  {
+    "name": "Sled Pull"
+  },
+  {
+    "name": "Battle Ropes"
+  },
+  {
+    "name": "Medicine Ball Slams"
+  },
+  {
+    "name": "Wall Balls"
+  },
+  {
+    "name": "Tire Flips"
+  },
+  {
+    "name": "Box Jumps"
+  },
+  {
+    "name": "Burpees"
+  }
 ]

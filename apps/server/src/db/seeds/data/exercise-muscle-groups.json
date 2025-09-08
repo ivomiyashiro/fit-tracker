@@ -1,45 +1,1035 @@
 [
-  { "exercise": "Bench Press", "muscleGroups": ["Chest", "Triceps", "Shoulders"] },
-  { "exercise": "Incline Bench Press", "muscleGroups": ["Chest", "Shoulders"] },
-  { "exercise": "Decline Bench Press", "muscleGroups": ["Chest"] },
-  { "exercise": "Dumbbell Press", "muscleGroups": ["Chest", "Triceps"] },
-  { "exercise": "Incline Dumbbell Press", "muscleGroups": ["Chest", "Shoulders"] },
-  { "exercise": "Push-ups", "muscleGroups": ["Chest", "Triceps"] },
-  { "exercise": "Chest Fly", "muscleGroups": ["Chest"] },
-  { "exercise": "Cable Crossover", "muscleGroups": ["Chest"] },
-  { "exercise": "Deadlift", "muscleGroups": ["Back", "Hamstrings", "Glutes", "Traps"] },
-  { "exercise": "Pull-ups", "muscleGroups": ["Lats", "Biceps"] },
-  { "exercise": "Chin-ups", "muscleGroups": ["Lats", "Biceps"] },
-  { "exercise": "Barbell Rows", "muscleGroups": ["Lats", "Rhomboids", "Rear Delts"] },
-  { "exercise": "Dumbbell Rows", "muscleGroups": ["Lats", "Rhomboids"] },
-  { "exercise": "Lat Pulldown", "muscleGroups": ["Lats", "Biceps"] },
-  { "exercise": "Cable Rows", "muscleGroups": ["Lats", "Rhomboids"] },
-  { "exercise": "T-Bar Rows", "muscleGroups": ["Lats", "Rhomboids"] },
-  { "exercise": "Overhead Press", "muscleGroups": ["Shoulders", "Triceps"] },
-  { "exercise": "Dumbbell Shoulder Press", "muscleGroups": ["Shoulders"] },
-  { "exercise": "Lateral Raises", "muscleGroups": ["Shoulders"] },
-  { "exercise": "Front Raises", "muscleGroups": ["Shoulders"] },
-  { "exercise": "Rear Delt Fly", "muscleGroups": ["Rear Delts"] },
-  { "exercise": "Upright Rows", "muscleGroups": ["Shoulders", "Traps"] },
-  { "exercise": "Arnold Press", "muscleGroups": ["Shoulders"] },
-  { "exercise": "Barbell Curls", "muscleGroups": ["Biceps"] },
-  { "exercise": "Dumbbell Curls", "muscleGroups": ["Biceps"] },
-  { "exercise": "Hammer Curls", "muscleGroups": ["Biceps", "Forearms"] },
-  { "exercise": "Tricep Dips", "muscleGroups": ["Triceps"] },
-  { "exercise": "Close-Grip Bench Press", "muscleGroups": ["Triceps", "Chest"] },
-  { "exercise": "Tricep Pushdown", "muscleGroups": ["Triceps"] },
-  { "exercise": "Overhead Tricep Extension", "muscleGroups": ["Triceps"] },
-  { "exercise": "Squats", "muscleGroups": ["Quadriceps", "Glutes"] },
-  { "exercise": "Leg Press", "muscleGroups": ["Quadriceps", "Glutes"] },
-  { "exercise": "Lunges", "muscleGroups": ["Quadriceps", "Glutes"] },
-  { "exercise": "Leg Curls", "muscleGroups": ["Hamstrings"] },
-  { "exercise": "Leg Extensions", "muscleGroups": ["Quadriceps"] },
-  { "exercise": "Calf Raises", "muscleGroups": ["Calves"] },
-  { "exercise": "Romanian Deadlift", "muscleGroups": ["Hamstrings", "Glutes"] },
-  { "exercise": "Bulgarian Split Squats", "muscleGroups": ["Quadriceps", "Glutes"] },
-  { "exercise": "Plank", "muscleGroups": ["Abs"] },
-  { "exercise": "Crunches", "muscleGroups": ["Abs"] },
-  { "exercise": "Russian Twists", "muscleGroups": ["Abs"] },
-  { "exercise": "Hanging Leg Raises", "muscleGroups": ["Abs"] },
-  { "exercise": "Bicycle Crunches", "muscleGroups": ["Abs"] }
+  {
+    "exercise": "Bench Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Incline Bench Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Decline Bench Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Incline Dumbbell Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Decline Dumbbell Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Push-ups",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Wide Push-ups",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Diamond Push-ups",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Weighted Push-ups",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Chest Fly",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Incline Chest Fly",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Decline Chest Fly",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Cable Crossover",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "High Cable Crossover",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Low Cable Crossover",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Pec Deck Machine",
+    "muscleGroups": [
+      "Chest"
+    ]
+  },
+  {
+    "exercise": "Smith Machine Bench Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Smith Machine Incline Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Machine Chest Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Iso-Lateral Chest Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Single Arm Dumbbell Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Deadlift",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Rack Pulls",
+    "muscleGroups": []
+  },
+  {
+    "exercise": "Sumo Deadlift",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Trap Bar Deadlift",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Pull-ups",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Weighted Pull-ups",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Chin-ups",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Neutral Grip Pull-ups",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Barbell Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Chest Supported Rows",
+    "muscleGroups": [
+      "Back",
+      "Chest",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Lat Pulldown",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Close Grip Lat Pulldown",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Wide Grip Lat Pulldown",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Straight Arm Pulldown",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Cable Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Seated Cable Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "T-Bar Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Meadows Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Inverted Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Overhead Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Seated Overhead Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Shoulder Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Arnold Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Smith Machine Shoulder Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Machine Shoulder Press",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Lateral Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Incline Lateral Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Cable Lateral Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Front Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Barbell Front Raise",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Front Raise",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Rear Delt Fly",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Incline Rear Delt Fly",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Cable Rear Delt Fly",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Face Pulls",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Upright Rows",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Shrugs",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Shoulders",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Barbell Shrugs",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Shoulders",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Overhead Dumbbell Shrugs",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Shoulders",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Barbell Curls",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Curls",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Incline Dumbbell Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Concentration Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Preacher Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Hammer Curls",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Cross Body Hammer Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Cable Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "EZ Bar Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Spider Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Tricep Dips",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Weighted Dips",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Bench Dips",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Close-Grip Bench Press",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "JM Press",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Tricep Pushdown",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Rope Pushdown",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Overhead Tricep Extension",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Dumbbell Kickback",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Skull Crushers",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "EZ Bar Skull Crushers",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Cable Overhead Extension",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Squats",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Back Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Front Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Box Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Pause Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Overhead Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Leg Press",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Single Leg Press",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Hack Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Sissy Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Split Squat",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Bulgarian Split Squats",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Walking Lunges",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Stationary Lunges",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Step-Ups",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Leg Curls",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Seated Leg Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Lying Leg Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Standing Leg Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ]
+  },
+  {
+    "exercise": "Leg Extensions",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Single Leg Extension",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Nordic Hamstring Curl",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms",
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Calf Raises",
+    "muscleGroups": [
+      "Calves",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Standing Calf Raise",
+    "muscleGroups": [
+      "Calves",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Seated Calf Raise",
+    "muscleGroups": [
+      "Calves",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Donkey Calf Raise",
+    "muscleGroups": [
+      "Calves",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Romanian Deadlift",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Stiff Leg Deadlift",
+    "muscleGroups": [
+      "Back",
+      "Lats",
+      "Traps"
+    ]
+  },
+  {
+    "exercise": "Good Mornings",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Glute Bridge",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Hip Thrusts",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Quadriceps"
+    ]
+  },
+  {
+    "exercise": "Cable Kickbacks",
+    "muscleGroups": [
+      "Triceps"
+    ]
+  },
+  {
+    "exercise": "Kettlebell Swings",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Plank",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Weighted Plank",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Side Plank",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Crunches",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Weighted Crunches",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Cable Crunches",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Russian Twists",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Weighted Russian Twists",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Hanging Leg Raises",
+    "muscleGroups": [
+      "Abs",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Toes to Bar",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Knee Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Hanging Knee Raises",
+    "muscleGroups": [
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Bicycle Crunches",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "V-Ups",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Mountain Climbers",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Ab Rollouts",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Dragon Flags",
+    "muscleGroups": [
+      "Abs"
+    ]
+  },
+  {
+    "exercise": "Farmer\u2019s Carry",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Overhead Carry",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Yoke Walk",
+    "muscleGroups": []
+  },
+  {
+    "exercise": "Sled Push",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Sled Pull",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Battle Ropes",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Medicine Ball Slams",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Wall Balls",
+    "muscleGroups": []
+  },
+  {
+    "exercise": "Tire Flips",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Box Jumps",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  },
+  {
+    "exercise": "Burpees",
+    "muscleGroups": [
+      "Abs",
+      "Glutes",
+      "Quadriceps",
+      "Shoulders"
+    ]
+  }
 ]

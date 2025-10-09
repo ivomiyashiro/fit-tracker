@@ -30,6 +30,7 @@ export const List = <T,>({
   searchValue: controlledSearchValue,
   searchPlaceholder = "Search...",
   isSuccess = false,
+  showSelectedItemsPills = false,
 
   // Infinite Scroll Props
   infiniteScrollEnabled = false,
@@ -51,15 +52,49 @@ export const List = <T,>({
   onItemContextMenu,
   onSearchValueChanged,
 }: Omit<ListProps<T>, "dataSource"> & { dataSource: T[] }) => {
+  const [internalDataSource, setInternalDataSource] = useState<T[]>(dataSource);
   const [internalSearchValue, setInternalSearchValue] = useState("");
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number | T)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number>(-1);
+
+  // Sync internalDataSource with dataSource, accumulating unique items
+  useEffect(() => {
+    if (dataSource.length > 0) {
+      setInternalDataSource((prev) => {
+        const newItems = dataSource.filter(newItem =>
+          !prev.some(existingItem =>
+            getItemKey(existingItem, keyExpr) === getItemKey(newItem, keyExpr),
+          ),
+        );
+        return [...prev, ...newItems];
+      });
+    }
+  }, [dataSource, keyExpr]);
 
   const loadMoreRef = useRef<HTMLLIElement>(null);
   const onLoadMoreRef = useRef(onLoadMore);
 
   const searchValue = controlledSearchValue !== undefined ? controlledSearchValue : internalSearchValue;
   const currentSelectedKeys = selectedItemKeys !== undefined ? selectedItemKeys : internalSelectedKeys;
+
+  // Create selected items for pills display
+  const selectedItemsForPills = useMemo(() => {
+    if (!showSelectedItemsPills || selectionMode === "none") {
+      return [];
+    }
+
+    return currentSelectedKeys
+      .map((key) => {
+        const item = internalDataSource.find(data => getItemKey(data, keyExpr) === key);
+        if (!item)
+          return null;
+        return {
+          key: String(key),
+          label: getItemDisplay(item, displayExpr),
+        };
+      })
+      .filter(Boolean) as { key: string; label: string }[];
+  }, [currentSelectedKeys, internalDataSource, keyExpr, displayExpr, showSelectedItemsPills, selectionMode]);
 
   // Filter data based on search
   const filteredData = useMemo(() => {
@@ -93,7 +128,7 @@ export const List = <T,>({
         newSelectedKeys = [itemKey];
         addedItems = [item];
         if (currentSelectedKeys.length > 0) {
-          const prevSelectedItem = dataSource.find(data =>
+          const prevSelectedItem = internalDataSource.find(data =>
             getItemKey(data, keyExpr) === currentSelectedKeys[0],
           );
           if (prevSelectedItem)
@@ -119,7 +154,7 @@ export const List = <T,>({
       setInternalSelectedKeys(newSelectedKeys);
     }
 
-    const selectedItemsArray = dataSource.filter(data =>
+    const selectedItemsArray = internalDataSource.filter(data =>
       newSelectedKeys.includes(getItemKey(data, keyExpr)),
     );
 
@@ -129,7 +164,16 @@ export const List = <T,>({
       selectedItems: selectedItemsArray,
       selectedItemKeys: newSelectedKeys,
     });
-  }, [selectionMode, disabled, currentSelectedKeys, dataSource, keyExpr, selectedItemKeys, onSelectionChanged]);
+  }, [selectionMode, disabled, currentSelectedKeys, internalDataSource, keyExpr, selectedItemKeys, onSelectionChanged]);
+
+  // Handle removing selected items via pills
+  const handleRemoveSelectedItem = useCallback((itemKey: string | number) => {
+    // Find the item by comparing string representation of keys
+    const item = internalDataSource.find(data => String(getItemKey(data, keyExpr)) === String(itemKey));
+    if (item) {
+      handleItemSelection(item, getItemKey(item, keyExpr));
+    }
+  }, [internalDataSource, keyExpr, handleItemSelection]);
 
   const handleItemClick = useCallback((item: T, itemKey: string | number | T, index: number, event: React.MouseEvent) => {
     if (disabled)
@@ -216,9 +260,12 @@ export const List = <T,>({
     >
       {searchEnabled && (
         <SearchInput
-          value={searchValue}
           onChange={handleSearchChange}
+          onRemoveItem={handleRemoveSelectedItem}
           placeholder={searchPlaceholder}
+          selectedItems={selectedItemsForPills}
+          showSelectedItems={showSelectedItemsPills}
+          value={searchValue}
         />
       )}
       <Card style={{ height, width }} className="overflow-auto">

@@ -10,19 +10,18 @@ import { useInfiniteExercisesQuery } from "@/web/modules/workouts/hooks/queries/
 import { ExerciseListItem } from "./exercise-list-item";
 
 type ExerciseSelectionListProps = {
-  onSelectionChanged?: (exercises: Exercise[]) => void;
   searchPlaceholder?: string;
   selectedExercises?: Exercise[];
+  onSelectionChanged?: (exercises: Exercise[]) => void;
 };
 
 export const ExerciseSelectionList = ({
-  onSelectionChanged,
   searchPlaceholder = "Search exercises by name or muscle group...",
   selectedExercises,
+  onSelectionChanged,
 }: ExerciseSelectionListProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
-  const selectedExercisesIds = selectedExercises?.map(e => e.id) || [];
 
   const {
     data,
@@ -51,6 +50,7 @@ export const ExerciseSelectionList = ({
   return (
     <List
       dataSource={allExercises}
+      displayExpr="name"
       hasNextPage={hasNextPage}
       height="400px"
       infiniteScrollEnabled={true}
@@ -67,8 +67,9 @@ export const ExerciseSelectionList = ({
       searchPlaceholder={searchPlaceholder}
       searchValue={searchTerm}
       selectByClick={true}
-      selectedItemKeys={selectedExercisesIds}
+      selectedItemKeys={selectedExercises}
       selectionMode="multiple"
+      showSelectedItemsPills={true}
       showSelectionControls={true}
       itemTemplate={({ itemData: exercise }) => (
         <ExerciseListItem exercise={exercise} />

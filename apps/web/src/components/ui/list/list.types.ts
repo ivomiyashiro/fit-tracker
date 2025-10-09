@@ -79,6 +79,7 @@ export type ListProps<T> = {
   searchValue?: string;
   searchPlaceholder?: string;
   isSuccess?: boolean;
+  showSelectedItemsPills?: boolean;
 
   // Infinite Scroll Props
   infiniteScrollEnabled?: boolean;

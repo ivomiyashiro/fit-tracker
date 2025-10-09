@@ -27,9 +27,8 @@ const WorkoutAddExercisePage = () => {
         className="flex flex-col gap-8"
       >
         <ExerciseSelectionList
-          selectedExercises={selectedExercises}
-          onSelectionChanged={handleSelectionChanged}
           searchPlaceholder="Search exercises to include in workout..."
+          onSelectionChanged={handleSelectionChanged}
         />
         <div className="flex justify-end">
           <Button

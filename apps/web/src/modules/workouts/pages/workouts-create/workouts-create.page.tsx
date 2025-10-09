@@ -1,3 +1,4 @@
+import { Label } from "@radix-ui/react-label";
 import { useNavigate } from "@tanstack/react-router";
 import { useId } from "react";
 
@@ -16,7 +17,6 @@ const CreateWorkoutPage = () => {
     handleSelectionChanged,
     hasSelection,
     register,
-    selectedExercises,
 
     // Actions
     handleCreateWorkout,
@@ -43,10 +43,10 @@ const CreateWorkoutPage = () => {
             placeholder="Enter workout name"
           />
         </form>
+        <Label className="text-sm ml-3 -mb-2">Select your exercises</Label>
         <ExerciseSelectionList
-          selectedExercises={selectedExercises}
+          searchPlaceholder="Search exercises exercises..."
           onSelectionChanged={handleSelectionChanged}
-          searchPlaceholder="Search exercises to include in workout..."
         />
         <div className="mt-4">
           <Button

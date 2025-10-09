@@ -1031,5 +1031,12 @@
       "Quadriceps",
       "Shoulders"
     ]
+  },
+  {
+    "exercise": "Pull Overs",
+    "muscleGroups": [
+      "Back",
+      "Lats"
+    ]
   }
 ]

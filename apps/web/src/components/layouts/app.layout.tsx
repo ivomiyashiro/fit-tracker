@@ -8,9 +8,14 @@ type Props = {
 
 export const AppLayout = ({ children }: Props) => {
   return (
-    <>
-      {children ?? <Outlet />}
-      <AppNavbar />
-    </>
+    <div className="grid h-screen grid-rows-[1fr_auto]">
+      <div className="overflow-auto ">
+        {children ?? <Outlet />}
+      </div>
+      <div className="relative py-3">
+        <div className="absolute inset-x-0 -top-3 h-4 bg-gradient-to-b from-transparent to-background" />
+        <AppNavbar />
+      </div>
+    </div>
   );
 };

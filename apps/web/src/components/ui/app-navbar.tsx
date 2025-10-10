@@ -51,7 +51,7 @@ export const AppNavbar = () => {
   };
 
   return (
-    <nav className="fixed bottom-4 left-0 right-0 bg-background border mx-4 rounded-full p-2 sm:max-w-md sm:mx-auto">
+    <nav className="bg-background border rounded-full mx-4 p-2 sm:max-w-md sm:mx-auto">
       <ul className="flex justify-between items-center">
         <NavbarItem
           icon={<DumbbellIcon className="w-5 h-5" />}

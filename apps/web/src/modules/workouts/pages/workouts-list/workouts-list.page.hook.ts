@@ -1,6 +1,6 @@
-import { useState } from "react";
-
 import type { Workout } from "@/web/modules/workouts/types";
+
+import { useState } from "react";
 
 import { useDeleteWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";

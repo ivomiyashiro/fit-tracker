@@ -1,6 +1,6 @@
-import { ChevronRightIcon } from "lucide-react";
-
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
+
+import { ChevronRightIcon } from "lucide-react";
 
 export const WorkoutExerciseListItemTemplate = ({
   workoutExercise,

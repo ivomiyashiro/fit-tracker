@@ -1,6 +1,6 @@
-import { Controller } from "react-hook-form";
-
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+
+import { Controller } from "react-hook-form";
 
 import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui";
 import { useUpdateWorkoutExerciseSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form.hook";

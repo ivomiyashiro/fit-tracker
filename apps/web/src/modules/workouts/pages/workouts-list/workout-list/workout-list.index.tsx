@@ -1,7 +1,7 @@
-import { useNavigate } from "@tanstack/react-router";
-
 import type { ItemClickEvent, SelectionChangedEvent } from "@/web/components/ui/list/list.types";
+
 import type { Workout } from "@/web/modules/workouts/types";
+import { useNavigate } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
 

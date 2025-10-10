@@ -1,6 +1,6 @@
-import { BicepsFlexedIcon, Repeat2Icon, WeightIcon } from "lucide-react";
-
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+
+import { BicepsFlexedIcon, Repeat2Icon, WeightIcon } from "lucide-react";
 
 import { timeFormat } from "@/web/utils/date-format";
 

@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-
 import type { ItemClickEvent } from "@/web/components/ui/list/list.types";
+
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
 import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";

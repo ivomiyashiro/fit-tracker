@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-
 import type { CreateSetRequest } from "@/dtos/sets/requests";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { toast } from "sonner";
 
 import { workoutExerciseSetService } from "@/web/modules/workouts/services/workout-exercise-set.service";
 import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";

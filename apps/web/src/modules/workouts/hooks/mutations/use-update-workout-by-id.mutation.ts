@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-
 import type { UpdateWorkoutRequest } from "@/dtos/workouts/requests";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { toast } from "sonner";
 
 import { workoutService } from "@/web/modules/workouts/services";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";

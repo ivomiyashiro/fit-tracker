@@ -1,8 +1,8 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
-
 import type { ItemClickEvent } from "@/web/components/ui";
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 
 import { useInfiniteWorkoutExerciseSetsQuery } from "@/web/modules/workouts/hooks/queries/use-infinite-workout-exercise-sets.query";
 import { dateFormat } from "@/web/utils/date-format";

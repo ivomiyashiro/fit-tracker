@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useParams } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-
 import type { UpdateSetRequest } from "@/dtos/sets/requests";
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate, useParams } from "@tanstack/react-router";
+
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { updateSetSchema } from "@/dtos/sets/requests";
 import { useUpdateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";

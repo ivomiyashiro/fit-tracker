@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
-
 import type { CreateWorkoutRequest } from "@/dtos/workouts/requests";
 import type { Exercise } from "@/web/modules/workouts/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
+
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { createWorkoutSchema } from "@/dtos/workouts/requests";
 import { useCreateWorkoutMutation } from "@/web/modules/workouts/hooks/mutations";

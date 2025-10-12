@@ -1,7 +1,7 @@
-import { useState } from "react";
-
 import type { SelectionChangedEvent } from "@/web/components/ui/list/list.types";
+
 import type { Exercise } from "@/web/modules/workouts/types";
+import { useMemo, useState } from "react";
 
 import { List } from "@/web/components/ui";
 import { useDebounce } from "@/web/hooks";
@@ -33,6 +33,11 @@ export const ExerciseSelectionList = ({
   } = useInfiniteExercisesQuery(debouncedSearchTerm);
 
   const allExercises = data?.pages.flatMap(page => page.data ?? []) || [];
+
+  const selectedIds = useMemo(
+    () => selectedExercises?.map(ex => ex.id) || [],
+    [selectedExercises],
+  );
 
   const handleSelectionChanged = (e: SelectionChangedEvent<Exercise>) => {
     onSelectionChanged?.(e.selectedItems);
@@ -67,9 +72,9 @@ export const ExerciseSelectionList = ({
       searchPlaceholder={searchPlaceholder}
       searchValue={searchTerm}
       selectByClick={true}
-      selectedItemKeys={selectedExercises}
+      selectedItems={selectedExercises}
+      selectedItemKeys={selectedIds}
       selectionMode="multiple"
-      showSelectedItemsPills={true}
       showSelectionControls={true}
       itemTemplate={({ itemData: exercise }) => (
         <ExerciseListItem exercise={exercise} />

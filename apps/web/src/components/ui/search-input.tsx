@@ -26,7 +26,7 @@ export const SearchInput = ({
   isLoading = false,
   selectedItems = [],
   onRemoveItem,
-  showSelectedItems = false,
+  showSelectedItems = true,
 }: SearchInputProps) => {
   return (
     <div className={`space-y-2 ${className}`}>

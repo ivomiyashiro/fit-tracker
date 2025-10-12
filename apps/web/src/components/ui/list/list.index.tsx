@@ -1,8 +1,8 @@
+import type { ListProps } from "./list.types";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Card, Checkbox, Label, SearchInput, Skeleton } from "@/web/components/ui";
-
-import type { ListProps } from "./list.types";
 
 import { getItemDisplay, getItemKey, searchInItem } from "./list.utils";
 
@@ -18,6 +18,7 @@ export const List = <T,>({
 
   // Selection Props
   selectionMode = "single",
+  selectedItems,
   selectedItemKeys,
   showSelectionControls = false,
   selectByClick = true,
@@ -30,7 +31,7 @@ export const List = <T,>({
   searchValue: controlledSearchValue,
   searchPlaceholder = "Search...",
   isSuccess = false,
-  showSelectedItemsPills = false,
+  showSelectedItemsPills = true,
 
   // Infinite Scroll Props
   infiniteScrollEnabled = false,
@@ -52,24 +53,9 @@ export const List = <T,>({
   onItemContextMenu,
   onSearchValueChanged,
 }: Omit<ListProps<T>, "dataSource"> & { dataSource: T[] }) => {
-  const [internalDataSource, setInternalDataSource] = useState<T[]>(dataSource);
   const [internalSearchValue, setInternalSearchValue] = useState("");
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number | T)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number>(-1);
-
-  // Sync internalDataSource with dataSource, accumulating unique items
-  useEffect(() => {
-    if (dataSource.length > 0) {
-      setInternalDataSource((prev) => {
-        const newItems = dataSource.filter(newItem =>
-          !prev.some(existingItem =>
-            getItemKey(existingItem, keyExpr) === getItemKey(newItem, keyExpr),
-          ),
-        );
-        return [...prev, ...newItems];
-      });
-    }
-  }, [dataSource, keyExpr]);
 
   const loadMoreRef = useRef<HTMLLIElement>(null);
   const onLoadMoreRef = useRef(onLoadMore);
@@ -83,9 +69,19 @@ export const List = <T,>({
       return [];
     }
 
+    // If selectedItems is provided (all selected items including those not in current dataSource),
+    // use it directly for pills to show all selected items even if not yet loaded
+    if (selectedItems && selectedItems.length > 0) {
+      return selectedItems.map(item => ({
+        key: String(getItemKey(item, keyExpr)),
+        label: getItemDisplay(item, displayExpr),
+      }));
+    }
+
+    // Fallback: search in dataSource (for backward compatibility)
     return currentSelectedKeys
       .map((key) => {
-        const item = internalDataSource.find(data => getItemKey(data, keyExpr) === key);
+        const item = dataSource.find(data => getItemKey(data, keyExpr) === key);
         if (!item)
           return null;
         return {
@@ -94,7 +90,7 @@ export const List = <T,>({
         };
       })
       .filter(Boolean) as { key: string; label: string }[];
-  }, [currentSelectedKeys, internalDataSource, keyExpr, displayExpr, showSelectedItemsPills, selectionMode]);
+  }, [selectedItems, currentSelectedKeys, dataSource, keyExpr, displayExpr, showSelectedItemsPills, selectionMode]);
 
   // Filter data based on search
   const filteredData = useMemo(() => {
@@ -128,7 +124,7 @@ export const List = <T,>({
         newSelectedKeys = [itemKey];
         addedItems = [item];
         if (currentSelectedKeys.length > 0) {
-          const prevSelectedItem = internalDataSource.find(data =>
+          const prevSelectedItem = dataSource.find(data =>
             getItemKey(data, keyExpr) === currentSelectedKeys[0],
           );
           if (prevSelectedItem)
@@ -154,9 +150,28 @@ export const List = <T,>({
       setInternalSelectedKeys(newSelectedKeys);
     }
 
-    const selectedItemsArray = internalDataSource.filter(data =>
-      newSelectedKeys.includes(getItemKey(data, keyExpr)),
-    );
+    // Build selectedItemsArray from both dataSource and selectedItems to ensure
+    // all selected items are returned, including those not yet loaded in dataSource
+    const selectedItemsArray: T[] = [];
+    const allAvailableItems = [...dataSource];
+
+    // Add items from selectedItems that are not in dataSource
+    if (selectedItems) {
+      selectedItems.forEach((item) => {
+        const itemKey = getItemKey(item, keyExpr);
+        if (!dataSource.some(d => getItemKey(d, keyExpr) === itemKey)) {
+          allAvailableItems.push(item);
+        }
+      });
+    }
+
+    // Filter all available items by the new selected keys
+    newSelectedKeys.forEach((key) => {
+      const item = allAvailableItems.find(data => getItemKey(data, keyExpr) === key);
+      if (item) {
+        selectedItemsArray.push(item);
+      }
+    });
 
     onSelectionChanged?.({
       addedItems,
@@ -164,16 +179,22 @@ export const List = <T,>({
       selectedItems: selectedItemsArray,
       selectedItemKeys: newSelectedKeys,
     });
-  }, [selectionMode, disabled, currentSelectedKeys, internalDataSource, keyExpr, selectedItemKeys, onSelectionChanged]);
+  }, [selectionMode, disabled, currentSelectedKeys, dataSource, selectedItems, keyExpr, selectedItemKeys, onSelectionChanged]);
 
   // Handle removing selected items via pills
   const handleRemoveSelectedItem = useCallback((itemKey: string | number) => {
     // Find the item by comparing string representation of keys
-    const item = internalDataSource.find(data => String(getItemKey(data, keyExpr)) === String(itemKey));
+    // First try to find in dataSource, then in selectedItems (for items not yet loaded)
+    let item = dataSource.find(data => String(getItemKey(data, keyExpr)) === String(itemKey));
+
+    if (!item && selectedItems) {
+      item = selectedItems.find(data => String(getItemKey(data, keyExpr)) === String(itemKey));
+    }
+
     if (item) {
       handleItemSelection(item, getItemKey(item, keyExpr));
     }
-  }, [internalDataSource, keyExpr, handleItemSelection]);
+  }, [dataSource, selectedItems, keyExpr, handleItemSelection]);
 
   const handleItemClick = useCallback((item: T, itemKey: string | number | T, index: number, event: React.MouseEvent) => {
     if (disabled)

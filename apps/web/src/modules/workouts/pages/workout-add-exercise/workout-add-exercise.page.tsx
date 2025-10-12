@@ -28,6 +28,7 @@ const WorkoutAddExercisePage = () => {
       >
         <ExerciseSelectionList
           searchPlaceholder="Search exercises to include in workout..."
+          selectedExercises={selectedExercises}
           onSelectionChanged={handleSelectionChanged}
         />
         <div className="flex justify-end">

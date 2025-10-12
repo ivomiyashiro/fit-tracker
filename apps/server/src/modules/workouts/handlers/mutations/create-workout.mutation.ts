@@ -1,3 +1,4 @@
+import { and, eq } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { WorkoutExercise } from "@/server/db/schemas/index.js";
@@ -13,6 +14,21 @@ import { getExercisesWithMuscleGroups, mapWorkoutExercisesToResponse } from "@/s
 export const createWorkout: AppRouteHandler<CreateRoute> = async (c) => {
   const { name, exerciseIds = [] } = c.req.valid("json");
   const userId = c.get("auth").user.id;
+
+  // Check if workout with same name already exists for this user
+  const existingWorkout = await db.query.workout.findFirst({
+    where: and(
+      eq(workout.userId, userId),
+      eq(workout.name, name),
+    ),
+  });
+
+  if (existingWorkout) {
+    return c.json(
+      { message: `A workout with name ${workout.name} already exists` },
+      HttpStatusCodes.CONFLICT,
+    );
+  }
 
   // Create workout
   const [newWorkout] = await db.insert(workout).values({

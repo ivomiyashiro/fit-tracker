@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
-import { createErrorSchema } from "stoker/openapi/schemas";
+import { createErrorSchema, createMessageObjectSchema } from "stoker/openapi/schemas";
 
 import { createWorkoutSchema } from "@/server/workouts/dtos/requests/index.js";
 import { workoutResponseSchema } from "@/server/workouts/dtos/responses/index.js";
@@ -22,6 +22,10 @@ export const createWorkout = createRoute({
     [HttpStatusCodes.CREATED]: jsonContent(
       workoutResponseSchema,
       "The created workout",
+    ),
+    [HttpStatusCodes.CONFLICT]: jsonContent(
+      createMessageObjectSchema("A workout with this name already exists"),
+      "Workout with this name already exists",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(createWorkoutSchema),

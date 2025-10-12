@@ -50,7 +50,7 @@ export const useWorkoutsList = () => {
   } = useWorkoutsSelection();
 
   const { mutate: deleteWorkouts, isPending: isDeletingWorkouts } = useDeleteWorkoutMutation();
-  const { data: workouts, isSuccess } = useWorkoutsQuery();
+  const { data: workouts, isLoading } = useWorkoutsQuery();
 
   const handleDeleteWorkouts = () => {
     deleteWorkouts(selectedWorkouts.map(w => w.id));
@@ -70,7 +70,7 @@ export const useWorkoutsList = () => {
     isDeletingWorkouts,
 
     // Data
-    isSuccess,
-    workouts,
+    isLoading,
+    workouts: workouts ?? [],
   };
 };

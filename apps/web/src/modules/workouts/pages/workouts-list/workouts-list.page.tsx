@@ -20,7 +20,7 @@ export default function WorkoutsListPage() {
     isDeletingWorkouts,
 
     // Data
-    isSuccess,
+    isLoading,
     workouts,
   } = useWorkoutsList();
 
@@ -45,7 +45,7 @@ export default function WorkoutsListPage() {
         className="flex flex-col gap-8"
       >
         <WorkoutsList
-          isSuccess={isSuccess}
+          isLoading={isLoading}
           workouts={workouts}
           selectionEnabled={selectionEnabled}
           selectedWorkouts={selectedWorkouts}

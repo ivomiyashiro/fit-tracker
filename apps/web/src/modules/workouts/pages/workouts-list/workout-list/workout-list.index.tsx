@@ -8,7 +8,7 @@ import { List } from "@/web/components/ui";
 import { WorkoutListItemTemplate } from "./workout-list-item-template";
 
 type WorkoutsListProps = {
-  isSuccess: boolean;
+  isLoading?: boolean;
   workouts: Workout[];
   selectionEnabled?: boolean;
   selectedWorkouts?: Workout[];
@@ -17,7 +17,7 @@ type WorkoutsListProps = {
 };
 
 export const WorkoutsList = ({
-  isSuccess,
+  isLoading = false,
   selectedWorkouts = [],
   selectionEnabled = false,
   workouts,
@@ -44,7 +44,7 @@ export const WorkoutsList = ({
     }
   };
 
-  if (workouts.length === 0) {
+  if (workouts.length === 0 && !isLoading) {
     return (
       <div className="text-center pt-8">
         <h3 className="text-lg font-semibold mb-2">You don't have any workouts yet.</h3>
@@ -56,9 +56,9 @@ export const WorkoutsList = ({
   return (
     <List
       dataSource={workouts}
+      isSuccess={!isLoading}
       displayExpr="name"
       keyExpr="id"
-      isSuccess={isSuccess}
       onItemClick={handleItemClick}
       onSelectionChanged={handleSelectionChanged}
       selectByClick={true}

@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-import { useState } from "react";
-
 import type { Exercise } from "@/web/modules/workouts/types";
+import { useNavigate, useParams } from "@tanstack/react-router";
+
+import { useState } from "react";
 
 import { useUpdateWorkoutByIdMutation } from "@/web/modules/workouts/hooks/mutations";
 import { useWorkoutByIdQuery } from "@/web/modules/workouts/hooks/queries";

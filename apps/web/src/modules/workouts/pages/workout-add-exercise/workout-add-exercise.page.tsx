@@ -1,5 +1,5 @@
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button } from "@/web/components/ui";
+import { AppHeader, Button, Spinner } from "@/web/components/ui";
 import { ExerciseSelectionList } from "@/web/modules/workouts/components/exercise-list/exercise-list.index";
 
 import { useWorkoutAddExercise } from "./workout-add-exercise.page.hook";
@@ -13,6 +13,9 @@ const WorkoutAddExercisePage = () => {
     // Actions
     handleAddExercises,
     handleBackNavigation,
+
+    // UI state
+    isPending,
   } = useWorkoutAddExercise();
 
   return (
@@ -35,9 +38,23 @@ const WorkoutAddExercisePage = () => {
           <Button
             className="w-full"
             onClick={handleAddExercises}
-            disabled={selectedExercises.length === 0}
+            disabled={selectedExercises.length === 0 || isPending}
           >
-            Add exercise
+            {isPending
+? (
+              <>
+                <Spinner className="w-4 h-4" />
+                Updating exercises...
+              </>
+            )
+: (
+              <>
+                Update workout exercises
+                (
+{selectedExercises.length}
+)
+              </>
+            )}
           </Button>
         </div>
       </PageLayout>

@@ -1,14 +1,12 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 
-import { useWorkoutsQuery } from "@/web/modules/workouts/hooks/queries";
+import { useWorkoutByIdQuery } from "@/web/modules/workouts/hooks/queries";
 
 export const useWorkout = () => {
   const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
   const navigate = useNavigate();
 
-  const { data: workouts, isSuccess } = useWorkoutsQuery();
-
-  const workout = workouts?.find(w => w.id === Number(workoutId));
+  const { data: workout, isLoading, isRefetching, isError } = useWorkoutByIdQuery(Number(workoutId));
 
   const handleBackNavigation = () => {
     navigate({ to: "/workouts" });
@@ -16,7 +14,8 @@ export const useWorkout = () => {
 
   return {
     // Data
-    isSuccess,
+    isLoading: isLoading || isRefetching,
+    isError,
     workout,
     workoutId,
 

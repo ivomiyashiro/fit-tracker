@@ -10,7 +10,8 @@ import { useWorkout } from "./workout.page.hook";
 const WorkoutPage = () => {
   const {
     // Data
-    isSuccess,
+    isLoading,
+    isError,
     workout,
     workoutId,
 
@@ -18,14 +19,15 @@ const WorkoutPage = () => {
     handleBackNavigation,
   } = useWorkout();
 
-  if (!workout) {
+  // Only redirect if there's an error or if finished loading and no workout found
+  if (isError || (!isLoading && !workout)) {
     return <Navigate to="/workouts" />;
   }
 
   return (
     <>
       <AppHeader
-        title={workout.name}
+        title={workout?.name || "Workout"}
         showBackButton
         onBackButtonClick={handleBackNavigation}
         showActionButton={false}
@@ -35,12 +37,12 @@ const WorkoutPage = () => {
         className="flex flex-col gap-8"
       >
         <WorkoutExerciseList
-          isSuccess={isSuccess}
-          workoutExercises={workout.workoutExercises}
+          isLoading={isLoading}
+          workoutExercises={workout?.workoutExercises || []}
         />
         <div className="flex justify-end flex-col gap-2">
           <Link to="/workouts/$workoutId/we/$workoutExerciseId/add-exercises" params={{ workoutId, workoutExerciseId: "1" }} className="w-full">
-            <Button className="w-full">
+            <Button className="w-full" disabled={isLoading}>
               <EditIcon className="w-4 h-4 mr-1 mt-0.5" />
               Edit Workout Exercises
             </Button>

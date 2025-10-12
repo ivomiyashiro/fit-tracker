@@ -12,5 +12,6 @@ export const useWorkoutsQuery = () => {
   return {
     ...query,
     isLoading: query.isLoading || (query.isFetching && !query.data),
+    isRefetching: query.isFetching && !!query.data,
   };
 };

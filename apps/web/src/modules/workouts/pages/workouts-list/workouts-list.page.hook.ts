@@ -50,12 +50,15 @@ export const useWorkoutsList = () => {
   } = useWorkoutsSelection();
 
   const { mutate: deleteWorkouts, isPending: isDeletingWorkouts } = useDeleteWorkoutMutation();
-  const { data: workouts, isLoading } = useWorkoutsQuery();
+  const { data: workouts, isLoading, isRefetching } = useWorkoutsQuery();
 
   const handleDeleteWorkouts = () => {
-    deleteWorkouts(selectedWorkouts.map(w => w.id));
-    clearSelection();
-    toggleSelectionEnabled();
+    deleteWorkouts(selectedWorkouts.map(w => w.id), {
+      onSuccess: () => {
+        clearSelection();
+        toggleSelectionEnabled();
+      },
+    });
   };
 
   return {
@@ -67,10 +70,10 @@ export const useWorkoutsList = () => {
 
     // Actions
     handleDeleteWorkouts,
-    isDeletingWorkouts,
 
     // Data
-    isLoading,
+    isDeletingWorkouts,
+    isLoading: isLoading || isRefetching,
     workouts: workouts ?? [],
   };
 };

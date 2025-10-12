@@ -6,6 +6,7 @@ export default new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: "always",
+      staleTime: 1000 * 60 * 5,
     },
   },
 });

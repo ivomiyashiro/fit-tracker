@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button } from "@/web/components/ui";
+import { AppHeader, Button, Spinner } from "@/web/components/ui";
 import { WorkoutsList } from "@/web/modules/workouts/pages/workouts-list/workout-list/workout-list.index";
 
 import { useWorkoutsList } from "./workouts-list.page.hook";
@@ -17,9 +17,9 @@ export default function WorkoutsListPage() {
 
     // Actions
     handleDeleteWorkouts,
-    isDeletingWorkouts,
 
     // Data
+    isDeletingWorkouts,
     isLoading,
     workouts,
   } = useWorkoutsList();
@@ -59,11 +59,12 @@ export default function WorkoutsListPage() {
               onClick={handleDeleteWorkouts}
               disabled={isDeletingWorkouts}
             >
+              {isDeletingWorkouts && <Spinner />}
               Delete Workouts
             </Button>
           )}
           <Link to="/workouts/create" className="w-full">
-            <Button className="w-full" disabled={isDeletingWorkouts}>
+            <Button className="w-full" disabled={isLoading || isDeletingWorkouts}>
               <PlusIcon className="w-4 h-4 mr-1 mt-0.5" />
               Create Workout
             </Button>

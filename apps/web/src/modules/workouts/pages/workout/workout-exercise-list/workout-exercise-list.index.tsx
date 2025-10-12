@@ -6,17 +6,19 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { List } from "@/web/components/ui";
 import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";
 
-export const WorkoutExerciseList = ({
-  isSuccess,
-  workoutExercises,
-}: {
-  isSuccess: boolean;
+type WorkoutExerciseListProps = {
+  isLoading: boolean;
   workoutExercises: WorkoutExercise[];
-}) => {
+};
+
+export const WorkoutExerciseList = ({
+  isLoading,
+  workoutExercises,
+}: WorkoutExerciseListProps) => {
   const navigate = useNavigate();
   const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
 
-  if (workoutExercises.length === 0) {
+  if (workoutExercises.length === 0 && !isLoading) {
     return (
       <div className="text-center p-8">
         <h3 className="text-lg font-semibold mb-2">Oops! No exercises found</h3>
@@ -36,7 +38,7 @@ export const WorkoutExerciseList = ({
     <List
       dataSource={workoutExercises}
       displayExpr="name"
-      isSuccess={isSuccess}
+      isSuccess={!isLoading}
       keyExpr="id"
       noDataText="No workout exercises found"
       onItemClick={handleItemClick}

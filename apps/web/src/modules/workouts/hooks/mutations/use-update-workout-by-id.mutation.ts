@@ -16,6 +16,9 @@ export const useUpdateWorkoutByIdMutation = (workoutId: number) => {
       queryClient.invalidateQueries({
         queryKey: workoutQueryKeys.detail(workoutId),
       });
+      queryClient.invalidateQueries({
+        queryKey: workoutQueryKeys.lists(),
+      });
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update workout");

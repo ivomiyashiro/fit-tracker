@@ -11,18 +11,32 @@ class ApiClient {
 
   async request<T = unknown>(endpoint: string, options: RequestConfig = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    const config: RequestConfig = {
+    const config: RequestInit = {
       credentials: "include",
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(options.headers || {}), // Merge custom headers
       },
     };
 
     const response = await fetch(url, config);
 
     if (!response.ok) {
-      throw new Error(response.statusText);
+      // Try to extract error message from response body
+      let errorMessage = response.statusText;
+
+      try {
+        const errorData = await response.json();
+        if (errorData && typeof errorData === "object" && "message" in errorData) {
+          errorMessage = String(errorData.message);
+        }
+      }
+ catch {
+        // If parsing fails, use statusText as fallback
+      }
+
+      throw new Error(errorMessage);
     }
 
     if (response.status === 204) {

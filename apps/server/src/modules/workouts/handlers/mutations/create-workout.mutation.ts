@@ -25,7 +25,7 @@ export const createWorkout: AppRouteHandler<CreateRoute> = async (c) => {
 
   if (existingWorkout) {
     return c.json(
-      { message: `A workout with name ${workout.name} already exists` },
+      { message: `A workout with name ${existingWorkout.name} already exists` },
       HttpStatusCodes.CONFLICT,
     );
   }

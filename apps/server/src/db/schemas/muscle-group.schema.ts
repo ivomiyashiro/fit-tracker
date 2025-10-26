@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-import { exerciseMuscleGroup } from "./exercise-muscle-group.schema.js";
+import { exerciseMuscleGroup } from "./exercise-muscle-group.schema";
 
 export type MuscleGroup = typeof muscleGroup.$inferSelect;
 

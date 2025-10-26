@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-import { user } from "./user.schema.js";
-import { workoutExercise } from "./workout-exercise.schema.js";
+import { user } from "./user.schema";
+import { workoutExercise } from "./workout-exercise.schema";
 
 export type Workout = typeof workout.$inferSelect;
 

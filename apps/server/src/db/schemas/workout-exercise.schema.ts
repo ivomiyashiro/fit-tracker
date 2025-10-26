@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
-import { exercise } from "./exercise.schema.js";
-import { workout } from "./workout.schema.js";
+import { exercise } from "./exercise.schema";
+import { workout } from "./workout.schema";
 
 export type WorkoutExercise = typeof workoutExercise.$inferSelect;
 
@@ -12,6 +12,9 @@ export const workoutExercise = sqliteTable("workout_exercises", {
     .references(() => workout.id),
   exerciseId: integer("exercise_id", { mode: "number" })
     .references(() => exercise.id),
+  order: integer("order", { mode: "number" })
+    .notNull()
+    .default(1),
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),

@@ -1,6 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-import { user } from "./user.schema.js";
+import { user } from "./user.schema";
 
 export type UserConfiguration = typeof userConfiguration.$inferSelect;
 

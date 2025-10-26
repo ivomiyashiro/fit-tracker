@@ -59,7 +59,7 @@ export const InfiniteSetList = ({
     <div ref={containerRef} className="flex flex-col gap-8">
       {Object.entries(groupedSets).map(([date, setsWithComparison]) => (
         <div key={date} className="flex flex-col gap-2">
-          <span className="text-sm font-semibold px-3 text-muted-foreground">
+          <span className="text-xs font-semibold px-3 text-muted-foreground">
             {date}
           </span>
           <List

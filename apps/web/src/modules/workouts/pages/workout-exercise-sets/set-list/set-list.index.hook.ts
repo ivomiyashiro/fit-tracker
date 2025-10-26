@@ -13,7 +13,8 @@ type Props = {
 
 export type SetWithComparison = {
   set: WorkoutExerciseSet;
-  previousSet?: WorkoutExerciseSet;
+  currentDaySets?: WorkoutExerciseSet[];
+  previousDaySets?: WorkoutExerciseSet[];
   isFirstOfDay: boolean;
 };
 
@@ -97,7 +98,7 @@ export const useSetList = ({
       });
     });
 
-    // Second pass: mark first set of each day and find previous set
+    // Second pass: mark first set of each day and add all sets from current and previous day
     dateGroups.forEach((date, dateIndex) => {
       const setsInDay = grouped[date];
 
@@ -105,15 +106,15 @@ export const useSetList = ({
         // Mark first set of the day
         setsInDay[0].isFirstOfDay = true;
 
-        // Find previous set (last set from previous day)
+        // Find previous day's sets
         if (dateIndex < dateGroups.length - 1) {
           const previousDate = dateGroups[dateIndex + 1];
           const previousDaySets = grouped[previousDate];
 
           if (previousDaySets && previousDaySets.length > 0) {
-            // Get the last set from the previous day
-            const previousSet = previousDaySets[previousDaySets.length - 1].set;
-            setsInDay[0].previousSet = previousSet;
+            // Pass all sets from current day and previous day for comparison
+            setsInDay[0].currentDaySets = setsInDay.map(s => s.set);
+            setsInDay[0].previousDaySets = previousDaySets.map(s => s.set);
           }
         }
       }

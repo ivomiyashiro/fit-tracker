@@ -1,71 +1,31 @@
 import type { WorkoutExerciseSet } from "../../../types";
-import { ArrowDownIcon, ArrowUpIcon, GitCompareArrowsIcon, MinusIcon } from "lucide-react";
-import { memo } from "react";
-
-import { cn } from "@/web/lib/cn";
+import { GitCompareArrowsIcon } from "lucide-react";
+import { memo, useMemo } from "react";
+import { ComparisonItem } from "./set-list-item-compared-item";
 
 type Props = {
-  set: WorkoutExerciseSet;
-  previousSet: WorkoutExerciseSet;
+  currentDaySets: WorkoutExerciseSet[];
+  previousDaySets: WorkoutExerciseSet[];
 };
 
-type ComparisonMetric = {
-  label: string;
-  current: number;
-  previous: number;
-  unit?: string;
-  showPercentage?: boolean;
-};
+export const SetListItemCompared = memo(({ currentDaySets, previousDaySets }: Props) => {
+  // Calculate totals and maximums for current day
+  const currentTotalReps = useMemo(() => currentDaySets.reduce((sum, s) => sum + s.reps, 0), [currentDaySets]);
+  const currentMaxWeight = useMemo(() => Math.max(...currentDaySets.map(s => s.weight)), [currentDaySets]);
+  const currentTotalVolume = useMemo(() => currentDaySets.reduce((sum, s) => sum + (s.reps * s.weight), 0), [currentDaySets]);
+  const currentAvgRir = useMemo(() => {
+    const rirValues = currentDaySets.filter(s => s.rir !== null).map(s => s.rir!);
+    return rirValues.length > 0 ? rirValues.reduce((sum, rir) => sum + rir, 0) / rirValues.length : null;
+  }, [currentDaySets]);
 
-const ComparisonItem = ({ label, current, previous, unit = "", showPercentage = true }: ComparisonMetric) => {
-  const difference = current - previous;
-  const percentageChange = previous !== 0 ? ((difference / previous) * 100) : 0;
-  const isPositive = difference > 0;
-  const isNeutral = difference === 0;
-
-  const getIcon = () => {
-    if (isNeutral)
-return <MinusIcon className="w-3 h-3" />;
-    return isPositive ? <ArrowUpIcon className="w-3 h-3" /> : <ArrowDownIcon className="w-3 h-3" />;
-  };
-
-  const getColorClass = () => {
-    if (isNeutral)
-return "text-muted-foreground";
-    return isPositive ? "text-green-500" : "text-red-500";
-  };
-
-  return (
-    <div className="flex flex-col gap-1 p-3 bg-secondary/30 rounded-md">
-      <span className="text-xs font-medium text-muted-foreground">{label}</span>
-      <div className="flex items-baseline gap-1.5 flex-col">
-        <span className="text-lg font-semibold">
-          {current}
-          {unit}
-        </span>
-        <div className={cn("flex items-center gap-0.5 text-xs font-medium", getColorClass())}>
-          {getIcon()}
-          <span>
-            {Math.abs(difference)}
-            {unit}
-          </span>
-            {showPercentage && percentageChange !== 0 && (
-                <span>
-                    (
-                    {isPositive ? "+" : ""}
-                    {percentageChange.toFixed(0)}
-                    %)
-                </span>
-            )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const SetListItemCompared = memo(({ set, previousSet }: Props) => {
-  const currentVolume = set.reps * set.weight;
-  const previousVolume = previousSet.reps * previousSet.weight;
+  // Calculate totals and maximums for previous day
+  const previousTotalReps = useMemo(() => previousDaySets.reduce((sum, s) => sum + s.reps, 0), [previousDaySets]);
+  const previousMaxWeight = useMemo(() => Math.max(...previousDaySets.map(s => s.weight)), [previousDaySets]);
+  const previousTotalVolume = useMemo(() => previousDaySets.reduce((sum, s) => sum + (s.reps * s.weight), 0), [previousDaySets]);
+  const previousAvgRir = useMemo(() => {
+    const rirValues = previousDaySets.filter(s => s.rir !== null).map(s => s.rir!);
+    return rirValues.length > 0 ? rirValues.reduce((sum, rir) => sum + rir, 0) / rirValues.length : null;
+  }, [previousDaySets]);
 
   const handleClick = (e: React.MouseEvent) => {
     // Prevent the click from bubbling up to parent elements
@@ -84,37 +44,39 @@ export const SetListItemCompared = memo(({ set, previousSet }: Props) => {
       <div className="grid grid-cols-2 gap-2">
         {/* Row 1: Reps and Weight */}
         <ComparisonItem
-          label="Reps"
-          current={set.reps}
-          previous={previousSet.reps}
+          label="Max Weight"
+          current={currentMaxWeight}
+          previous={previousMaxWeight}
+          unit="kg"
         />
         <ComparisonItem
-          label="Weight"
-          current={set.weight}
-          previous={previousSet.weight}
-          unit="kg"
+          label="Toal Reps"
+          current={currentTotalReps}
+          previous={previousTotalReps}
         />
         {/* Row 2: Volume and RIR */}
         <ComparisonItem
           label="Volume"
-          current={currentVolume}
-          previous={previousVolume}
+          current={currentTotalVolume}
+          previous={previousTotalVolume}
           unit="kg"
         />
-        {set.rir !== null && previousSet.rir !== null
+        {currentAvgRir !== null && previousAvgRir !== null
 ? (
           <ComparisonItem
-            label="RIR"
-            current={set.rir}
-            previous={previousSet.rir}
+            label="Avg RIR"
+            current={currentAvgRir}
+            previous={previousAvgRir}
             showPercentage={false}
+            lowerIsBetter={true}
+            decimalPlaces={1}
           />
         )
 : (
           <div className="flex flex-col gap-1 p-3 bg-secondary/30 rounded-md">
-            <span className="text-xs font-medium text-muted-foreground">RIR</span>
+            <span className="text-xs font-medium text-muted-foreground">Avg RIR</span>
             <span className="text-lg font-semibold">
-              {set.rir ?? "—"}
+              {currentAvgRir !== null ? currentAvgRir.toFixed(1) : "—"}
             </span>
           </div>
         )}

@@ -37,10 +37,10 @@ export const InfiniteSetList = ({
 
   const renderSetItem = useCallback(({ itemData }: { itemData: any }) => (
     <div className="flex flex-col gap-3">
-      {itemData.isFirstOfDay && itemData.previousSet && (
+      {itemData.isFirstOfDay && itemData.currentDaySets && itemData.previousDaySets && (
         <SetListItemCompared
-          set={itemData.set}
-          previousSet={itemData.previousSet}
+          currentDaySets={itemData.currentDaySets}
+          previousDaySets={itemData.previousDaySets}
         />
       )}
       <SetListItem

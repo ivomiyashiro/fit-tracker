@@ -68,7 +68,17 @@ export const AppNavbar = () => {
           icon={theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         />
-        <NavbarItem icon={<LogOutIcon className="w-5 h-5" />} path="/logout" onClick={() => setOpen(true)} />
+        <NavbarItem
+          icon={<LogOutIcon className="w-5 h-5" />}
+          path="/logout"
+          onClick={() => {
+          // Blur any focused element before opening dialog to prevent aria-hidden conflict
+          if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+          }
+          setOpen(true);
+        }}
+        />
       </ul>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent className="max-w-xs">

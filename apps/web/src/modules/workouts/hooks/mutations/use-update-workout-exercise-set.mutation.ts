@@ -16,6 +16,9 @@ export const useUpdateWorkoutExerciseSetMutation = (setId: number) => {
       queryClient.invalidateQueries({
         queryKey: workoutExerciseSetsQueryKeys.detail(setId),
       });
+      queryClient.invalidateQueries({
+        queryKey: workoutExerciseSetsQueryKeys.all,
+      });
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update set");

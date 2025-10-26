@@ -12,7 +12,7 @@ export const CreateSetDrawerForm = ({
   workoutExerciseId,
   onSuccess,
 }: Props) => {
-  const { form, handleSubmit, isPending, isValid } = useCreateWorkoutExerciseSetDrawerForm({
+  const { form, handleSubmit, isValid } = useCreateWorkoutExerciseSetDrawerForm({
     workoutExerciseId,
     onSuccess,
   });
@@ -99,8 +99,8 @@ export const CreateSetDrawerForm = ({
         />
       </FormField>
 
-      <Button type="submit" disabled={!isValid || isPending} className="w-full mt-2">
-        {isPending ? "Recording..." : "Record Set"}
+      <Button type="submit" disabled={!isValid} className="w-full mt-2">
+        Record Set
       </Button>
     </form>
   );

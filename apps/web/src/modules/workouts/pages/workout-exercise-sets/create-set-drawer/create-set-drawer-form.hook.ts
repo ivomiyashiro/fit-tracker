@@ -25,9 +25,17 @@ export const useCreateWorkoutExerciseSetDrawerForm = ({
     },
   });
 
-  const { mutate: createSet, isPending } = useCreateWorkoutExerciseSetMutation();
+  const { mutate: createSet } = useCreateWorkoutExerciseSetMutation();
 
   const handleSubmit = (data: CreateSetRequest) => {
+    // Reset form and close drawer immediately (optimistic)
+    form.reset();
+    onSuccess?.();
+
+    // Show optimistic success message
+    toast.success("Set recorded!");
+
+    // Execute mutation in the background
     createSet(
       {
         workoutExerciseId,
@@ -37,10 +45,6 @@ export const useCreateWorkoutExerciseSetDrawerForm = ({
         notes: data.notes,
       },
       {
-        onSuccess: () => {
-          form.reset();
-          onSuccess?.();
-        },
         onError: (error) => {
           toast.error(error.message || "Failed to record set");
         },
@@ -51,7 +55,6 @@ export const useCreateWorkoutExerciseSetDrawerForm = ({
   return {
     form,
     handleSubmit: form.handleSubmit(handleSubmit),
-    isPending,
     isValid: form.formState.isValid,
   };
 };

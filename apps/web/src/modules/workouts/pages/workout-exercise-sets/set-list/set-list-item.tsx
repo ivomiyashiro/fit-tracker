@@ -1,6 +1,7 @@
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
 import { BicepsFlexedIcon, Repeat2Icon, WeightIcon } from "lucide-react";
+import { memo } from "react";
 
 import { timeFormat } from "@/web/utils/date-format";
 
@@ -11,7 +12,7 @@ type Props = {
   onClick?: () => void;
 };
 
-export const SetListItem = ({ set, onClick }: Props) => {
+export const SetListItem = memo(({ set, onClick }: Props) => {
   return (
     <div
       className="flex flex-col gap-2 w-full cursor-pointer"
@@ -50,4 +51,4 @@ export const SetListItem = ({ set, onClick }: Props) => {
       {set.notes && <p className="text-sm text-muted-foreground mt-1 px-1">{set.notes}</p>}
     </div>
   );
-};
+});

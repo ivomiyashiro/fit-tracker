@@ -1,7 +1,7 @@
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useInfiniteWorkoutExerciseSetsQuery } from "@/web/modules/workouts/hooks/queries/use-infinite-workout-exercise-sets.query";
 import { dateFormat } from "@/web/utils/date-format";
@@ -66,7 +66,7 @@ export const useSetList = ({
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleSetClick = (setId: number) => {
+  const handleSetClick = useCallback((setId: number) => {
     if (workoutId && workoutExerciseId) {
       navigate({
         to: "/workouts/$workoutId/we/$workoutExerciseId/sets/$setId",
@@ -77,7 +77,7 @@ export const useSetList = ({
         },
       });
     }
-  };
+  }, [workoutId, workoutExerciseId, navigate]);
 
   // Group sets by date and add comparison info
   const groupedSetsWithComparison = useMemo(() => {

@@ -1,5 +1,6 @@
 import type { WorkoutExerciseSet } from "../../../types";
 import { ArrowDownIcon, ArrowUpIcon, GitCompareArrowsIcon, MinusIcon } from "lucide-react";
+import { memo } from "react";
 
 import { cn } from "@/web/lib/cn";
 
@@ -62,7 +63,7 @@ return "text-muted-foreground";
   );
 };
 
-export const SetListItemCompared = ({ set, previousSet }: Props) => {
+export const SetListItemCompared = memo(({ set, previousSet }: Props) => {
   const currentVolume = set.reps * set.weight;
   const previousVolume = previousSet.reps * previousSet.weight;
 
@@ -120,4 +121,4 @@ export const SetListItemCompared = ({ set, previousSet }: Props) => {
       </div>
     </div>
   );
-};
+});

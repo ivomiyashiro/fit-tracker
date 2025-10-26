@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import { List } from "@/web/components/ui";
 import { SetListItem } from "./set-list-item";
 import { SetListItemCompared } from "./set-list-item-compared";
@@ -33,6 +35,21 @@ export const InfiniteSetList = ({
     workoutExerciseId,
   });
 
+  const renderSetItem = useCallback(({ itemData }: { itemData: any }) => (
+    <div className="flex flex-col gap-3">
+      {itemData.isFirstOfDay && itemData.previousSet && (
+        <SetListItemCompared
+          set={itemData.set}
+          previousSet={itemData.previousSet}
+        />
+      )}
+      <SetListItem
+        set={itemData.set}
+        onClick={() => handleSetClick(itemData.set.id)}
+      />
+    </div>
+  ), [handleSetClick]);
+
   if (isError) {
     return (
       <div className="text-center p-8">
@@ -66,20 +83,7 @@ export const InfiniteSetList = ({
             dataSource={setsWithComparison}
             isSuccess={!isLoading}
             keyExpr={item => item.set.id}
-            itemTemplate={({ itemData }) => (
-              <div className="flex flex-col gap-3">
-                {itemData.isFirstOfDay && itemData.previousSet && (
-                  <SetListItemCompared
-                    set={itemData.set}
-                    previousSet={itemData.previousSet}
-                  />
-                )}
-                <SetListItem
-                  set={itemData.set}
-                  onClick={() => handleSetClick(itemData.set.id)}
-                />
-              </div>
-            )}
+            itemTemplate={renderSetItem}
           />
         </div>
       ))}

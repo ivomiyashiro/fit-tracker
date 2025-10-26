@@ -1,8 +1,7 @@
-import type { ItemClickEvent } from "@/web/components/ui";
 import type { WorkoutExerciseSet } from "@/web/modules/workouts/types";
 
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { useInfiniteWorkoutExerciseSetsQuery } from "@/web/modules/workouts/hooks/queries/use-infinite-workout-exercise-sets.query";
 import { dateFormat } from "@/web/utils/date-format";
@@ -10,6 +9,12 @@ import { dateFormat } from "@/web/utils/date-format";
 type Props = {
   workoutId: number;
   workoutExerciseId: number;
+};
+
+export type SetWithComparison = {
+  set: WorkoutExerciseSet;
+  previousSet?: WorkoutExerciseSet;
+  isFirstOfDay: boolean;
 };
 
 export const useSetList = ({
@@ -31,7 +36,10 @@ export const useSetList = ({
     isLoading,
   } = useInfiniteWorkoutExerciseSetsQuery(Number(workoutExerciseId), 10);
 
-  const allSets = data?.pages.flatMap(page => page.data) || [];
+  const allSets = useMemo(
+    () => data?.pages.flatMap(page => page.data) || [],
+    [data?.pages],
+  );
 
   // Set up intersection observer for infinite scroll
   useEffect(() => {
@@ -58,29 +66,61 @@ export const useSetList = ({
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleSetClick = (e: ItemClickEvent<WorkoutExerciseSet>) => {
-    const set = e.item;
+  const handleSetClick = (setId: number) => {
     if (workoutId && workoutExerciseId) {
       navigate({
         to: "/workouts/$workoutId/we/$workoutExerciseId/sets/$setId",
         params: {
           workoutId: String(workoutId),
           workoutExerciseId: String(workoutExerciseId),
-          setId: String(set.id),
+          setId: String(setId),
         },
       });
     }
   };
 
-  // Group sets by date
-  const groupedSets = allSets.reduce((acc: Record<string, WorkoutExerciseSet[]>, set: WorkoutExerciseSet) => {
-    const date = dateFormat.format(new Date(set.createdAt));
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(set);
-    return acc;
-  }, {});
+  // Group sets by date and add comparison info
+  const groupedSetsWithComparison = useMemo(() => {
+    const grouped: Record<string, SetWithComparison[]> = {};
+    const dateGroups: string[] = [];
+
+    // First pass: group by date
+    allSets.forEach((set) => {
+      const date = dateFormat.format(new Date(set.createdAt));
+      if (!grouped[date]) {
+        grouped[date] = [];
+        dateGroups.push(date);
+      }
+      grouped[date].push({
+        set,
+        isFirstOfDay: false,
+      });
+    });
+
+    // Second pass: mark first set of each day and find previous set
+    dateGroups.forEach((date, dateIndex) => {
+      const setsInDay = grouped[date];
+
+      if (setsInDay.length > 0) {
+        // Mark first set of the day
+        setsInDay[0].isFirstOfDay = true;
+
+        // Find previous set (last set from previous day)
+        if (dateIndex < dateGroups.length - 1) {
+          const previousDate = dateGroups[dateIndex + 1];
+          const previousDaySets = grouped[previousDate];
+
+          if (previousDaySets && previousDaySets.length > 0) {
+            // Get the last set from the previous day
+            const previousSet = previousDaySets[previousDaySets.length - 1].set;
+            setsInDay[0].previousSet = previousSet;
+          }
+        }
+      }
+    });
+
+    return grouped;
+  }, [allSets]);
 
   return {
     // UI state
@@ -94,7 +134,7 @@ export const useSetList = ({
 
     // Data
     allSets,
-    groupedSets,
+    groupedSets: groupedSetsWithComparison,
 
     // Actions
     handleSetClick,

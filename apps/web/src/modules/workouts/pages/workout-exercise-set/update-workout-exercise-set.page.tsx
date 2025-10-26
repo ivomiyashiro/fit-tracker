@@ -9,7 +9,6 @@ const UpdateWorkoutExerciseSetPage = () => {
   const {
     // Data
     setToUpdate,
-
     setId,
 
     // UI state

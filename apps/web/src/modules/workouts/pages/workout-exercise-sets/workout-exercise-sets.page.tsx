@@ -35,14 +35,14 @@ const WorkoutExerciseSetsPage = () => {
         meta={{ title: "Workout Exercise Sets", description: "Workout Exercise Sets" }}
         className="flex flex-col gap-8"
       >
-        <InfiniteSetList
-          workoutId={workoutId}
-          workoutExerciseId={workoutExerciseId}
-        />
         <Button onClick={handleCreateDrawerOpen}>
           <PlusIcon className="w-4 h-4 mt-0.5" />
           Add Set
         </Button>
+        <InfiniteSetList
+          workoutId={workoutId}
+          workoutExerciseId={workoutExerciseId}
+        />
         <CreateSetDrawer
           isOpen={isCreateDrawerOpen}
           onClose={handleCreateDrawerClose}

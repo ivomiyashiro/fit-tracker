@@ -8,11 +8,15 @@ import { SetBadge } from "./set-badge";
 
 type Props = {
   set: WorkoutExerciseSet;
+  onClick?: () => void;
 };
 
-export const SetListItem = ({ set }: Props) => {
+export const SetListItem = ({ set, onClick }: Props) => {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div
+      className="flex flex-col gap-2 w-full cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <span className="text-sm font-medium px-1">

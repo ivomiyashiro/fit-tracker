@@ -1,5 +1,6 @@
 import { List } from "@/web/components/ui";
 import { SetListItem } from "./set-list-item";
+import { SetListItemCompared } from "./set-list-item-compared";
 import { SetListSkeleton } from "./set-list-skeleton";
 import { useSetList } from "./set-list.index.hook";
 
@@ -56,18 +57,28 @@ export const InfiniteSetList = ({
 
   return (
     <div ref={containerRef} className="flex flex-col gap-8">
-      {Object.entries(groupedSets).map(([date, sets]) => (
+      {Object.entries(groupedSets).map(([date, setsWithComparison]) => (
         <div key={date} className="flex flex-col gap-2">
           <span className="text-sm font-semibold px-3 text-muted-foreground">
             {date}
           </span>
           <List
-            dataSource={sets}
+            dataSource={setsWithComparison}
             isSuccess={!isLoading}
-            keyExpr="id"
-            onItemClick={handleSetClick}
-            itemTemplate={({ itemData: set }) => (
-              <SetListItem set={set} />
+            keyExpr={item => item.set.id}
+            itemTemplate={({ itemData }) => (
+              <div className="flex flex-col gap-3">
+                {itemData.isFirstOfDay && itemData.previousSet && (
+                  <SetListItemCompared
+                    set={itemData.set}
+                    previousSet={itemData.previousSet}
+                  />
+                )}
+                <SetListItem
+                  set={itemData.set}
+                  onClick={() => handleSetClick(itemData.set.id)}
+                />
+              </div>
             )}
           />
         </div>

@@ -27,6 +27,8 @@ export const useSetList = ({
     isFetchingNextPage,
     isSuccess,
     isError,
+    isFetching,
+    isLoading,
   } = useInfiniteWorkoutExerciseSetsQuery(Number(workoutExerciseId), 10);
 
   const allSets = data?.pages.flatMap(page => page.data) || [];
@@ -88,6 +90,7 @@ export const useSetList = ({
     isFetchingNextPage,
     isSuccess,
     isError,
+    isLoading: isLoading || isFetching || isFetchingNextPage,
 
     // Data
     allSets,

@@ -1,7 +1,7 @@
 import { PlusIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button } from "@/web/components/ui";
+import { AppHeader, AppHeaderTitle, Button } from "@/web/components/ui";
 import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer.index";
 import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/set-list/set-list.index";
 
@@ -16,6 +16,7 @@ const WorkoutExerciseSetsPage = () => {
 
     // UI state
     isCreateDrawerOpen,
+    isWorkoutsLoading,
 
     // Actions
     handleCreateDrawerClose,
@@ -26,7 +27,7 @@ const WorkoutExerciseSetsPage = () => {
   return (
     <>
       <AppHeader
-        title={`${exercise?.name}`}
+        title={<AppHeaderTitle title={exercise?.name} isLoading={isWorkoutsLoading} />}
         showBackButton
         onBackButtonClick={handleBackNavigation}
       />

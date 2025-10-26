@@ -1,6 +1,6 @@
 import { List } from "@/web/components/ui";
-
 import { SetListItem } from "./set-list-item";
+import { SetListSkeleton } from "./set-list-skeleton";
 import { useSetList } from "./set-list.index.hook";
 
 type Props = {
@@ -18,8 +18,8 @@ export const InfiniteSetList = ({
     observerRef,
     hasNextPage,
     isFetchingNextPage,
-    isSuccess,
     isError,
+    isLoading,
 
     // Data
     allSets,
@@ -41,6 +41,10 @@ export const InfiniteSetList = ({
     );
   }
 
+  if (isLoading && allSets.length === 0) {
+    return <SetListSkeleton />;
+  }
+
   if (allSets.length === 0) {
     return (
       <div className="text-center p-8">
@@ -59,7 +63,7 @@ export const InfiniteSetList = ({
           </span>
           <List
             dataSource={sets}
-            isSuccess={isSuccess}
+            isSuccess={!isLoading}
             keyExpr="id"
             onItemClick={handleSetClick}
             itemTemplate={({ itemData: set }) => (

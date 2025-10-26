@@ -13,7 +13,7 @@ export const useWorkoutExerciseSets = () => {
 
   const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
 
-  const { data: workouts } = useWorkoutsQuery();
+  const { data: workouts, isLoading: isWorkoutsLoading } = useWorkoutsQuery();
   const workout = workouts?.find(w => w.id === Number(workoutId));
   const exercise = workout?.workoutExercises.find(
     we => we.id === Number(workoutExerciseId),
@@ -43,6 +43,7 @@ export const useWorkoutExerciseSets = () => {
 
     // UI state
     isCreateDrawerOpen,
+    isWorkoutsLoading,
 
     // Actions
     handleCreateDrawerClose,

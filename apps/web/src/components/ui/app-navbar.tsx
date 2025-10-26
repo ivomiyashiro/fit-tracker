@@ -7,6 +7,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -75,6 +76,9 @@ export const AppNavbar = () => {
             <AlertDialogTitle className="text-left">
               Are you sure you want to logout?
             </AlertDialogTitle>
+            <AlertDialogDescription className="text-left">
+              You will need to sign in again to access your account.
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-between">
             <AlertDialogCancel onClick={handleLogout}>

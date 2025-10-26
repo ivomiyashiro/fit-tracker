@@ -1,30 +1,25 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader } from "@/web/components/ui";
-import { useWorkoutExerciseSetByIdQuery } from "@/web/modules/workouts/hooks/queries/use-workout-exercise-set-by-id.query";
+import { AppHeader, AppHeaderTitle } from "@/web/components/ui";
 import { DeleteSetButton } from "@/web/modules/workouts/pages/workout-exercise-set/delete-set-button";
 import { UpdateSetForm } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form";
+import { UpdateSetFormSkeleton } from "@/web/modules/workouts/pages/workout-exercise-set/update-set-form-skeleton";
+import { useUpdateWorkoutExerciseSet } from "./update-workout-exercise-set.page.hook";
 
 const UpdateWorkoutExerciseSetPage = () => {
-  const navigate = useNavigate();
-  const { workoutId, workoutExerciseId, setId } = useParams({
-    from: "/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/$setId/",
-  });
+  const {
+    // Data
+    setToUpdate,
 
-  const { data: setToUpdate } = useWorkoutExerciseSetByIdQuery(Number(setId));
+    setId,
 
-  const handleBackClick = () => {
-    navigate({
-      to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
-      params: {
-        workoutId,
-        workoutExerciseId,
-      },
-    });
-  };
+    // UI state
+    isLoading,
 
-  if (!setToUpdate) {
+    // Actions
+    handleBackClick,
+  } = useUpdateWorkoutExerciseSet();
+
+  if (!setToUpdate && !isLoading) {
     return (
       <>
         <AppHeader title="Set Not Found" showBackButton onBackButtonClick={handleBackClick} />
@@ -42,16 +37,30 @@ const UpdateWorkoutExerciseSetPage = () => {
 
   return (
     <>
-      <AppHeader title="Edit Set" showBackButton onBackButtonClick={handleBackClick} />
+      <AppHeader
+        title={<AppHeaderTitle title="Edit Set" />}
+        showBackButton
+        onBackButtonClick={handleBackClick}
+      />
       <PageLayout
         meta={{ title: "Update Set", description: "Update workout exercise set" }}
         className="flex flex-col gap-4"
       >
-        <UpdateSetForm
-          setId={Number(setId)}
-          initialData={setToUpdate}
-        />
-        <DeleteSetButton setId={Number(setId)} />
+        {isLoading
+? (
+          <UpdateSetFormSkeleton />
+        )
+: (
+          setToUpdate && (
+            <>
+              <UpdateSetForm
+                setId={Number(setId)}
+                initialData={setToUpdate}
+              />
+              <DeleteSetButton setId={Number(setId)} />
+            </>
+          )
+        )}
       </PageLayout>
     </>
   );

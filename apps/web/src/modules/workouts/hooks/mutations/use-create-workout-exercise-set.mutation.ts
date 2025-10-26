@@ -40,6 +40,7 @@ return old;
             notes: newSet.notes ?? null,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
+            isOptimistic: true, // Mark as optimistic
           };
 
           // Add to the first page (most recent)

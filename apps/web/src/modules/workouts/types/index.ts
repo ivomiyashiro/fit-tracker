@@ -6,7 +6,9 @@ export type Workout = WorkoutResponse;
 
 export type WorkoutExercise = WorkoutResponse["workoutExercises"][number];
 
-export type WorkoutExerciseSet = SetPaginatedResponse["data"][number];
+export type WorkoutExerciseSet = SetPaginatedResponse["data"][number] & {
+  isOptimistic?: boolean;
+};
 
 export type Exercise = ExerciseResponse["data"][number];
 

@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -13,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
+  Spinner,
 } from "@/web/components/ui";
 import { cn } from "@/web/lib/cn";
 import { useDeleteWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
@@ -32,12 +32,20 @@ export const DeleteSetButton = ({
 
   const { mutate: deleteSetMutation, isPending } = useDeleteWorkoutExerciseSetMutation();
 
-  const handleDelete = () => {
-    deleteSetMutation({ setId });
-    navigate({
-      to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
-      params: { workoutId, workoutExerciseId },
-    });
+  const handleDelete = (e: React.MouseEvent) => {
+    e.preventDefault();
+    deleteSetMutation(
+      { setId },
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+          navigate({
+            to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
+            params: { workoutId, workoutExerciseId },
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -60,14 +68,15 @@ export const DeleteSetButton = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
+          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <Button
             onClick={handleDelete}
             className="bg-destructive text-white hover:bg-destructive/90"
             disabled={isPending}
           >
+            {isPending && <Spinner />}
             {isPending ? "Deleting..." : "Delete"}
-          </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

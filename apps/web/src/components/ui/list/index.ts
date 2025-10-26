@@ -5,6 +5,7 @@ export type {
   ItemDeletedEvent,
   ItemDeletingEvent,
   ItemRenderedEvent,
+  ItemReorderedEvent,
   ListProps,
   ScrollEvent,
   SelectionChangedEvent,

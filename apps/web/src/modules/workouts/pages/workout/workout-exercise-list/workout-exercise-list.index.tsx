@@ -1,9 +1,10 @@
-import type { ItemClickEvent } from "@/web/components/ui/list/list.types";
+import type { ItemClickEvent, ItemReorderedEvent } from "@/web/components/ui/list/list.types";
 
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
 import { useNavigate, useParams } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
+import { useReorderWorkoutExercisesMutation } from "@/web/modules/workouts/hooks/mutations";
 import { WorkoutExerciseListItem } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list-item";
 
 type WorkoutExerciseListProps = {
@@ -17,6 +18,7 @@ export const WorkoutExerciseList = ({
 }: WorkoutExerciseListProps) => {
   const navigate = useNavigate();
   const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
+  const reorderMutation = useReorderWorkoutExercisesMutation();
 
   if (workoutExercises.length === 0 && !isLoading) {
     return (
@@ -34,6 +36,25 @@ export const WorkoutExerciseList = ({
     });
   };
 
+  const handleReorder = (e: ItemReorderedEvent<WorkoutExercise>) => {
+    if (workoutExercises.length === 0)
+      return;
+
+    // Usar el primer ejercicio como referencia (necesario para el endpoint)
+    const firstExerciseId = workoutExercises[0]?.id;
+
+    const reorderedExercises = e.reorderedItems.map((exercise, index) => ({
+      id: exercise.id,
+      order: index + 1,
+    }));
+
+    reorderMutation.mutate({
+      workoutId: Number(workoutId),
+      workoutExerciseId: firstExerciseId,
+      exercises: reorderedExercises,
+    });
+  };
+
   return (
     <List
       dataSource={workoutExercises}
@@ -42,6 +63,8 @@ export const WorkoutExerciseList = ({
       keyExpr="id"
       noDataText="No workout exercises found"
       onItemClick={handleItemClick}
+      onItemReordered={handleReorder}
+      reorderEnabled={true}
       selectByClick={true}
       selectionMode="none"
       itemTemplate={({ itemData: workoutExercise }) => (

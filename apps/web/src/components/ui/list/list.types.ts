@@ -38,6 +38,13 @@ export type ItemDeletedEvent<T> = {
   itemKey: string | number | T;
 };
 
+export type ItemReorderedEvent<T> = {
+  item: T;
+  fromIndex: number;
+  toIndex: number;
+  reorderedItems: T[];
+};
+
 export type ItemRenderedEvent<T> = {
   item: T;
   itemData: T;
@@ -80,6 +87,10 @@ export type ListProps<T> = {
   searchPlaceholder?: string;
   isSuccess?: boolean;
   showSelectedItemsPills?: boolean;
+
+  // Reorder Props
+  reorderEnabled?: boolean;
+  onItemReordered?: (e: ItemReorderedEvent<T>) => void;
 
   // Infinite Scroll Props
   infiniteScrollEnabled?: boolean;

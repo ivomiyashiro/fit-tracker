@@ -5,6 +5,7 @@ export const workoutResponseSchema = z.object({
   name: z.string(),
   workoutExercises: z.array(z.object({
     id: z.number(),
+    order: z.number().optional(),
     exercise: z.object({
       id: z.number(),
       name: z.string(),

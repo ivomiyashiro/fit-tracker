@@ -1,0 +1,1 @@
+ALTER TABLE `workout_exercises` ADD `order` integer DEFAULT 0 NOT NULL;

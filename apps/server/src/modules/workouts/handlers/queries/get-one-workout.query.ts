@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types.js";
@@ -6,7 +6,7 @@ import type { WorkoutResponse } from "@/server/workouts/dtos/responses/index.js"
 import type { GetOneRoute } from "@/server/workouts/endpoints/index.js";
 
 import db from "@/server/db/index.js";
-import { workout } from "@/server/db/schemas/index.js";
+import { workout, workoutExercise } from "@/server/db/schemas/index.js";
 
 export const getOneWorkout: AppRouteHandler<GetOneRoute> = async (c) => {
   const { id } = c.req.valid("param");
@@ -15,6 +15,7 @@ export const getOneWorkout: AppRouteHandler<GetOneRoute> = async (c) => {
   const workoutData = await db.query.workout.findFirst({
     with: {
       workoutExercises: {
+        orderBy: [asc(workoutExercise.order)],
         with: {
           exercise: {
             with: {
@@ -40,6 +41,7 @@ export const getOneWorkout: AppRouteHandler<GetOneRoute> = async (c) => {
     name: workoutData.name,
     workoutExercises: workoutData.workoutExercises.map(we => ({
       id: we.id,
+      order: we.order,
       exercise: {
         id: we.exercise!.id,
         name: we.exercise!.name,

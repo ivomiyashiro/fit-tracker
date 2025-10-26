@@ -26,7 +26,7 @@ type Props = {
   actionButtonComponent?: React.ReactNode;
   showBackButton?: boolean;
   showActionButton?: boolean;
-  title: string;
+  title: string | React.ReactNode;
 };
 
 export const AppHeader = ({

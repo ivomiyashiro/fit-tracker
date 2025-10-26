@@ -1,6 +1,7 @@
 export * from "./alert-dialog";
 export * from "./app-fallback";
 export * from "./app-header";
+export * from "./app-header-title";
 export * from "./app-navbar";
 export * from "./badge";
 export * from "./button";

@@ -4,7 +4,7 @@ import type { WorkoutExercise } from "@/web/modules/workouts/types";
 import { useNavigate, useParams } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
-import { WorkoutExerciseListItemTemplate } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list";
+import { WorkoutExerciseListItem } from "@/web/modules/workouts/pages/workout/workout-exercise-list/workout-exercise-list-item";
 
 type WorkoutExerciseListProps = {
   isLoading: boolean;
@@ -45,7 +45,7 @@ export const WorkoutExerciseList = ({
       selectByClick={true}
       selectionMode="none"
       itemTemplate={({ itemData: workoutExercise }) => (
-        <WorkoutExerciseListItemTemplate
+        <WorkoutExerciseListItem
           workoutExercise={workoutExercise}
         />
       )}

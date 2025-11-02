@@ -61,6 +61,28 @@ export type ScrollEvent = {
   reachedRight: boolean;
 };
 
+export type ListItemProps<T> = {
+  item: T;
+  index: number;
+  itemKey: string | number | T;
+  disabled: boolean;
+  isSelected: boolean;
+  isHovered: boolean;
+  itemClassName: string | ((params: { itemData: T; itemIndex: number; itemKey: string | number | T }) => string);
+  hoveredItemClassName: string;
+  disabledItemClassName: string;
+  showSelectionControls: boolean;
+  selectionMode: "single" | "multiple" | "none";
+  itemTemplate?: ((params: { itemData: T; itemIndex: number; itemKey: string | number | T }) => ReactNode) | ReactNode;
+  displayExpr: string | ((item: T) => string);
+  onItemClick: (item: T, itemKey: string | number | T, index: number, event: React.MouseEvent) => void;
+  onItemContextMenu?: (e: ItemContextMenuEvent<T>) => void;
+  onKeyDown: (event: React.KeyboardEvent, item: T, itemKey: string | number | T, index: number) => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  handleItemSelection: (item: T, itemKey: string | number | T) => void;
+};
+
 export type ListProps<T> = {
   // Core Props
   dataSource?: T[];

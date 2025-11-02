@@ -11,7 +11,7 @@ const db = drizzle({
     authToken: env.DATABASE_TOKEN,
   }),
   schema,
-  logger: env.NODE_ENV === "development",
+  logger: false,
 });
 
 export default db;

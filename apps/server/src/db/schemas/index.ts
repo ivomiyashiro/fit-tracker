@@ -8,4 +8,5 @@ export * from "./user.schema";
 export * from "./verification.schema";
 export * from "./workout-exercise-set.schema";
 export * from "./workout-exercise.schema";
+export * from "./workout-session.schema";
 export * from "./workout.schema";

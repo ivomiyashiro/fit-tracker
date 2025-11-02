@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as AuthenticatedWorkoutsIndexRouteImport } from './routes/_authenticated/workouts.index'
+import { Route as AuthenticatedExercisesIndexRouteImport } from './routes/_authenticated/exercises.index'
 import { Route as PublicAuthSignInRouteImport } from './routes/_public/auth.sign-in'
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth.register'
 import { Route as AuthenticatedWorkoutsCreateRouteImport } from './routes/_authenticated/workouts.create'
@@ -44,6 +45,12 @@ const AuthenticatedWorkoutsIndexRoute =
   AuthenticatedWorkoutsIndexRouteImport.update({
     id: '/workouts/',
     path: '/workouts/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedExercisesIndexRoute =
+  AuthenticatedExercisesIndexRouteImport.update({
+    id: '/exercises/',
+    path: '/exercises/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const PublicAuthSignInRoute = PublicAuthSignInRouteImport.update({
@@ -97,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
   '/auth/sign-in': typeof PublicAuthSignInRoute
+  '/exercises': typeof AuthenticatedExercisesIndexRoute
   '/workouts': typeof AuthenticatedWorkoutsIndexRoute
   '/workouts/$workoutId': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/add-exercises': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
@@ -109,6 +117,7 @@ export interface FileRoutesByTo {
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
   '/auth/sign-in': typeof PublicAuthSignInRoute
+  '/exercises': typeof AuthenticatedExercisesIndexRoute
   '/workouts': typeof AuthenticatedWorkoutsIndexRoute
   '/workouts/$workoutId': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/add-exercises': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
@@ -124,6 +133,7 @@ export interface FileRoutesById {
   '/_authenticated/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/_public/auth/register': typeof PublicAuthRegisterRoute
   '/_public/auth/sign-in': typeof PublicAuthSignInRoute
+  '/_authenticated/exercises/': typeof AuthenticatedExercisesIndexRoute
   '/_authenticated/workouts/': typeof AuthenticatedWorkoutsIndexRoute
   '/_authenticated/workouts/$workoutId/': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/add-exercises/': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/workouts/create'
     | '/auth/register'
     | '/auth/sign-in'
+    | '/exercises'
     | '/workouts'
     | '/workouts/$workoutId'
     | '/workouts/$workoutId/we/$workoutExerciseId/add-exercises'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/workouts/create'
     | '/auth/register'
     | '/auth/sign-in'
+    | '/exercises'
     | '/workouts'
     | '/workouts/$workoutId'
     | '/workouts/$workoutId/we/$workoutExerciseId/add-exercises'
@@ -164,6 +176,7 @@ export interface FileRouteTypes {
     | '/_authenticated/workouts/create'
     | '/_public/auth/register'
     | '/_public/auth/sign-in'
+    | '/_authenticated/exercises/'
     | '/_authenticated/workouts/'
     | '/_authenticated/workouts/$workoutId/'
     | '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/add-exercises/'
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/workouts'
       fullPath: '/workouts'
       preLoaderRoute: typeof AuthenticatedWorkoutsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/exercises/': {
+      id: '/_authenticated/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises'
+      preLoaderRoute: typeof AuthenticatedExercisesIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_public/auth/sign-in': {
@@ -268,6 +288,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedWorkoutsCreateRoute: typeof AuthenticatedWorkoutsCreateRoute
+  AuthenticatedExercisesIndexRoute: typeof AuthenticatedExercisesIndexRoute
   AuthenticatedWorkoutsIndexRoute: typeof AuthenticatedWorkoutsIndexRoute
   AuthenticatedWorkoutsWorkoutIdIndexRoute: typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute: typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
@@ -277,6 +298,7 @@ interface AuthenticatedRouteChildren {
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedWorkoutsCreateRoute: AuthenticatedWorkoutsCreateRoute,
+  AuthenticatedExercisesIndexRoute: AuthenticatedExercisesIndexRoute,
   AuthenticatedWorkoutsIndexRoute: AuthenticatedWorkoutsIndexRoute,
   AuthenticatedWorkoutsWorkoutIdIndexRoute:
     AuthenticatedWorkoutsWorkoutIdIndexRoute,

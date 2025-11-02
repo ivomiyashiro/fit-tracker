@@ -4,7 +4,9 @@ import type { WorkoutResponse } from "@/dtos/workouts/responses";
 
 export type Workout = WorkoutResponse;
 
-export type WorkoutExercise = WorkoutResponse["workoutExercises"][number];
+export type WorkoutExercise = WorkoutResponse["workoutExercises"][number] & {
+  hasCompletedSets?: boolean;
+};
 
 export type WorkoutExerciseSet = SetPaginatedResponse["data"][number] & {
   isOptimistic?: boolean;
@@ -31,6 +33,7 @@ export type WorkoutSessionDetail = {
   completedAt: string | null;
   duration: number | null;
   notes: string | null;
+  lastIncompleteExerciseIndex?: number;
   workout: {
     id: number;
     name: string;

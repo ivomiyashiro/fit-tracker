@@ -18,10 +18,11 @@ export const useTodaysWorkout = () => {
   const handleStartWorkout = useCallback(async () => {
     // If there's an active session, resume it
     if (hasActiveSession && activeSession) {
+      const exerciseIndex = activeSession.lastIncompleteExerciseIndex ?? 0;
       navigate({
         to: "/todays-workout/session/$sessionId",
         params: { sessionId: String(activeSession.id) },
-        search: { exerciseIndex: 0 }, // TODO: Calculate the last incomplete exercise
+        search: { exerciseIndex },
       });
       return;
     }

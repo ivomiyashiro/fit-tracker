@@ -1,11 +1,11 @@
-import { and, eq, isNull } from "drizzle-orm";
+import { and, count, eq, gt, isNull } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types.js";
 import type { GetActiveWorkoutSessionRoute } from "@/server/workout-sessions/endpoints/get-active-workout-session.endpoint.js";
 
 import db from "@/server/db/index.js";
-import { workoutSession } from "@/server/db/schemas/index.js";
+import { workoutExercise, workoutExerciseSet, workoutSession } from "@/server/db/schemas/index.js";
 
 export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRoute> = async (c) => {
   const userId = c.get("auth").user.id;
@@ -45,6 +45,30 @@ export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRou
     );
   }
 
+  // Get workout exercise IDs that have sets completed
+  const exercisesWithSets = await db
+    .select({
+      workoutExerciseId: workoutExercise.id,
+      setCount: count(workoutExerciseSet.id),
+    })
+    .from(workoutExercise)
+    .leftJoin(
+      workoutExerciseSet,
+      eq(workoutExercise.id, workoutExerciseSet.workoutExerciseId),
+    )
+    .where(eq(workoutExercise.workoutId, session.workoutId))
+    .groupBy(workoutExercise.id)
+    .having(gt(count(workoutExerciseSet.id), 0));
+
+  const completedExerciseIds = new Set(
+    exercisesWithSets.map(e => e.workoutExerciseId),
+  );
+
+  // Find the index of the last incomplete exercise
+  const lastIncompleteExerciseIndex = session.workout.workoutExercises.findIndex(
+    we => !completedExerciseIds.has(we.id),
+  );
+
   const response = {
     id: session.id,
     workoutId: session.workoutId,
@@ -52,6 +76,7 @@ export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRou
     completedAt: session.completedAt?.toISOString() ?? null,
     duration: session.duration,
     notes: session.notes,
+    lastIncompleteExerciseIndex: lastIncompleteExerciseIndex !== -1 ? lastIncompleteExerciseIndex : 0,
     workout: {
       id: session.workout.id,
       name: session.workout.name,
@@ -59,6 +84,7 @@ export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRou
       workoutExercises: session.workout.workoutExercises.map(we => ({
         id: we.id,
         order: we.order,
+        hasCompletedSets: completedExerciseIds.has(we.id),
         exercise: {
           id: we.exercise!.id,
           name: we.exercise!.name,

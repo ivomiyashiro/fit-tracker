@@ -14,6 +14,7 @@ const exerciseSchema = z.object({
 const workoutExerciseSchema = z.object({
   id: z.number(),
   order: z.number(),
+  hasCompletedSets: z.boolean().optional(),
   exercise: exerciseSchema,
 });
 
@@ -31,6 +32,7 @@ export const workoutSessionDetailSchema = z.object({
   completedAt: z.string().nullable(),
   duration: z.number().nullable(),
   notes: z.string().nullable(),
+  lastIncompleteExerciseIndex: z.number().optional(),
   workout: workoutSchema,
   createdAt: z.string(),
   updatedAt: z.string(),

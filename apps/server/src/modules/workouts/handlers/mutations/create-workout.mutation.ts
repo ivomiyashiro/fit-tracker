@@ -58,6 +58,7 @@ export const createWorkout: AppRouteHandler<CreateRoute> = async (c) => {
   const result: WorkoutResponse = {
     id: newWorkout.id,
     name: newWorkout.name,
+    order: newWorkout.order,
     workoutExercises: workoutExercisesResponse,
     createdAt: newWorkout.createdAt.toISOString(),
     updatedAt: newWorkout.updatedAt.toISOString(),

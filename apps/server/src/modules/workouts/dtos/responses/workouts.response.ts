@@ -3,6 +3,7 @@ import { z } from "zod";
 export const workoutResponseSchema = z.object({
   id: z.number(),
   name: z.string(),
+  order: z.number().optional(),
   workoutExercises: z.array(z.object({
     id: z.number(),
     order: z.number().optional(),

@@ -12,11 +12,13 @@
       "@/server/health/*": ["./src/modules/health/*"],
       "@/server/sets/*": ["./src/modules/sets/*"],
       "@/server/workout-exercises/*": ["./src/modules/workout-exercises/*"],
+      "@/server/workout-sessions/*": ["./src/modules/workout-sessions/*"],
       "@/server/workouts/*": ["./src/modules/workouts/*"],
       "@/server/muscle-groups/*": ["./src/modules/muscle-groups/*"],
       "@/dtos/auth/*": ["./src/modules/auth/dtos/*"],
       "@/dtos/exercises/*": ["./src/modules/exercises/dtos/*"],
       "@/dtos/sets/*": ["./src/modules/sets/dtos/*"],
+      "@/dtos/workout-sessions/*": ["./src/modules/workout-sessions/dtos/*"],
       "@/dtos/workouts/*": ["./src/modules/workouts/dtos/*"]
     },
     "resolveJsonModule": true,

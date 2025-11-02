@@ -91,6 +91,7 @@ export const updateWorkout: AppRouteHandler<UpdateRoute> = async (c) => {
   const result: WorkoutResponse = {
     id: updatedWorkout.id,
     name: updatedWorkout.name,
+    order: updatedWorkout.order,
     workoutExercises: workoutExercisesResponse,
     createdAt: updatedWorkout.createdAt.toISOString(),
     updatedAt: updatedWorkout.updatedAt.toISOString(),

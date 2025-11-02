@@ -10,6 +10,7 @@ import createApp from "@/server/lib/create-app.js";
 import muscleGroups from "@/server/muscle-groups/muscle-groups.index.js";
 import sets from "@/server/sets/sets.index.js";
 import workoutExercises from "@/server/workout-exercises/workout-exercises.index.js";
+import workoutsSessions from "@/server/workout-sessions/workout-sessions.index.js";
 import workouts from "@/server/workouts/workouts.index.js";
 
 import env from "./env.js";
@@ -28,6 +29,7 @@ const routes = [
   sets,
   muscleGroups,
   workoutExercises,
+  workoutsSessions,
   workouts,
 ] as const;
 

@@ -39,6 +39,7 @@ export const getOneWorkout: AppRouteHandler<GetOneRoute> = async (c) => {
   const result: WorkoutResponse = {
     id: workoutData.id,
     name: workoutData.name,
+    order: workoutData.order,
     workoutExercises: workoutData.workoutExercises.map(we => ({
       id: we.id,
       order: we.order,

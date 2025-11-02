@@ -10,9 +10,11 @@ const router = createRouter();
 router.use(requireAuth);
 
 router.openapi(endpoints.listWorkouts, queries.listWorkouts);
+router.openapi(endpoints.getNextWorkout, queries.getNextWorkout);
 router.openapi(endpoints.createWorkout, mutations.createWorkout);
 router.openapi(endpoints.getOneWorkout, queries.getOneWorkout);
 router.openapi(endpoints.updateWorkout, mutations.updateWorkout);
+router.openapi(endpoints.reorderWorkouts, mutations.reorderWorkouts);
 router.openapi(endpoints.bulkDeleteWorkout, mutations.bulkDeleteWorkout);
 
 export default router;

@@ -27,13 +27,16 @@ export const listWorkouts: AppRouteHandler<ListRoute> = async (c) => {
       },
     },
     where: eq(workout.userId, userId),
+    orderBy: [workout.order],
   });
 
   const result: WorkoutResponse[] = workouts.map(workout => ({
     id: workout.id,
     name: workout.name,
+    order: workout.order,
     workoutExercises: workout.workoutExercises.map(we => ({
       id: we.id,
+      order: we.order,
       exercise: {
         id: we.exercise!.id,
         name: we.exercise!.name,

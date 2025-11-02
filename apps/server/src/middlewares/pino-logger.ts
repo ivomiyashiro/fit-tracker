@@ -7,6 +7,7 @@ import env from "@/server/env.js";
 export function pinoLogger() {
   return logger({
     pino: pino({
+      enabled: false,
       level: env.LOG_LEVEL || "info",
     }, env.NODE_ENV === "production" ? undefined : pretty()),
   });

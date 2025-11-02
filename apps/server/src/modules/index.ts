@@ -10,6 +10,7 @@ import health from "./health/health.index.js";
 import muscleGroups from "./muscle-groups/muscle-groups.index.js";
 import sets from "./sets/sets.index.js";
 import workoutExercises from "./workout-exercises/workout-exercises.index.js";
+import workoutSessions from "./workout-sessions/workout-sessions.index.js";
 import workouts from "./workouts/workouts.index.js";
 
 export function registerRoutes(app: AppOpenAPI) {
@@ -20,6 +21,7 @@ export function registerRoutes(app: AppOpenAPI) {
     .route("/", muscleGroups)
     .route("/", sets)
     .route("/", workoutExercises)
+    .route("/", workoutSessions)
     .route("/", workouts);
 }
 

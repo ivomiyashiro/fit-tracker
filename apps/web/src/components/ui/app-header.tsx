@@ -41,9 +41,13 @@ export const AppHeader = ({
 
   const handleBackButtonClick = () => {
     if (onBackButtonClick) {
-      onBackButtonClick();
+      return onBackButtonClick();
     }
-    else {
+
+    try {
+      window.history.back();
+    }
+    catch {
       navigate({ to: "/" });
     }
   };

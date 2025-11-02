@@ -1,9 +1,10 @@
+import type { ItemClickEvent } from "@/web/components/ui/list/list.types";
+
 import type { Exercise } from "@/web/modules/exercises/types";
 
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-
 import { useDeleteExercisesMutation } from "@/web/modules/exercises/hooks/mutations";
-import { useInfiniteExercisesQuery } from "@/web/modules/exercises/hooks/queries";
 
 const useExercisesSelection = () => {
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
@@ -14,12 +15,6 @@ const useExercisesSelection = () => {
     if (selectionEnabled) {
       setSelectedExercises([]);
     }
-  };
-
-  const toggleSelection = (exercise: Exercise) => {
-    setSelectedExercises(prev =>
-      prev.includes(exercise) ? prev.filter(e => e.id !== exercise.id) : [...prev, exercise],
-    );
   };
 
   const setSelectedExercisesFromList = (exercises: Exercise[]) => {
@@ -34,15 +29,12 @@ const useExercisesSelection = () => {
     selectedExercises,
     selectionEnabled,
     toggleSelectionEnabled,
-    toggleSelection,
     setSelectedExercisesFromList,
     clearSelection,
   };
 };
 
 export const useExercisesList = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
   const {
     selectionEnabled,
     toggleSelectionEnabled,
@@ -50,20 +42,26 @@ export const useExercisesList = () => {
     setSelectedExercisesFromList,
     clearSelection,
   } = useExercisesSelection();
-
+  const navigate = useNavigate();
   const { mutate: deleteExercises, isPending: isDeletingExercises } = useDeleteExercisesMutation();
-  const { data, isSuccess, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteExercisesQuery(searchTerm);
 
-  const exercises = data?.pages.flatMap(page => page.data) || [];
+  const handleAddNewExercise = () => {
+    navigate({
+      to: "/exercises/create",
+    });
+  };
+
+  const handleItemClick = (e: ItemClickEvent<Exercise>) => {
+    navigate({
+      to: "/exercises/$exerciseId",
+      params: { exerciseId: String(e.item.id) },
+    });
+  };
 
   const handleDeleteExercises = () => {
     deleteExercises(selectedExercises.map(e => e.id));
     clearSelection();
     toggleSelectionEnabled();
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
   };
 
   return {
@@ -73,19 +71,10 @@ export const useExercisesList = () => {
     selectedExercises,
     setSelectedExercisesFromList,
 
-    // Search
-    searchTerm,
-    handleSearchChange,
-
     // Actions
     handleDeleteExercises,
+    handleItemClick,
+    handleAddNewExercise,
     isDeletingExercises,
-
-    // Data
-    isSuccess,
-    exercises,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
   };
 };

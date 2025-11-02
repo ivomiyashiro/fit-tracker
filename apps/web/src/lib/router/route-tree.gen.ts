@@ -18,7 +18,9 @@ import { Route as AuthenticatedExercisesIndexRouteImport } from './routes/_authe
 import { Route as PublicAuthSignInRouteImport } from './routes/_public/auth.sign-in'
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth.register'
 import { Route as AuthenticatedWorkoutsCreateRouteImport } from './routes/_authenticated/workouts.create'
+import { Route as AuthenticatedExercisesCreateRouteImport } from './routes/_authenticated/exercises.create'
 import { Route as AuthenticatedWorkoutsWorkoutIdIndexRouteImport } from './routes/_authenticated/workouts.$workoutId.index'
+import { Route as AuthenticatedExercisesExerciseIdIndexRouteImport } from './routes/_authenticated/exercises.$exerciseId.index'
 import { Route as AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRouteImport } from './routes/_authenticated/workouts.$workoutId.we.$workoutExerciseId.sets.index'
 import { Route as AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRouteImport } from './routes/_authenticated/workouts.$workoutId.we.$workoutExerciseId.add-exercises.index'
 import { Route as AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsSetIdIndexRouteImport } from './routes/_authenticated/workouts.$workoutId.we.$workoutExerciseId.sets.$setId.index'
@@ -69,10 +71,22 @@ const AuthenticatedWorkoutsCreateRoute =
     path: '/workouts/create',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedExercisesCreateRoute =
+  AuthenticatedExercisesCreateRouteImport.update({
+    id: '/exercises/create',
+    path: '/exercises/create',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedWorkoutsWorkoutIdIndexRoute =
   AuthenticatedWorkoutsWorkoutIdIndexRouteImport.update({
     id: '/workouts/$workoutId/',
     path: '/workouts/$workoutId/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedExercisesExerciseIdIndexRoute =
+  AuthenticatedExercisesExerciseIdIndexRouteImport.update({
+    id: '/exercises/$exerciseId/',
+    path: '/exercises/$exerciseId/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute =
@@ -101,11 +115,13 @@ const AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsSetIdIndexRoute =
 export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/': typeof PublicIndexRoute
+  '/exercises/create': typeof AuthenticatedExercisesCreateRoute
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
   '/auth/sign-in': typeof PublicAuthSignInRoute
   '/exercises': typeof AuthenticatedExercisesIndexRoute
   '/workouts': typeof AuthenticatedWorkoutsIndexRoute
+  '/exercises/$exerciseId': typeof AuthenticatedExercisesExerciseIdIndexRoute
   '/workouts/$workoutId': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/add-exercises': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/sets': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute
@@ -114,11 +130,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/': typeof PublicIndexRoute
+  '/exercises/create': typeof AuthenticatedExercisesCreateRoute
   '/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/auth/register': typeof PublicAuthRegisterRoute
   '/auth/sign-in': typeof PublicAuthSignInRoute
   '/exercises': typeof AuthenticatedExercisesIndexRoute
   '/workouts': typeof AuthenticatedWorkoutsIndexRoute
+  '/exercises/$exerciseId': typeof AuthenticatedExercisesExerciseIdIndexRoute
   '/workouts/$workoutId': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/add-exercises': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
   '/workouts/$workoutId/we/$workoutExerciseId/sets': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute
@@ -130,11 +148,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_public/': typeof PublicIndexRoute
+  '/_authenticated/exercises/create': typeof AuthenticatedExercisesCreateRoute
   '/_authenticated/workouts/create': typeof AuthenticatedWorkoutsCreateRoute
   '/_public/auth/register': typeof PublicAuthRegisterRoute
   '/_public/auth/sign-in': typeof PublicAuthSignInRoute
   '/_authenticated/exercises/': typeof AuthenticatedExercisesIndexRoute
   '/_authenticated/workouts/': typeof AuthenticatedWorkoutsIndexRoute
+  '/_authenticated/exercises/$exerciseId/': typeof AuthenticatedExercisesExerciseIdIndexRoute
   '/_authenticated/workouts/$workoutId/': typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/add-exercises/': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
   '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/': typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute
@@ -145,11 +165,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/404'
     | '/'
+    | '/exercises/create'
     | '/workouts/create'
     | '/auth/register'
     | '/auth/sign-in'
     | '/exercises'
     | '/workouts'
+    | '/exercises/$exerciseId'
     | '/workouts/$workoutId'
     | '/workouts/$workoutId/we/$workoutExerciseId/add-exercises'
     | '/workouts/$workoutId/we/$workoutExerciseId/sets'
@@ -158,11 +180,13 @@ export interface FileRouteTypes {
   to:
     | '/404'
     | '/'
+    | '/exercises/create'
     | '/workouts/create'
     | '/auth/register'
     | '/auth/sign-in'
     | '/exercises'
     | '/workouts'
+    | '/exercises/$exerciseId'
     | '/workouts/$workoutId'
     | '/workouts/$workoutId/we/$workoutExerciseId/add-exercises'
     | '/workouts/$workoutId/we/$workoutExerciseId/sets'
@@ -173,11 +197,13 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_public'
     | '/_public/'
+    | '/_authenticated/exercises/create'
     | '/_authenticated/workouts/create'
     | '/_public/auth/register'
     | '/_public/auth/sign-in'
     | '/_authenticated/exercises/'
     | '/_authenticated/workouts/'
+    | '/_authenticated/exercises/$exerciseId/'
     | '/_authenticated/workouts/$workoutId/'
     | '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/add-exercises/'
     | '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/'
@@ -255,11 +281,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWorkoutsCreateRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/exercises/create': {
+      id: '/_authenticated/exercises/create'
+      path: '/exercises/create'
+      fullPath: '/exercises/create'
+      preLoaderRoute: typeof AuthenticatedExercisesCreateRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/workouts/$workoutId/': {
       id: '/_authenticated/workouts/$workoutId/'
       path: '/workouts/$workoutId'
       fullPath: '/workouts/$workoutId'
       preLoaderRoute: typeof AuthenticatedWorkoutsWorkoutIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/exercises/$exerciseId/': {
+      id: '/_authenticated/exercises/$exerciseId/'
+      path: '/exercises/$exerciseId'
+      fullPath: '/exercises/$exerciseId'
+      preLoaderRoute: typeof AuthenticatedExercisesExerciseIdIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/workouts/$workoutId/we/$workoutExerciseId/sets/': {
@@ -287,9 +327,11 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedExercisesCreateRoute: typeof AuthenticatedExercisesCreateRoute
   AuthenticatedWorkoutsCreateRoute: typeof AuthenticatedWorkoutsCreateRoute
   AuthenticatedExercisesIndexRoute: typeof AuthenticatedExercisesIndexRoute
   AuthenticatedWorkoutsIndexRoute: typeof AuthenticatedWorkoutsIndexRoute
+  AuthenticatedExercisesExerciseIdIndexRoute: typeof AuthenticatedExercisesExerciseIdIndexRoute
   AuthenticatedWorkoutsWorkoutIdIndexRoute: typeof AuthenticatedWorkoutsWorkoutIdIndexRoute
   AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute: typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute
   AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute: typeof AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdSetsIndexRoute
@@ -297,9 +339,12 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedExercisesCreateRoute: AuthenticatedExercisesCreateRoute,
   AuthenticatedWorkoutsCreateRoute: AuthenticatedWorkoutsCreateRoute,
   AuthenticatedExercisesIndexRoute: AuthenticatedExercisesIndexRoute,
   AuthenticatedWorkoutsIndexRoute: AuthenticatedWorkoutsIndexRoute,
+  AuthenticatedExercisesExerciseIdIndexRoute:
+    AuthenticatedExercisesExerciseIdIndexRoute,
   AuthenticatedWorkoutsWorkoutIdIndexRoute:
     AuthenticatedWorkoutsWorkoutIdIndexRoute,
   AuthenticatedWorkoutsWorkoutIdWeWorkoutExerciseIdAddExercisesIndexRoute:

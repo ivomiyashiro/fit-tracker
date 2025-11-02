@@ -1,8 +1,8 @@
-import { SquareMousePointerIcon } from "lucide-react";
+import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button, SearchInput } from "@/web/components/ui";
-import { ExercisesList } from "@/web/modules/exercises/pages/exercise-list/exercise-list/exercise-list.index";
+import { AppHeader, Button } from "@/web/components/ui";
+import { ExerciseSelectionList } from "@/web/modules/exercises/pages/exercise-list/exercise-list/exercise-list.index";
 
 import { useExercisesList } from "./exercise-list.page.hook";
 
@@ -14,20 +14,11 @@ export default function ExerciseListPage() {
     selectedExercises,
     setSelectedExercisesFromList,
 
-    // Search
-    searchTerm,
-    handleSearchChange,
-
     // Actions
     handleDeleteExercises,
+    handleAddNewExercise,
+    handleItemClick,
     isDeletingExercises,
-
-    // Data
-    isSuccess,
-    exercises,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
   } = useExercisesList();
 
   return (
@@ -50,33 +41,16 @@ export default function ExerciseListPage() {
         meta={{ title: "Exercises", description: "Exercise library" }}
         className="flex flex-col gap-4"
       >
-        <SearchInput
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search exercises..."
+        <ExerciseSelectionList
+          selectionEnabled={selectionEnabled}
+          selectedExercises={selectedExercises}
+          onItemClick={handleItemClick}
+          onSelectionChanged={setSelectedExercisesFromList}
         />
-
-        <div className="flex-1">
-          <ExercisesList
-            isSuccess={isSuccess}
-            exercises={exercises}
-            selectionEnabled={selectionEnabled}
-            selectedExercises={selectedExercises}
-            onSelectionChanged={setSelectedExercisesFromList}
-          />
-          {hasNextPage && (
-            <div className="text-center py-4">
-              <Button
-                variant="outline"
-                onClick={() => fetchNextPage()}
-                disabled={isFetchingNextPage}
-              >
-                {isFetchingNextPage ? "Loading..." : "Load More"}
-              </Button>
-            </div>
-          )}
-        </div>
-
+        <Button className="w-full" onClick={handleAddNewExercise}>
+          <PlusIcon className="w-4 h-4" />
+          Add New Exercise
+        </Button>
         {selectedExercises.length > 0 && (
           <div className="flex justify-end">
             <Button

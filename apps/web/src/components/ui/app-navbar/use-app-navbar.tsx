@@ -1,21 +1,20 @@
-import { useNavigate } from "@tanstack/react-router";
-import { BicepsFlexedIcon, LogOutIcon, MoonIcon, NotebookIcon, SunIcon } from "lucide-react";
+import { useLocation, useNavigate } from "@tanstack/react-router";
+import { BicepsFlexedIcon, LogOutIcon, MoonIcon, NotebookIcon, PlayCircle, SunIcon } from "lucide-react";
 
 import { useTheme } from "@/web/lib/theme/use-theme";
-import { useNextWorkoutQuery } from "@/web/modules/workouts/hooks/queries";
+
+import { useNavbarContext } from "./navbar-context";
 
 export const useAppNavbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { theme, setTheme } = useTheme();
-  const { data: nextWorkout } = useNextWorkoutQuery();
+  const { startWorkoutHandlerRef, isStartingWorkout, isLoadingWorkout } = useNavbarContext();
+
+  const isOnTodaysWorkoutPage = location.pathname === "/todays-workout";
 
   const handleNextWorkout = () => {
-    if (nextWorkout) {
-      navigate({
-        to: "/workouts/$workoutId",
-        params: { workoutId: String(nextWorkout.id) },
-      });
-    }
+    navigate({ to: "/todays-workout" });
   };
 
   const toggleTheme = () => {
@@ -47,9 +46,29 @@ export const useAppNavbar = () => {
     },
   ];
 
+  const getCenterButtonConfig = () => {
+    if (isOnTodaysWorkoutPage && startWorkoutHandlerRef.current) {
+      return {
+        icon: <PlayCircle className="w-7 h-7 text-primary-foreground" />,
+        onClick: () => startWorkoutHandlerRef.current?.(),
+        disabled: isStartingWorkout || isLoadingWorkout,
+        isLoading: isStartingWorkout,
+      };
+    }
+
+    return {
+      icon: null,
+      onClick: handleNextWorkout,
+      disabled: false,
+      isLoading: false,
+    };
+  };
+
   return {
     handleNextWorkout,
     getNavbarItems,
     getRightNavbarItems,
+    getCenterButtonConfig,
+    isOnTodaysWorkoutPage,
   };
 };

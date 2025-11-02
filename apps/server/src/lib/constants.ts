@@ -14,3 +14,5 @@ export const ZOD_ERROR_CODES = {
 export const BASE_PATH = "/api";
 
 export const notFoundSchema = createMessageObjectSchema(HttpStatusPhrases.NOT_FOUND);
+export const unauthorizedSchema = createMessageObjectSchema(HttpStatusPhrases.UNAUTHORIZED);
+export const badRequestSchema = createMessageObjectSchema(HttpStatusPhrases.BAD_REQUEST);

@@ -25,7 +25,7 @@ const nextWorkoutResponseSchema = z.object({
   })),
   lastSession: z.object({
     id: z.number(),
-    completedAt: z.string(),
+    completedAt: z.string().optional(),
   }).optional(),
   createdAt: z.string(),
   updatedAt: z.string(),

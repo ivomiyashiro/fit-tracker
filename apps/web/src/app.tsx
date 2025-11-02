@@ -3,6 +3,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 import { AppFallback, Toaster } from "@/web/components/ui";
+import { NavbarProvider } from "@/web/components/ui/app-navbar/navbar-context";
 import { useSession } from "@/web/lib/auth";
 import queryClient from "@/web/lib/query-client";
 import { router } from "@/web/lib/router/router.index";
@@ -18,10 +19,12 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <Suspense fallback={<AppFallback />}>
-          <RouterProvider router={router} context={{ auth }} />
-          <Toaster richColors position="bottom-center" />
-        </Suspense>
+        <NavbarProvider>
+          <Suspense fallback={<AppFallback />}>
+            <RouterProvider router={router} context={{ auth }} />
+            <Toaster richColors position="bottom-center" />
+          </Suspense>
+        </NavbarProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

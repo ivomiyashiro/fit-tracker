@@ -17,9 +17,47 @@ export type MuscleGroups = Exercise["muscleGroups"][number];
 export type WorkoutSession = {
   id: number;
   workoutId: number;
-  completedAt: string;
+  completedAt: string | null;
   duration?: number;
   notes?: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type WorkoutSessionDetail = {
+  id: number;
+  workoutId: number;
+  userId: string;
+  completedAt: string | null;
+  duration: number | null;
+  notes: string | null;
+  workout: {
+    id: number;
+    name: string;
+    order: number;
+    workoutExercises: WorkoutExercise[];
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type WorkoutSessionSummary = {
+  session: {
+    id: number;
+    workoutName: string;
+    completedAt: string | null;
+    duration: number;
+  };
+  stats: {
+    totalSets: number;
+    totalVolume: number;
+    exercisesCompleted: number;
+  };
+  exerciseBreakdown: Array<{
+    exerciseName: string;
+    sets: number;
+    volume: number;
+    avgReps: number;
+    avgWeight: number;
+  }>;
 };

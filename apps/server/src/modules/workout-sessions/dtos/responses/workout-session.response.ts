@@ -3,7 +3,7 @@ import { z } from "zod";
 export const workoutSessionResponseSchema = z.object({
   id: z.number(),
   workoutId: z.number(),
-  completedAt: z.string(),
+  completedAt: z.string().nullable(),
   duration: z.number().nullable(),
   notes: z.string().nullable(),
   createdAt: z.string(),

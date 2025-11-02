@@ -12,7 +12,7 @@ export const AppNavbar = () => {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { handleNextWorkout, getNavbarItems, getRightNavbarItems } = useAppNavbar();
+  const { getNavbarItems, getRightNavbarItems, getCenterButtonConfig } = useAppNavbar();
 
   const handleConfirmLogout = () => {
     setIsLogoutDialogOpen(false);
@@ -22,6 +22,7 @@ export const AppNavbar = () => {
 
   const navbarItems = getNavbarItems();
   const rightNavbarItems = getRightNavbarItems(() => setIsLogoutDialogOpen(true));
+  const centerButtonConfig = getCenterButtonConfig();
 
   return (
     <nav className="bg-background border rounded-full mx-4 sm:max-w-md sm:mx-auto">
@@ -30,7 +31,12 @@ export const AppNavbar = () => {
           <NavbarItem key={item.path} {...item} />
         ))}
 
-        <NextWorkoutButton onClick={handleNextWorkout} />
+        <NextWorkoutButton
+          onClick={centerButtonConfig.onClick}
+          icon={centerButtonConfig.icon}
+          disabled={centerButtonConfig.disabled}
+          isLoading={centerButtonConfig.isLoading}
+        />
 
         {rightNavbarItems.map((item, index) => (
           <NavbarItem key={item.path || `nav-item-${index}`} {...item} />

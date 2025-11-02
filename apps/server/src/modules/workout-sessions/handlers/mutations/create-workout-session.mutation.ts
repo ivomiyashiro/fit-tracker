@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/server/lib/types.js";
@@ -10,6 +10,21 @@ import { workout, workoutSession } from "@/server/db/schemas/index.js";
 export const createWorkoutSession: AppRouteHandler<CreateWorkoutSessionRoute> = async (c) => {
   const { workoutId, completedAt, duration, notes } = c.req.valid("json");
   const userId = c.get("auth").user.id;
+
+  // Check if there's an active session
+  const activeSession = await db.query.workoutSession.findFirst({
+    where: and(
+      eq(workoutSession.userId, userId),
+      isNull(workoutSession.completedAt),
+    ),
+  });
+
+  if (activeSession) {
+    return c.json(
+      { message: "You have an active workout session. Please complete it before starting a new one." },
+      HttpStatusCodes.CONFLICT,
+    );
+  }
 
   const userWorkout = await db.query.workout.findFirst({
     where: eq(workout.id, workoutId),
@@ -25,7 +40,7 @@ export const createWorkoutSession: AppRouteHandler<CreateWorkoutSessionRoute> = 
   const [newSession] = await db.insert(workoutSession).values({
     workoutId,
     userId,
-    completedAt: completedAt ? new Date(completedAt) : new Date(),
+    completedAt: completedAt ? new Date(completedAt) : null,
     duration,
     notes,
   }).returning();
@@ -34,7 +49,7 @@ export const createWorkoutSession: AppRouteHandler<CreateWorkoutSessionRoute> = 
     {
       id: newSession.id,
       workoutId: newSession.workoutId,
-      completedAt: newSession.completedAt.toISOString(),
+      completedAt: newSession.completedAt?.toISOString() ?? null,
       duration: newSession.duration,
       notes: newSession.notes,
       createdAt: newSession.createdAt.toISOString(),

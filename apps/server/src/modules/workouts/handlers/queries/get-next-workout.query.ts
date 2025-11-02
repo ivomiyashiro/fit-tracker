@@ -88,7 +88,7 @@ export const getNextWorkout: AppRouteHandler<GetNextWorkoutRoute> = async (c) =>
     lastSession: lastSession
       ? {
           id: Number(lastSession.id),
-          completedAt: lastSession.completedAt.toISOString(),
+          completedAt: lastSession.completedAt?.toISOString(),
         }
       : undefined,
     createdAt: nextWorkout.createdAt.toISOString(),

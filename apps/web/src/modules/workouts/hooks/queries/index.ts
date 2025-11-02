@@ -1,3 +1,4 @@
+export * from "./use-active-workout-session.query";
 export * from "./use-exercises.query";
 export * from "./use-infinite-workout-exercise-sets.query";
 export * from "./use-next-workout.query";

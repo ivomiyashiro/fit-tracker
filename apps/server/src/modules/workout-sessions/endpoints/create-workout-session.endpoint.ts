@@ -28,6 +28,10 @@ export const createWorkoutSession = createRoute({
       notFoundSchema,
       "Workout not found",
     ),
+    [HttpStatusCodes.CONFLICT]: jsonContent(
+      notFoundSchema,
+      "Active workout session already exists",
+    ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(createWorkoutSessionSchema),
       "The validation error(s)",

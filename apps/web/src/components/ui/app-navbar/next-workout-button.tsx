@@ -1,10 +1,14 @@
-import { DumbbellIcon } from "lucide-react";
+import type { ReactNode } from "react";
+import { DumbbellIcon, Loader2 } from "lucide-react";
 
 type NextWorkoutButtonProps = {
   onClick: () => void;
+  icon?: ReactNode;
+  disabled?: boolean;
+  isLoading?: boolean;
 };
 
-export const NextWorkoutButton = ({ onClick }: NextWorkoutButtonProps) => {
+export const NextWorkoutButton = ({ onClick, icon, disabled, isLoading }: NextWorkoutButtonProps) => {
   return (
     <>
       <li className="px-6"></li>
@@ -14,9 +18,16 @@ export const NextWorkoutButton = ({ onClick }: NextWorkoutButtonProps) => {
           <button
             type="button"
             onClick={onClick}
-            className="relative p-3 transition-colors rounded-full bg-primary z-10"
+            disabled={disabled}
+            className="relative p-3 transition-colors rounded-full bg-primary z-10 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <DumbbellIcon className="w-7 h-7 text-primary-foreground" />
+            {isLoading
+? (
+              <Loader2 className="w-7 h-7 text-primary-foreground animate-spin" />
+            )
+: (
+              icon || <DumbbellIcon className="w-7 h-7 text-primary-foreground" />
+            )}
           </button>
         </div>
       </li>

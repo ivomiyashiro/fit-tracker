@@ -13,3 +13,13 @@ export type WorkoutExerciseSet = SetPaginatedResponse["data"][number] & {
 export type Exercise = ExerciseResponse["data"][number];
 
 export type MuscleGroups = Exercise["muscleGroups"][number];
+
+export type WorkoutSession = {
+  id: number;
+  workoutId: number;
+  completedAt: string;
+  duration?: number;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+};

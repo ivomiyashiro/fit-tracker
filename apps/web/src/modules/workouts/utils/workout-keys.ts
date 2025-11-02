@@ -4,4 +4,5 @@ export const workoutQueryKeys = {
   list: (filters?: Record<string, unknown>) => [...workoutQueryKeys.lists(), filters] as const,
   details: () => [...workoutQueryKeys.all, "detail"] as const,
   detail: (id: number) => [...workoutQueryKeys.details(), id] as const,
+  next: () => [...workoutQueryKeys.all, "next"] as const,
 } as const;

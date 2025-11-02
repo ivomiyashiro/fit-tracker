@@ -1,9 +1,10 @@
-import type { ItemClickEvent, SelectionChangedEvent } from "@/web/components/ui/list/list.types";
+import type { ItemClickEvent, ItemReorderedEvent, SelectionChangedEvent } from "@/web/components/ui/list/list.types";
 
 import type { Workout } from "@/web/modules/workouts/types";
 import { useNavigate } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
+import { useReorderWorkoutsMutation } from "@/web/modules/workouts/hooks/mutations";
 
 import { WorkoutListItemTemplate } from "./workout-list-item-template";
 
@@ -25,6 +26,7 @@ export const WorkoutsList = ({
   onWorkoutClick,
 }: WorkoutsListProps) => {
   const navigate = useNavigate();
+  const reorderMutation = useReorderWorkoutsMutation();
 
   const selectedWorkoutIds = selectedWorkouts.map(w => w.id);
 
@@ -44,6 +46,18 @@ export const WorkoutsList = ({
     }
   };
 
+  const handleReorder = (e: ItemReorderedEvent<Workout>) => {
+    if (workouts.length === 0)
+      return;
+
+    const reorderedWorkouts = e.reorderedItems.map((workout, index) => ({
+      id: workout.id,
+      order: index + 1,
+    }));
+
+    reorderMutation.mutate({ workouts: reorderedWorkouts });
+  };
+
   if (workouts.length === 0 && !isLoading) {
     return (
       <div className="text-center pt-8">
@@ -60,7 +74,9 @@ export const WorkoutsList = ({
       displayExpr="name"
       keyExpr="id"
       onItemClick={handleItemClick}
+      onItemReordered={handleReorder}
       onSelectionChanged={handleSelectionChanged}
+      reorderEnabled={!selectionEnabled}
       selectByClick={true}
       selectedItemKeys={selectedWorkoutIds}
       selectionMode={selectionEnabled ? "multiple" : "none"}

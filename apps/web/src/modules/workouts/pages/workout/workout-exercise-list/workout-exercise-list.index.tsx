@@ -40,7 +40,7 @@ export const WorkoutExerciseList = ({
     if (workoutExercises.length === 0)
       return;
 
-    // Usar el primer ejercicio como referencia (necesario para el endpoint)
+    // Use the first exercise as a reference (needed for the endpoint)
     const firstExerciseId = workoutExercises[0]?.id;
 
     const reorderedExercises = e.reorderedItems.map((exercise, index) => ({

@@ -71,7 +71,7 @@ export const AppHeader = ({
   );
 
   return (
-    <header className="border-b border-border border-r border-l mx-4 sm:max-w-md rounded-b-lg px-4 sm:mx-auto">
+    <header className="border-b border-border border-r border-l mx-4 sm:max-w-md rounded-b-lg px-2 sm:mx-auto">
       <div className="relative flex items-center justify-center p-4 sm:px-0 sm:max-w-md sm:mx-auto">
         {showBackButton && (
           <div className="absolute left-0">

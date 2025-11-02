@@ -26,6 +26,14 @@ class WorkoutService {
   async deleteWorkouts(workoutIds: number[]): Promise<void> {
     return await apiClient.delete(`/workouts`, workoutIds);
   }
+
+  async getNextWorkout(): Promise<Workout> {
+    return await apiClient.get(`/workouts/next`);
+  }
+
+  async reorderWorkouts(workouts: Array<{ id: number; order: number }>): Promise<void> {
+    return await apiClient.patch(`/workouts/reorder`, { workouts });
+  }
 }
 
 export const workoutService = new WorkoutService();

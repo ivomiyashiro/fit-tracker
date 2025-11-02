@@ -1,5 +1,4 @@
 import { Link, Navigate } from "@tanstack/react-router";
-import { EditIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button } from "@/web/components/ui";
@@ -43,7 +42,6 @@ const WorkoutPage = () => {
         <div className="flex justify-end flex-col gap-2">
           <Link to="/workouts/$workoutId/we/$workoutExerciseId/add-exercises" params={{ workoutId, workoutExerciseId: "1" }} className="w-full">
             <Button className="w-full" disabled={isLoading}>
-              <EditIcon className="w-4 h-4 mr-1 mt-0.5" />
               Edit Workout Exercises
             </Button>
           </Link>

@@ -1,5 +1,3 @@
-import { SquareMousePointerIcon } from "lucide-react";
-
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button, DeleteConfirmationButton } from "@/web/components/ui";
 import { ExerciseSelectionList } from "@/web/modules/exercises/pages/exercise-list/exercise-list/exercise-list.index";
@@ -24,18 +22,10 @@ export default function ExerciseListPage() {
   return (
     <>
       <AppHeader
-        actionButtonComponent={(
-          <Button
-            variant="secondary"
-            className="w-9 h-9 text-muted-foreground"
-            onClick={toggleSelectionEnabled}
-          >
-            <SquareMousePointerIcon className="w-4 h-4" />
-          </Button>
-        )}
-        onActionButtonClick={toggleSelectionEnabled}
         showActionButton={true}
         title="Exercises"
+        selectionMode={selectionEnabled}
+        onSelectionModeToggle={toggleSelectionEnabled}
       />
       <PageLayout
         meta={{ title: "Exercises", description: "Exercise library" }}

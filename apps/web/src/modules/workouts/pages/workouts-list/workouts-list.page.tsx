@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button, Spinner } from "@/web/components/ui";
@@ -27,18 +26,10 @@ export default function WorkoutsListPage() {
   return (
     <>
       <AppHeader
-        actionButtonComponent={(
-          <Button
-            variant="secondary"
-            className="w-9 h-9 text-muted-foreground"
-            onClick={toggleSelectionEnabled}
-          >
-            <SquareMousePointerIcon className="w-4 h-4" />
-          </Button>
-        )}
-        onActionButtonClick={toggleSelectionEnabled}
         showActionButton={true}
         title="Workouts"
+        selectionMode={selectionEnabled}
+        onSelectionModeToggle={toggleSelectionEnabled}
       />
       <PageLayout
         meta={{ title: "Workouts", description: "Workouts" }}

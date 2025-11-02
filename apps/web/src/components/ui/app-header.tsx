@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
+import { ArrowLeftIcon, MoreVerticalIcon, SquareMousePointerIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/web/components/ui";
 
@@ -27,6 +27,9 @@ type Props = {
   showBackButton?: boolean;
   showActionButton?: boolean;
   title: string | React.ReactNode;
+  // Selection mode props
+  selectionMode?: boolean;
+  onSelectionModeToggle?: () => void;
 };
 
 export const AppHeader = ({
@@ -36,6 +39,8 @@ export const AppHeader = ({
   showBackButton,
   showActionButton,
   title,
+  selectionMode,
+  onSelectionModeToggle,
 }: Props) => {
   const navigate = useNavigate();
 
@@ -51,6 +56,19 @@ export const AppHeader = ({
       navigate({ to: "/" });
     }
   };
+
+  // Default selection mode button if selection mode is enabled
+  const defaultSelectionButton = onSelectionModeToggle && (
+    <Button
+      variant="secondary"
+      className="w-9 h-9 text-muted-foreground"
+      onClick={onSelectionModeToggle}
+    >
+      {selectionMode
+        ? <XIcon className="w-4 h-4" />
+        : <SquareMousePointerIcon className="w-4 h-4" />}
+    </Button>
+  );
 
   return (
     <header className="border-b border-border border-r border-l mx-4 sm:max-w-md rounded-b-lg px-4 sm:mx-auto">
@@ -68,7 +86,7 @@ export const AppHeader = ({
         {showActionButton && (
           <div className="absolute right-0">
             <ActionButton
-              actionButtonComponent={actionButtonComponent}
+              actionButtonComponent={actionButtonComponent || defaultSelectionButton}
               onActionButtonClick={onActionButtonClick}
             />
           </div>

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { BicepsFlexedIcon, LogOutIcon, MoonIcon, NotebookIcon, PlayCircle, SunIcon } from "lucide-react";
+import { BicepsFlexedIcon, LogOutIcon, MoonIcon, NotebookIcon, PlayCircle, Plus, SunIcon } from "lucide-react";
 
 import { useTheme } from "@/web/lib/theme/use-theme";
 
@@ -9,9 +9,16 @@ export const useAppNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
-  const { startWorkoutHandlerRef, isStartingWorkout, isLoadingWorkout } = useNavbarContext();
+  const {
+    startWorkoutHandlerRef,
+    isStartingWorkout,
+    isLoadingWorkout,
+    addSetHandlerRef,
+    isAddingSet,
+  } = useNavbarContext();
 
   const isOnTodaysWorkoutPage = location.pathname === "/todays-workout";
+  const isOnActiveSessionPage = location.pathname.includes("/todays-workout/session/");
 
   const handleNextWorkout = () => {
     navigate({ to: "/todays-workout" });
@@ -47,7 +54,18 @@ export const useAppNavbar = () => {
   ];
 
   const getCenterButtonConfig = () => {
-    if (isOnTodaysWorkoutPage && startWorkoutHandlerRef.current) {
+    // Active session page - show "+" button to add set
+    if (isOnActiveSessionPage) {
+      return {
+        icon: <Plus className="w-7 h-7 text-primary-foreground" />,
+        onClick: () => addSetHandlerRef.current?.(),
+        disabled: isAddingSet,
+        isLoading: isAddingSet,
+      };
+    }
+
+    // Today's workout page - show play button to start workout
+    if (isOnTodaysWorkoutPage) {
       return {
         icon: <PlayCircle className="w-7 h-7 text-primary-foreground" />,
         onClick: () => startWorkoutHandlerRef.current?.(),
@@ -70,5 +88,6 @@ export const useAppNavbar = () => {
     getRightNavbarItems,
     getCenterButtonConfig,
     isOnTodaysWorkoutPage,
+    isOnActiveSessionPage,
   };
 };

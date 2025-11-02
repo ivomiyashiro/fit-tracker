@@ -1,7 +1,8 @@
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { useNavbarContext } from "@/web/components/ui/app-navbar/navbar-context";
 import { useUpdateWorkoutSessionMutation, useWorkoutSessionQuery } from "@/web/modules/todays-workout/hooks";
 
 export const useActiveSession = () => {
@@ -11,8 +12,11 @@ export const useActiveSession = () => {
 
   const { data: session, isLoading } = useWorkoutSessionQuery(Number(sessionId));
   const updateSessionMutation = useUpdateWorkoutSessionMutation();
+  const { addSetHandlerRef } = useNavbarContext();
 
-  const currentExerciseIndex = Number(exerciseIndex);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const currentExerciseIndex = exerciseIndex;
   const currentExercise = session?.workout?.workoutExercises?.[currentExerciseIndex];
   const totalExercises = session?.workout?.workoutExercises?.length ?? 0;
 
@@ -80,8 +84,7 @@ export const useActiveSession = () => {
         params: { sessionId: String(sessionId) },
       });
     }
-    catch (error) {
-      console.error("Failed to complete workout:", error);
+    catch {
       toast.error("Failed to complete workout");
     }
   };
@@ -89,6 +92,26 @@ export const useActiveSession = () => {
   const handleBack = () => {
     navigate({ to: "/workouts" });
   };
+
+  const handleOpenDrawer = useCallback(() => {
+    setIsDrawerOpen(true);
+  }, []);
+
+  const handleCloseDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+  }, []);
+
+  // Assign the add set handler to the ref
+  useEffect(() => {
+    addSetHandlerRef.current = handleOpenDrawer;
+  }, [handleOpenDrawer, addSetHandlerRef]);
+
+  // Cleanup when component unmounts
+  useEffect(() => {
+    return () => {
+      addSetHandlerRef.current = null;
+    };
+  }, [addSetHandlerRef]);
 
   return {
     session,
@@ -103,5 +126,8 @@ export const useActiveSession = () => {
     handleNextExercise,
     handleFinishWorkout,
     handleBack,
+    isDrawerOpen,
+    handleOpenDrawer,
+    handleCloseDrawer,
   };
 };

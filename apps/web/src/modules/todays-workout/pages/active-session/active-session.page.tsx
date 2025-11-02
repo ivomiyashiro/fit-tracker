@@ -22,6 +22,8 @@ const ActiveSessionPage = () => {
     handleNextExercise,
     handleFinishWorkout,
     handleBack,
+    isDrawerOpen,
+    handleCloseDrawer,
   } = useActiveSession();
 
   if (isLoading || !session || !currentExercise) {
@@ -93,8 +95,8 @@ const ActiveSessionPage = () => {
         />
 
         <CreateSetDrawer
-          isOpen={false}
-          onClose={() => {}}
+          isOpen={isDrawerOpen}
+          onClose={handleCloseDrawer}
           workoutExerciseId={currentExercise.id}
         />
       </PageLayout>

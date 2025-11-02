@@ -2,19 +2,24 @@ import type { ReactNode } from "react";
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 
 type NavbarContextType = {
-  startWorkoutHandlerRef: React.MutableRefObject<(() => void) | null>;
+  startWorkoutHandlerRef: React.RefObject<(() => void) | null>;
   isStartingWorkout: boolean;
   isLoadingWorkout: boolean;
   setIsStartingWorkout: (isStarting: boolean) => void;
   setIsLoadingWorkout: (isLoading: boolean) => void;
+  addSetHandlerRef: React.RefObject<(() => void) | null>;
+  isAddingSet: boolean;
+  setIsAddingSet: (isAdding: boolean) => void;
 };
 
 const NavbarContext = createContext<NavbarContextType | undefined>(undefined);
 
 export const NavbarProvider = ({ children }: { children: ReactNode }) => {
   const startWorkoutHandlerRef = useRef<(() => void) | null>(null);
+  const addSetHandlerRef = useRef<(() => void) | null>(null);
   const [isStartingWorkout, setIsStartingWorkout] = useState(false);
   const [isLoadingWorkout, setIsLoadingWorkout] = useState(false);
+  const [isAddingSet, setIsAddingSet] = useState(false);
 
   // Memoize setter functions to prevent recreating them on every render
   const memoizedSetIsStartingWorkout = useCallback((isStarting: boolean) => {
@@ -25,6 +30,10 @@ export const NavbarProvider = ({ children }: { children: ReactNode }) => {
     setIsLoadingWorkout(isLoading);
   }, []);
 
+  const memoizedSetIsAddingSet = useCallback((isAdding: boolean) => {
+    setIsAddingSet(isAdding);
+  }, []);
+
   const value = useMemo(
     () => ({
       startWorkoutHandlerRef,
@@ -32,12 +41,17 @@ export const NavbarProvider = ({ children }: { children: ReactNode }) => {
       isLoadingWorkout,
       setIsStartingWorkout: memoizedSetIsStartingWorkout,
       setIsLoadingWorkout: memoizedSetIsLoadingWorkout,
+      addSetHandlerRef,
+      isAddingSet,
+      setIsAddingSet: memoizedSetIsAddingSet,
     }),
     [
       isStartingWorkout,
       isLoadingWorkout,
       memoizedSetIsStartingWorkout,
       memoizedSetIsLoadingWorkout,
+      isAddingSet,
+      memoizedSetIsAddingSet,
     ],
   );
 

@@ -14,6 +14,5 @@ export const useDeleteExercisesMutation = () => {
       queryClient.invalidateQueries({ queryKey: exercisesQueryKeys.all });
       toast.success("Exercises deleted successfully");
     },
-    onError: error => toast.error(error.message || "Failed to delete exercises"),
   });
 };

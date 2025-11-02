@@ -4,6 +4,7 @@ import type { ExerciseResponse } from "@/dtos/exercises/responses";
 import type { Exercise, MuscleGroup, SingleExercise } from "@/web/modules/exercises/types";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { exercisesService, muscleGroupsService } from "@/web/modules/exercises/services";
 import { exercisesQueryKeys } from "@/web/modules/exercises/utils";
@@ -49,8 +50,9 @@ export const useCreateExerciseMutation = () => {
       queryClient.setQueriesData<InfiniteData<ExerciseResponse>>(
         { queryKey: exercisesQueryKeys.lists() },
         (old) => {
-          if (!old)
-return old;
+          if (!old) {
+            return old;
+          }
 
           // Find the correct position for the new exercise (alphabetically, case-insensitive)
           const firstPageData = old.pages[0]?.data || [];
@@ -93,13 +95,19 @@ return old;
       return { previousExercises };
     },
 
-    onError: (_error, _newExercise, context) => {
+    onError: (error, _newExercise, context) => {
       // Rollback to previous state on error
       if (context?.previousExercises) {
         context.previousExercises.forEach(([queryKey, data]) => {
           queryClient.setQueryData(queryKey, data);
         });
       }
+
+      // Show error toast
+      const errorMessage = error instanceof Error
+        ? error.message
+        : "Failed to create exercise";
+      toast.error(errorMessage);
     },
 
     onSuccess: () => {

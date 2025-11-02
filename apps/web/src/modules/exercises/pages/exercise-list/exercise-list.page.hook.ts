@@ -59,9 +59,12 @@ export const useExercisesList = () => {
   };
 
   const handleDeleteExercises = () => {
-    deleteExercises(selectedExercises.map(e => e.id));
-    clearSelection();
-    toggleSelectionEnabled();
+    deleteExercises(selectedExercises.map(e => e.id), {
+      onSuccess: () => {
+        clearSelection();
+        toggleSelectionEnabled();
+      },
+    });
   };
 
   return {

@@ -1,7 +1,7 @@
 import { SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button } from "@/web/components/ui";
+import { AppHeader, Button, DeleteConfirmationButton } from "@/web/components/ui";
 import { ExerciseSelectionList } from "@/web/modules/exercises/pages/exercise-list/exercise-list/exercise-list.index";
 
 import { useExercisesList } from "./exercise-list.page.hook";
@@ -52,16 +52,17 @@ export default function ExerciseListPage() {
         </Button>
         {selectedExercises.length > 0 && (
           <div className="flex justify-end">
-            <Button
+            <DeleteConfirmationButton
+              title={`Delete Exercise${selectedExercises.length > 1 ? "s" : ""}`}
+              description={`Are you sure you want to delete ${selectedExercises.length} exercise${selectedExercises.length > 1 ? "s" : ""}? This action cannot be undone and will also remove ${selectedExercises.length > 1 ? "them" : "it"} from all workouts.`}
+              buttonText={`Delete Exercise${selectedExercises.length > 1 ? "s" : ""}`}
+              deletingText="Deleting..."
+              confirmText="Delete"
+              isDeleting={isDeletingExercises}
+              onConfirm={handleDeleteExercises}
               variant="destructive"
               className="w-full"
-              onClick={handleDeleteExercises}
-              disabled={isDeletingExercises}
-            >
-              {isDeletingExercises
-                ? "Deleting..."
-                : `Delete Exercise${selectedExercises.length > 1 ? "s" : ""}`}
-            </Button>
+            />
           </div>
         )}
       </PageLayout>

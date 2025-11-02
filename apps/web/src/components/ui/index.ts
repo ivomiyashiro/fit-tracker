@@ -7,6 +7,7 @@ export * from "./badge";
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";
+export * from "./delete-confirmation-button";
 export * from "./drawer";
 export * from "./form-field";
 export * from "./increment-input";

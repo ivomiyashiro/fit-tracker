@@ -1,6 +1,6 @@
 import type { MuscleGroup } from "@/web/modules/exercises/types";
 
-import { Button, Input, Label } from "@/web/components/ui";
+import { Button, Input, Label, Spinner } from "@/web/components/ui";
 import { MuscleGroupSelectionList } from "@/web/modules/exercises/components";
 
 type ExerciseFormProps = {
@@ -59,6 +59,7 @@ export const ExerciseForm = ({
           onClick={onSubmit}
           disabled={!canSave || isSubmitting}
         >
+          {isSubmitting ? <Spinner /> : null}
           {isSubmitting ? submittingButtonText : submitButtonText}
         </Button>
       </div>

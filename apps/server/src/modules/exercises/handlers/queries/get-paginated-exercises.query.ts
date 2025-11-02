@@ -1,4 +1,4 @@
-import { and, count, like } from "drizzle-orm";
+import { and, count, like, sql } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { GetPaginatedExercisesRoute } from "@/server/exercises/endpoints/index.js";
@@ -31,7 +31,7 @@ export const getPaginatedExercises: AppRouteHandler<GetPaginatedExercisesRoute> 
   // Get paginated exercises
   const exercises = await db.query.exercise.findMany({
     where: whereConditions.length > 0 ? and(...whereConditions) : undefined,
-    orderBy: (exercise, { asc }) => [asc(exercise.name)],
+    orderBy: () => [sql`LOWER(${exercise.name}) ASC`],
     limit,
     offset,
     with: {

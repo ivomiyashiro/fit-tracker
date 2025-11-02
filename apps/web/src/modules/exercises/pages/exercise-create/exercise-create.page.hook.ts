@@ -3,11 +3,14 @@ import type { MuscleGroup } from "@/web/modules/exercises/types";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { useCreateExerciseMutation } from "@/web/modules/exercises/hooks/mutations/use-create-exercise.mutation";
+
 export const useExerciseCreate = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState<MuscleGroup[]>([]);
-  const [isCreating, setIsCreating] = useState(false);
+
+  const createMutation = useCreateExerciseMutation();
 
   const handleNameChange = (value: string) => {
     setName(value);
@@ -18,16 +21,17 @@ export const useExerciseCreate = () => {
   };
 
   const handleCreate = () => {
-    // TODO: Implementar la lógica de creación cuando esté el backend
-    setIsCreating(true);
-    // eslint-disable-next-line no-console
-    console.log("Creating exercise:", { name, muscleGroups: selectedMuscleGroups });
-
-    // Simular creación exitosa y redirigir
-    setTimeout(() => {
-      setIsCreating(false);
-      navigate({ to: "/exercises" });
-    }, 1000);
+    createMutation.mutate(
+      {
+        name,
+        muscleGroupIds: selectedMuscleGroups.map(mg => mg.id),
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: "/exercises" });
+        },
+      },
+    );
   };
 
   const canSave = name.trim() !== "" && selectedMuscleGroups.length > 0;
@@ -35,7 +39,7 @@ export const useExerciseCreate = () => {
   return {
     name,
     selectedMuscleGroups,
-    isCreating,
+    isCreating: createMutation.isPending,
     canSave,
     handleNameChange,
     handleMuscleGroupsChange,

@@ -1,5 +1,3 @@
-import { PlusIcon } from "lucide-react";
-
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, AppHeaderTitle, Button } from "@/web/components/ui";
 import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer.index";
@@ -36,7 +34,6 @@ const WorkoutExerciseSetsPage = () => {
         className="flex flex-col gap-8"
       >
         <Button onClick={handleCreateDrawerOpen}>
-          <PlusIcon className="w-4 h-4 mt-0.5" />
           Add Set
         </Button>
         <InfiniteSetList

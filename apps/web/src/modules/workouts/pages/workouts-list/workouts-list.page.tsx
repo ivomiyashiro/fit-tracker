@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
+import { SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button, Spinner } from "@/web/components/ui";
@@ -65,7 +65,6 @@ export default function WorkoutsListPage() {
           )}
           <Link to="/workouts/create" className="w-full">
             <Button className="w-full" disabled={isLoading || isDeletingWorkouts}>
-              <PlusIcon className="w-4 h-4 mr-1 mt-0.5" />
               Create Workout
             </Button>
           </Link>

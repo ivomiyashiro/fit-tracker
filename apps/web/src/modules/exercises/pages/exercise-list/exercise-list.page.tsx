@@ -1,4 +1,4 @@
-import { PlusIcon, SquareMousePointerIcon } from "lucide-react";
+import { SquareMousePointerIcon } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
 import { AppHeader, Button } from "@/web/components/ui";
@@ -48,7 +48,6 @@ export default function ExerciseListPage() {
           onSelectionChanged={setSelectedExercisesFromList}
         />
         <Button className="w-full" onClick={handleAddNewExercise}>
-          <PlusIcon className="w-4 h-4" />
           Add New Exercise
         </Button>
         {selectedExercises.length > 0 && (
@@ -59,8 +58,9 @@ export default function ExerciseListPage() {
               onClick={handleDeleteExercises}
               disabled={isDeletingExercises}
             >
-              Delete Exercise
-              {selectedExercises.length > 1 ? "s" : ""}
+              {isDeletingExercises
+                ? "Deleting..."
+                : `Delete Exercise${selectedExercises.length > 1 ? "s" : ""}`}
             </Button>
           </div>
         )}

@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, AppHeaderTitle, Button } from "@/web/components/ui";
+import { AppHeader, AppHeaderTitle, Button, Spinner } from "@/web/components/ui";
 import { CreateSetDrawer } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer.index";
 import { InfiniteSetList } from "@/web/modules/workouts/pages/workout-exercise-sets/set-list/set-list.index";
 
@@ -18,6 +18,7 @@ const ActiveSessionPage = () => {
     canGoNext,
     isLastExercise,
     isLoading,
+    isFinishingWorkout,
     handlePreviousExercise,
     handleNextExercise,
     handleFinishWorkout,
@@ -73,7 +74,12 @@ const ActiveSessionPage = () => {
 
           {isLastExercise
 ? (
-            <Button onClick={handleFinishWorkout} className="flex-1">
+            <Button
+              onClick={handleFinishWorkout}
+              disabled={isFinishingWorkout}
+              className="flex-1"
+            >
+              {isFinishingWorkout && <Spinner />}
               Finish Workout
             </Button>
           )

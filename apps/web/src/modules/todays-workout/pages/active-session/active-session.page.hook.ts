@@ -122,6 +122,7 @@ export const useActiveSession = () => {
     canGoNext,
     isLastExercise,
     isLoading,
+    isFinishingWorkout: updateSessionMutation.isPending,
     handlePreviousExercise,
     handleNextExercise,
     handleFinishWorkout,

@@ -29,6 +29,9 @@ export const useUpdateWorkoutSessionMutation = () => {
       queryClient.invalidateQueries({
         queryKey: workoutQueryKeys.next(),
       });
+      queryClient.invalidateQueries({
+        queryKey: workoutSessionKeys.active(),
+      });
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update workout session");

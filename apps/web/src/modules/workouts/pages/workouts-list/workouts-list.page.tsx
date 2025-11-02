@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader, Button, Spinner } from "@/web/components/ui";
+import { AppHeader, Button, DeleteConfirmationButton } from "@/web/components/ui";
 import { WorkoutsList } from "@/web/modules/workouts/pages/workouts-list/workout-list/workout-list.index";
 
 import { useWorkoutsList } from "./workouts-list.page.hook";
@@ -44,15 +44,17 @@ export default function WorkoutsListPage() {
         />
         <div className="flex justify-end flex-col gap-2">
           {selectedWorkouts.length > 0 && (
-            <Button
+            <DeleteConfirmationButton
+              title={`Delete Workout${selectedWorkouts.length > 1 ? "s" : ""}`}
+              description={`Are you sure you want to delete ${selectedWorkouts.length} workout${selectedWorkouts.length > 1 ? "s" : ""}? This action cannot be undone.`}
+              buttonText={`Delete Workout${selectedWorkouts.length > 1 ? "s" : ""}`}
+              deletingText="Deleting..."
+              confirmText="Delete"
+              isDeleting={isDeletingWorkouts}
+              onConfirm={handleDeleteWorkouts}
               variant="destructive"
               className="w-full"
-              onClick={handleDeleteWorkouts}
-              disabled={isDeletingWorkouts}
-            >
-              {isDeletingWorkouts && <Spinner />}
-              Delete Workouts
-            </Button>
+            />
           )}
           <Link to="/workouts/create" className="w-full">
             <Button className="w-full" disabled={isLoading || isDeletingWorkouts}>

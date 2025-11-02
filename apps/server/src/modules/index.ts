@@ -7,6 +7,7 @@ import createRouter from "@/server/lib/create-app.js";
 import auth from "./auth/auth.index.js";
 import exercises from "./exercises/exercises.index.js";
 import health from "./health/health.index.js";
+import muscleGroups from "./muscle-groups/muscle-groups.index.js";
 import sets from "./sets/sets.index.js";
 import workoutExercises from "./workout-exercises/workout-exercises.index.js";
 import workouts from "./workouts/workouts.index.js";
@@ -16,6 +17,7 @@ export function registerRoutes(app: AppOpenAPI) {
     .route("/", auth)
     .route("/", exercises)
     .route("/", health)
+    .route("/", muscleGroups)
     .route("/", sets)
     .route("/", workoutExercises)
     .route("/", workouts);

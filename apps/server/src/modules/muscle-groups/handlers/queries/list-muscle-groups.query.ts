@@ -1,6 +1,6 @@
 import type { AppRouteHandler } from "@/server/lib/types.js";
-import type { MuscleGroupResponse } from "@/server/modules/exercises/dtos/responses/index.js";
-import type { ListMuscleGroupsRoute } from "@/server/modules/exercises/endpoints/index.js";
+import type { MuscleGroupResponse } from "@/server/modules/muscle-groups/dtos/responses/index.js";
+import type { ListMuscleGroupsRoute } from "@/server/modules/muscle-groups/endpoints/index.js";
 
 import db from "@/server/db/index.js";
 

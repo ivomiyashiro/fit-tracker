@@ -7,6 +7,7 @@ import exercises from "@/server/exercises/exercises.index.js";
 import health from "@/server/health/health.index.js";
 import configureOpenAPI from "@/server/lib/configure-open-api.js";
 import createApp from "@/server/lib/create-app.js";
+import muscleGroups from "@/server/muscle-groups/muscle-groups.index.js";
 import sets from "@/server/sets/sets.index.js";
 import workoutExercises from "@/server/workout-exercises/workout-exercises.index.js";
 import workouts from "@/server/workouts/workouts.index.js";
@@ -25,6 +26,7 @@ const routes = [
   // protected routes
   exercises,
   sets,
+  muscleGroups,
   workoutExercises,
   workouts,
 ] as const;

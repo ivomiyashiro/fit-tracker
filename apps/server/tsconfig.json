@@ -13,6 +13,7 @@
       "@/server/sets/*": ["./src/modules/sets/*"],
       "@/server/workout-exercises/*": ["./src/modules/workout-exercises/*"],
       "@/server/workouts/*": ["./src/modules/workouts/*"],
+      "@/server/muscle-groups/*": ["./src/modules/muscle-groups/*"],
       "@/dtos/auth/*": ["./src/modules/auth/dtos/*"],
       "@/dtos/exercises/*": ["./src/modules/exercises/dtos/*"],
       "@/dtos/sets/*": ["./src/modules/sets/dtos/*"],

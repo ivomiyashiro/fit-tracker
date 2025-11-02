@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { DumbbellIcon, LogOutIcon, MoonIcon, SunIcon, Zap } from "lucide-react";
+import { BicepsFlexedIcon, DumbbellIcon, LogOutIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -59,7 +59,7 @@ export const AppNavbar = () => {
           onClick={() => navigate({ to: "/workouts" })}
         />
         <NavbarItem
-          icon={<Zap className="w-5 h-5" />}
+          icon={<BicepsFlexedIcon className="w-5 h-5" />}
           path="/exercises"
           onClick={() => navigate({ to: "/exercises" })}
         />

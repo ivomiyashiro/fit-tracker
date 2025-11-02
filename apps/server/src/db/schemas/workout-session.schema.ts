@@ -16,8 +16,7 @@ export const workoutSession = sqliteTable("workout_sessions", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  completedAt: integer("completed_at", { mode: "timestamp" })
-    .notNull(),
+  completedAt: integer("completed_at", { mode: "timestamp" }),
   duration: integer("duration"),
   notes: text("notes", { length: 1000 }),
   createdAt: integer("created_at", { mode: "timestamp" })

@@ -43,8 +43,6 @@ export const useTodaysWorkout = () => {
         params: { sessionId: String(session.id) },
         search: { exerciseIndex: 0 },
       });
-
-      toast.success("Workout session started!");
     }
     catch (error: any) {
       if (error?.message?.includes("active workout session")) {

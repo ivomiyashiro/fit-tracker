@@ -77,8 +77,6 @@ export const useActiveSession = () => {
         },
       });
 
-      toast.success("Workout completed!");
-
       navigate({
         to: "/workouts/session/$sessionId/summary",
         params: { sessionId: String(sessionId) },

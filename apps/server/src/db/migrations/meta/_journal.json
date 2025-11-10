@@ -43,6 +43,13 @@
       "when": 1762112329320,
       "tag": "0005_flaky_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1762779634004,
+      "tag": "0006_awesome_titanium_man",
+      "breakpoints": true
     }
   ]
 }

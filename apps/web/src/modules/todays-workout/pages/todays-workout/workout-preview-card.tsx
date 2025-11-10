@@ -33,10 +33,8 @@ exercise
         {lastSessionDate && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <CalendarDays className="w-4 h-4" />
-            <span>
-Last completed:
-{new Date(lastSessionDate).toLocaleDateString()}
-            </span>
+            <span>Last completed:</span>
+            <span>{new Date(lastSessionDate).toLocaleDateString()}</span>
           </div>
         )}
       </CardContent>

@@ -68,7 +68,7 @@ const ActiveSessionPage = () => {
             variant="outline"
             className="flex-1"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
+            <ChevronLeft className="w-4 h-4" />
             Previous
           </Button>
 
@@ -90,7 +90,7 @@ const ActiveSessionPage = () => {
               className="flex-1"
             >
               Next
-              <ChevronRight className="w-4 h-4 ml-2" />
+              <ChevronRight className="w-4 h-4" />
             </Button>
           )}
         </div>
@@ -103,6 +103,7 @@ const ActiveSessionPage = () => {
         <CreateSetDrawer
           isOpen={isDrawerOpen}
           onClose={handleCloseDrawer}
+          workoutSessionId={session.id}
           workoutExerciseId={currentExercise.id}
         />
       </PageLayout>

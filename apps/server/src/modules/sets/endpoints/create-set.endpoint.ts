@@ -24,6 +24,10 @@ export const createSet = createRoute({
       setResponseSchema,
       "The created set",
     ),
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+      createErrorSchema(createSetSchema),
+      "No active workout session found",
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
       "Workout exercise not found",

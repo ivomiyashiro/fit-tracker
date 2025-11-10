@@ -1,6 +1,9 @@
 import { z } from "zod";
 
 export const createSetSchema = z.object({
+  workoutSessionId: z.number({
+    message: "Workout session ID is required",
+  }).optional(),
   workoutExerciseId: z.number({
     message: "Workout exercise ID is required",
   }),

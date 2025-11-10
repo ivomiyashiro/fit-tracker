@@ -5,12 +5,14 @@ import { CreateSetDrawerForm } from "./create-set-drawer-form";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  workoutSessionId?: number;
   workoutExerciseId: number;
 };
 
 export const CreateSetDrawer = ({
   isOpen,
   onClose,
+  workoutSessionId,
   workoutExerciseId,
 }: Props) => {
   const handleSuccess = () => onClose();
@@ -24,6 +26,7 @@ export const CreateSetDrawer = ({
 
         <div className="px-4 mt-4 sm:px-0 sm:max-w-md sm:mx-auto w-full mb-6">
           <CreateSetDrawerForm
+            workoutSessionId={workoutSessionId}
             workoutExerciseId={workoutExerciseId}
             onSuccess={handleSuccess}
           />

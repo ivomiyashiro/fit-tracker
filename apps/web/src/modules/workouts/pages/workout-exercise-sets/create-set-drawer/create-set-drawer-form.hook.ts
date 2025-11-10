@@ -6,17 +6,20 @@ import { type CreateSetRequest, createSetSchema } from "@/dtos/sets/requests";
 import { useCreateWorkoutExerciseSetMutation } from "@/web/modules/workouts/hooks/mutations";
 
 type Props = {
+  workoutSessionId?: number;
   workoutExerciseId: number;
   onSuccess?: () => void;
 };
 
 export const useCreateWorkoutExerciseSetDrawerForm = ({
+  workoutSessionId,
   workoutExerciseId,
   onSuccess,
 }: Props) => {
   const form = useForm<CreateSetRequest>({
     resolver: zodResolver(createSetSchema),
     defaultValues: {
+      workoutSessionId,
       workoutExerciseId,
       reps: 0,
       weight: 0,
@@ -32,12 +35,10 @@ export const useCreateWorkoutExerciseSetDrawerForm = ({
     form.reset();
     onSuccess?.();
 
-    // Show optimistic success message
-    toast.success("Set recorded!");
-
     // Execute mutation in the background
     createSet(
       {
+        ...(workoutSessionId && { workoutSessionId }),
         workoutExerciseId,
         reps: data.reps,
         weight: data.weight,

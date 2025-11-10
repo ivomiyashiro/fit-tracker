@@ -45,7 +45,7 @@ export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRou
     );
   }
 
-  // Get workout exercise IDs that have sets completed
+  // Get workout exercise IDs that have sets completed for this specific session
   const exercisesWithSets = await db
     .select({
       workoutExerciseId: workoutExercise.id,
@@ -54,7 +54,10 @@ export const getActiveWorkoutSession: AppRouteHandler<GetActiveWorkoutSessionRou
     .from(workoutExercise)
     .leftJoin(
       workoutExerciseSet,
-      eq(workoutExercise.id, workoutExerciseSet.workoutExerciseId),
+      and(
+        eq(workoutExercise.id, workoutExerciseSet.workoutExerciseId),
+        eq(workoutExerciseSet.workoutSessionId, session.id),
+      ),
     )
     .where(eq(workoutExercise.workoutId, session.workoutId))
     .groupBy(workoutExercise.id)

@@ -1,6 +1,7 @@
 import type { InfiniteData } from "@tanstack/react-query";
 import type { CreateSetRequest } from "@/dtos/sets/requests";
 import type { SetPaginatedResponse } from "@/dtos/sets/responses";
+import type { WorkoutSessionDetail } from "@/web/modules/workouts/types";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -63,14 +64,41 @@ return old;
         });
       }
 
-      // Return a context object with the snapshotted value
-      return { previousSets };
+      // Optimistically update active session to mark exercise as completed
+      const activeSessionKey = workoutSessionKeys.active();
+      const previousActiveSession = queryClient.getQueryData<WorkoutSessionDetail>(activeSessionKey);
+
+      if (previousActiveSession) {
+        queryClient.setQueryData<WorkoutSessionDetail>(activeSessionKey, (old) => {
+          if (!old)
+return old;
+
+          return {
+            ...old,
+            workout: {
+              ...old.workout,
+              workoutExercises: old.workout.workoutExercises.map(we =>
+                we.id === newSet.workoutExerciseId
+                  ? { ...we, hasCompletedSets: true }
+                  : we,
+              ),
+            },
+          };
+        });
+      }
+
+      // Return a context object with the snapshotted values
+      return { previousSets, previousActiveSession };
     },
     onError: (error, _newSet, context) => {
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousSets) {
         const queryKey = workoutExerciseSetsQueryKeys.infinite(_newSet.workoutExerciseId, 10);
         queryClient.setQueryData(queryKey, context.previousSets);
+      }
+      if (context?.previousActiveSession) {
+        const activeSessionKey = workoutSessionKeys.active();
+        queryClient.setQueryData(activeSessionKey, context.previousActiveSession);
       }
       toast.error(error.message || "Failed to record set");
     },

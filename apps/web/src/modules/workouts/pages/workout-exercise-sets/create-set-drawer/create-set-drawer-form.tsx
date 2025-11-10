@@ -4,15 +4,18 @@ import { Button, FormField, IncrementInput, Textarea } from "@/web/components/ui
 import { useCreateWorkoutExerciseSetDrawerForm } from "@/web/modules/workouts/pages/workout-exercise-sets/create-set-drawer/create-set-drawer-form.hook";
 
 type Props = {
+  workoutSessionId?: number;
   workoutExerciseId: number;
   onSuccess?: () => void;
 };
 
 export const CreateSetDrawerForm = ({
+  workoutSessionId,
   workoutExerciseId,
   onSuccess,
 }: Props) => {
   const { form, handleSubmit, isValid } = useCreateWorkoutExerciseSetDrawerForm({
+    workoutSessionId,
     workoutExerciseId,
     onSuccess,
   });

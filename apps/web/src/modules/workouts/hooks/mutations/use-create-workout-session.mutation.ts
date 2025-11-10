@@ -18,8 +18,6 @@ export const useCreateWorkoutSessionMutation = () => {
     mutationFn: (params: CreateWorkoutSessionParams) =>
       workoutSessionService.createWorkoutSession(params),
     onSuccess: () => {
-      toast.success("Workout completed! 🎉");
-
       queryClient.invalidateQueries({
         queryKey: workoutQueryKeys.next(),
       });

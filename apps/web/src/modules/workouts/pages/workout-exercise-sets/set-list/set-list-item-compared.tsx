@@ -39,7 +39,7 @@ export const SetListItemCompared = memo(({ currentDaySets, previousDaySets }: Pr
     >
       <div className="flex items-center gap-2">
         <GitCompareArrowsIcon className="w-4 h-4 text-primary" />
-        <p className="text-sm font-medium text-primary">Compared to previous workout</p>
+        <p className="text-sm font-medium">Compared to previous workout</p>
       </div>
       <div className="grid grid-cols-2 gap-2">
         {/* Row 1: Reps and Weight */}

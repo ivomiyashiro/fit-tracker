@@ -30,13 +30,13 @@ export const ComparisonItem = ({ label, current, previous, unit = "", showPercen
     const getColorClass = () => {
         if (isNeutral)
             return "text-muted-foreground";
-        return isImprovement ? "text-green-500" : "text-red-500";
+        return isImprovement ? "text-success" : "text-destructive";
     };
 
     const formatNumber = (num: number) => num.toFixed(decimalPlaces);
 
     return (
-        <div className="flex flex-col gap-1 p-3 bg-secondary/30 rounded-md">
+        <div className="flex flex-col gap-1 p-3 bg-secondary rounded-md">
             <span className="text-xs font-medium text-muted-foreground">{label}</span>
             <div className="flex items-baseline gap-1.5 flex-col">
                 <span className="text-lg font-semibold">

@@ -27,7 +27,7 @@ export const SetListItem = memo(({ set, onClick, disabled }: Props) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1 w-full">
-          <span className="text-sm font-medium px-1 flex justify-between items-center gap-2">
+          <span className="text-sm font-medium px-1 flex justify-between items-center gap-2 text-muted-foreground">
             {timeFormat.format(new Date(set.createdAt))}
             {set.isOptimistic && (
               <span className="text-xs text-muted-foreground animate-pulse flex items-center gap-1">
@@ -38,24 +38,24 @@ export const SetListItem = memo(({ set, onClick, disabled }: Props) => {
           </span>
           <div className={`flex gap-2 items-center mt-0.5 ${!set.notes ? "mb-1" : ""}`}>
             <SetBadge
-              icon={<Repeat2Icon />}
+              icon={<Repeat2Icon className="text-muted-foreground" />}
               label="Reps"
               value={set.reps}
-              className="text-green-500"
+              className="text-foreground"
             />
             <SetBadge
-              icon={<WeightIcon />}
+              icon={<WeightIcon className="text-muted-foreground" />}
               label="Weight"
               value={set.weight}
               unit="kg"
-              className="text-orange-500"
+              className="text-foreground"
             />
             {set.rir !== undefined && (
               <SetBadge
-                icon={<BicepsFlexedIcon />}
+                icon={<BicepsFlexedIcon className="text-muted-foreground" />}
                 label="RIR"
                 value={set.rir ?? 0}
-                className="text-blue-500"
+                className="text-foreground"
               />
             )}
           </div>

@@ -34,9 +34,9 @@ const WorkoutSessionPage = () => {
           {/* Calendar Section */}
           <div className="lg:col-span-2">
             <WorkoutSessionCalendar
+              isLoading={isLoading}
               selectedDate={selectedDate}
               eventDates={eventDates}
-              isLoading={isLoading}
               isError={isError}
               onDateSelection={handleDateSelection}
             />

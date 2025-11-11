@@ -1,6 +1,6 @@
 import type { CalendarSelectionChangedEvent } from "../calendar.types";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { isSameDay, normalizeDate } from "../calendar.utils";
 
@@ -15,6 +15,27 @@ export function useCalendarSelection(
 return [];
     return Array.isArray(value) ? value.map(normalizeDate) : [normalizeDate(value)];
   });
+
+  const pendingChangeRef = useRef<CalendarSelectionChangedEvent | null>(null);
+
+  // Sync with external value prop
+  useEffect(() => {
+    if (!value) {
+      setSelectedDates([]);
+      return;
+    }
+
+    const newDates = Array.isArray(value) ? value.map(normalizeDate) : [normalizeDate(value)];
+    setSelectedDates(newDates);
+  }, [value]);
+
+  // Notify parent of selection changes after state update
+  useEffect(() => {
+    if (pendingChangeRef.current) {
+      onValueChanged?.(pendingChangeRef.current);
+      pendingChangeRef.current = null;
+    }
+  }, [selectedDates, onValueChanged]);
 
   const handleDateSelection = useCallback((date: Date) => {
     if (disabled || selectionMode === "none")
@@ -45,15 +66,16 @@ return;
         }
       }
 
-      onValueChanged?.({
+      // Store the change event to be dispatched after state update
+      pendingChangeRef.current = {
         selectedDates: newDates,
         addedDates,
         removedDates,
-      });
+      };
 
       return newDates;
     });
-  }, [disabled, selectionMode, onValueChanged]);
+  }, [disabled, selectionMode]);
 
   const isDateSelected = useCallback((date: Date) => {
     return selectedDates.some(d => isSameDay(d, date));

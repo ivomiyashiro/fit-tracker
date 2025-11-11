@@ -18,11 +18,23 @@ export function CalendarDay({
     hasEvent && !isSelected ? "font-semibold" : "",
   ].filter(Boolean).join(" ");
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isDisabled) {
+      onDayClick(date, e);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <button
       type="button"
       className={dayClasses}
-      onClick={e => !isDisabled && onDayClick(date, e)}
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
       disabled={isDisabled}
       aria-selected={isSelected}
       aria-label={date.toLocaleDateString()}

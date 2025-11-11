@@ -20,7 +20,7 @@ export const useTodaysWorkout = () => {
     if (hasActiveSession && activeSession) {
       const exerciseIndex = activeSession.lastIncompleteExerciseIndex ?? 0;
       navigate({
-        to: "/todays-workout/session/$sessionId",
+        to: "/workout-sessions/$sessionId",
         params: { sessionId: String(activeSession.id) },
         search: { exerciseIndex },
       });
@@ -39,7 +39,7 @@ export const useTodaysWorkout = () => {
       });
 
       navigate({
-        to: "/todays-workout/session/$sessionId",
+        to: "/workout-sessions/$sessionId",
         params: { sessionId: String(session.id) },
         search: { exerciseIndex: 0 },
       });

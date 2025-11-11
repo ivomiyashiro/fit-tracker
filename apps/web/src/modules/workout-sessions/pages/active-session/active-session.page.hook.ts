@@ -50,7 +50,7 @@ export const useActiveSession = () => {
     }
 
     navigate({
-      to: "/todays-workout/session/$sessionId",
+      to: "/workout-sessions/$sessionId",
       params: { sessionId: String(sessionId) },
       search: { exerciseIndex: currentExerciseIndex - 1 },
     });
@@ -62,7 +62,7 @@ export const useActiveSession = () => {
     }
 
     navigate({
-      to: "/todays-workout/session/$sessionId",
+      to: "/workout-sessions/$sessionId",
       params: { sessionId: String(sessionId) },
       search: { exerciseIndex: currentExerciseIndex + 1 },
     });

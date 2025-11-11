@@ -1,4 +1,4 @@
-export { List } from "./list.index";
+export { List } from "./components/list.index";
 export type {
   ItemClickEvent,
   ItemContextMenuEvent,

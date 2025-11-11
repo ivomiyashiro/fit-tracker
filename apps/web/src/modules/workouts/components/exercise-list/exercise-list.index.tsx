@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 
 import { List } from "@/web/components/ui";
 import { useDebounce } from "@/web/hooks";
-import { useInfiniteExercisesQuery } from "@/web/modules/workouts/hooks/queries/use-exercises.query";
+import { useInfiniteExercisesQuery } from "@/web/modules/exercises/hooks/queries/use-exercises.query";
 
 import { ExerciseListItem } from "./exercise-list-item";
 

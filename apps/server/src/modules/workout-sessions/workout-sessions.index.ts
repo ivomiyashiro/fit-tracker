@@ -9,6 +9,7 @@ const router = createRouter();
 
 router.use(requireAuth);
 
+router.openapi(endpoints.getWorkoutSessions, queries.getWorkoutSessions);
 router.openapi(endpoints.getActiveWorkoutSession, queries.getActiveWorkoutSession);
 router.openapi(endpoints.getWorkoutSession, queries.getWorkoutSession);
 router.openapi(endpoints.getWorkoutSessionSummary, queries.getWorkoutSessionSummary);

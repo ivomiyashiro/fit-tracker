@@ -5,6 +5,7 @@ export * from "./app-header-title";
 export * from "./app-navbar";
 export * from "./badge";
 export * from "./button";
+export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
 export * from "./delete-confirmation-button";

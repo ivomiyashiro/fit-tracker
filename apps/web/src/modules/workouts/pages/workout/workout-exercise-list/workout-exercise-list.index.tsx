@@ -1,7 +1,7 @@
-import type { ItemClickEvent, ItemReorderedEvent } from "@/web/components/ui/list/list.types";
+import type { ItemReorderedEvent } from "@/web/components/ui/list/list.types";
 
 import type { WorkoutExercise } from "@/web/modules/workouts/types";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
 
 import { List } from "@/web/components/ui";
 import { useReorderWorkoutExercisesMutation } from "@/web/modules/workouts/hooks/mutations";
@@ -16,7 +16,6 @@ export const WorkoutExerciseList = ({
   isLoading,
   workoutExercises,
 }: WorkoutExerciseListProps) => {
-  const navigate = useNavigate();
   const { workoutId } = useParams({ from: "/_authenticated/workouts/$workoutId/" });
   const reorderMutation = useReorderWorkoutExercisesMutation();
 
@@ -28,13 +27,6 @@ export const WorkoutExerciseList = ({
       </div>
     );
   }
-
-  const handleItemClick = (e: ItemClickEvent<WorkoutExercise>) => {
-    navigate({
-      to: "/workouts/$workoutId/we/$workoutExerciseId/sets",
-      params: { workoutId, workoutExerciseId: String(e.item.id) },
-    });
-  };
 
   const handleReorder = (e: ItemReorderedEvent<WorkoutExercise>) => {
     if (workoutExercises.length === 0)
@@ -62,7 +54,6 @@ export const WorkoutExerciseList = ({
       isSuccess={!isLoading}
       keyExpr="id"
       noDataText="No workout exercises found"
-      onItemClick={handleItemClick}
       onItemReordered={handleReorder}
       reorderEnabled={true}
       selectByClick={true}

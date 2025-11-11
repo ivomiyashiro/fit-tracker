@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { workoutSessionService } from "@/web/modules/workouts/services";
+import { workoutSessionService } from "@/web/modules/workout-sessions/services/workout-session.service";
 import { workoutQueryKeys } from "@/web/modules/workouts/utils";
 
 type CreateWorkoutSessionParams = {

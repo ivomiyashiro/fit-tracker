@@ -7,8 +7,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { toast } from "sonner";
 
+import { workoutSessionKeys } from "@/web/modules/workout-sessions/utils";
 import { workoutExerciseSetService } from "@/web/modules/workouts/services/workout-exercise-set.service";
-import { workoutExerciseSetsQueryKeys, workoutSessionKeys } from "@/web/modules/workouts/utils";
+import { workoutExerciseSetsQueryKeys } from "@/web/modules/workouts/utils";
 
 export const useCreateWorkoutExerciseSetMutation = () => {
   const queryClient = useQueryClient();

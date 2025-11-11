@@ -1,14 +1,12 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { BicepsFlexedIcon, LogOutIcon, MoonIcon, NotebookIcon, PlayCircle, Plus, SunIcon } from "lucide-react";
-
-import { useTheme } from "@/web/lib/theme/use-theme";
+import { BicepsFlexedIcon, CalendarIcon, LogOutIcon, NotebookIcon, PlayCircle, Plus } from "lucide-react";
 
 import { useNavbarContext } from "./navbar-context";
 
 export const useAppNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
+
   const {
     startWorkoutHandlerRef,
     isStartingWorkout,
@@ -21,30 +19,27 @@ export const useAppNavbar = () => {
   const isOnActiveSessionPage = location.pathname.includes("/todays-workout/session/");
 
   const handleNextWorkout = () => {
-    navigate({ to: "/todays-workout" });
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    navigate({ to: "/workout-sessions/todays-workout" });
   };
 
   const getNavbarItems = () => [
+    {
+      icon: <CalendarIcon className="w-5 h-5" />,
+      path: "/workout-sessions" as const,
+      onClick: () => navigate({ to: "/workout-sessions" }),
+    },
     {
       icon: <NotebookIcon className="w-5 h-5" />,
       path: "/workouts" as const,
       onClick: () => navigate({ to: "/workouts" }),
     },
-    {
-      icon: <BicepsFlexedIcon className="w-5 h-5" />,
-      path: "/exercises" as const,
-      onClick: () => navigate({ to: "/exercises" }),
-    },
   ];
 
   const getRightNavbarItems = (onLogoutClick: () => void) => [
     {
-      icon: theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />,
-      onClick: toggleTheme,
+      icon: <BicepsFlexedIcon className="w-5 h-5" />,
+      path: "/exercises" as const,
+      onClick: () => navigate({ to: "/exercises" }),
     },
     {
       icon: <LogOutIcon className="w-5 h-5" />,

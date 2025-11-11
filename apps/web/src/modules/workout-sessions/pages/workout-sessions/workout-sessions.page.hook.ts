@@ -11,7 +11,7 @@ export function useWorkoutSessions() {
   const month = selectedDate.getMonth();
 
   // Fetch workout sessions using React Query
-  const { data: workoutSessions = [], isLoading, isError } = useWorkoutSessionsQuery(year, month);
+  const { data: workoutSessions = [], isLoading } = useWorkoutSessionsQuery(year, month);
 
   // Convert workout sessions to event dates
   const eventDates = useMemo(
@@ -48,7 +48,6 @@ export function useWorkoutSessions() {
   return {
     // Data
     isLoading,
-    isError,
     selectedDate,
     workoutSessions,
     eventDates,

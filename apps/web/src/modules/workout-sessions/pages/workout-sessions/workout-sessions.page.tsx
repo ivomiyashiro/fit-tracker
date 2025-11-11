@@ -1,7 +1,6 @@
 import { PageLayout } from "@/web/components/layouts";
-import { AppHeader } from "@/web/components/ui";
+import { AppHeader, Calendar } from "@/web/components/ui";
 
-import { WorkoutSessionCalendar } from "./workout-session-calendar";
 import { WorkoutSessionDetails } from "./workout-session-details";
 import { useWorkoutSessions } from "./workout-sessions.page.hook";
 
@@ -9,7 +8,6 @@ const WorkoutSessionPage = () => {
   const {
     // Data
     isLoading,
-    isError,
     selectedDate,
     eventDates,
     selectedDateSession,
@@ -33,12 +31,12 @@ const WorkoutSessionPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Calendar Section */}
           <div className="lg:col-span-2">
-            <WorkoutSessionCalendar
-              isLoading={isLoading}
-              selectedDate={selectedDate}
+            <Calendar
+              value={selectedDate}
+              disabled={isLoading}
+              selectionMode="single"
               eventDates={eventDates}
-              isError={isError}
-              onDateSelection={handleDateSelection}
+              onValueChanged={handleDateSelection}
             />
           </div>
 
